@@ -26,7 +26,7 @@ public class UserProjectServiceImpl implements UserProjectService {
     }
 
     @Override
-    public OperationStatus manageUserInProject(boolean bind, int userId, int projectId) {
+    public OperationStatus manageUserInProject(boolean link, int userId, int projectId) {
         // read operation for user
         OperationStatus userOperation = userService.readById(userId);
 
@@ -47,7 +47,7 @@ public class UserProjectServiceImpl implements UserProjectService {
         Set<Project> projectSet = user.getProjectSet();
 
         //update project set
-        if (bind) {
+        if (link) {
             // link
             // check project if it is already included in set
             if (projectSet.contains(project))

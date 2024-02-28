@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "e6bd92cd-d48b-49ec-8d3c-35451c5affce",
+		"_postman_id": "4573ffe2-4137-4773-81be-fb4645ab4671",
 		"name": "spring-boot-domains",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26266539"
 	},
 	"item": [
 		{
-			"name": "localhost:8080/domains",
+			"name": "domains",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -40,7 +40,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/domains/1",
+			"name": "domains/1",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -60,7 +60,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/domains/3",
+					"raw": "http://localhost:8080/domains/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -68,14 +68,14 @@
 					"port": "8080",
 					"path": [
 						"domains",
-						"3"
+						"1"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/domains/paged",
+			"name": "domains/paged",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -122,7 +122,54 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/domains",
+			"name": "domains/count",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "ahmet@hotmail.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/domains/count",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"domains",
+						"count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "domains",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -143,7 +190,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"new-domain.com.tr\",\r\n    \"isActive\": false\r\n}",
+					"raw": "{\r\n    \"name\": \"new domain.com.tr\",\r\n    \"isActive\": true\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -165,7 +212,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/domains/4",
+			"name": "domains/5",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -186,7 +233,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"updated-domain.com.tr\",\r\n    \"isActive\": false\r\n}",
+					"raw": "{\r\n    \"name\": \"updated domain.com.tr\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -194,21 +241,21 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/domains/6",
+					"raw": "localhost:8080/domains/5",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"domains",
-						"6"
+						"5"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "localhost:8080/domains/4",
+			"name": "domains/4",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -228,21 +275,21 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/domains/7",
+					"raw": "localhost:8080/domains/4",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"domains",
-						"7"
+						"4"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "localhost:8080/domains/6/deactivate",
+			"name": "domains/6/deactivate",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -277,7 +324,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/domains/6/activate",
+			"name": "domains/6/activate",
 			"request": {
 				"auth": {
 					"type": "basic",

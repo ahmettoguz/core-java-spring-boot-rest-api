@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/domains")
 public class DomainRestControllerImpl<T extends Domain> extends BaseRestControllerImpl<T> implements DomainRestController {
     BaseService<T> service;
 
     @Autowired
-    public DomainRestControllerImpl(@Qualifier("projectServiceImpl") BaseService<T> service) {
+    public DomainRestControllerImpl(@Qualifier("domainServiceImpl") BaseService<T> service) {
         super(service);
     }
 }

@@ -17,32 +17,11 @@ import java.util.HashMap;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/users")
-public class UserRestControllerImpl<T extends User> extends BaseRestControllerImpl<T> implements ProjectRestController {
+public class UserRestControllerImpl<T extends User> extends BaseRestControllerImpl<T> implements UserRestController {
     BaseService<T> service;
-    UserProjectService userProjectService;
 
     @Autowired
-    public UserRestControllerImpl(@Qualifier("userServiceImpl") BaseService<T> service,
-                                  UserProjectService userProjectService) {
+    public UserRestControllerImpl(@Qualifier("userServiceImpl") BaseService<T> service) {
         super(service);
-        this.userProjectService = userProjectService;
-    }
-
-    @Override
-    @PostMapping("/{userId}/projects/{projectId}/link")
-    public ResponseEntity<HashMap<String, Object>> addUserToProject(@PathVariable("userId") int userId,
-                                                                    @PathVariable("projectId") int projectId) {
-        // perform operation and return
-        OperationStatus operationStatus = ((UserProjectService) userProjectService).manageUserInProject(true, userId, projectId);
-        return operationStatus.getResponseEntity();
-    }
-
-    @Override
-    @DeleteMapping("/{userId}/projects/{projectId}/unlink")
-    public ResponseEntity<HashMap<String, Object>> removeUserFromProject(@PathVariable("userId") int userId,
-                                                                         @PathVariable("projectId") int projectId) {
-        // perform operation and return
-        OperationStatus operationStatus = ((UserProjectService) userProjectService).manageUserInProject(false, userId, projectId);
-        return operationStatus.getResponseEntity();
     }
 }

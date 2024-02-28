@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "53ecabe5-ea2c-4a66-8d94-0596de81288a",
+		"_postman_id": "bb60d042-3c6b-485f-bd3b-1a2adc18d6d8",
 		"name": "spring-boot-users-projects",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26266539"
 	},
 	"item": [
 		{
-			"name": "users/projects/link",
+			"name": "users/projects",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -36,7 +36,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/1/projects/1/link",
+					"raw": "http://localhost:8080/users/1/projects/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -46,15 +46,60 @@
 						"users",
 						"1",
 						"projects",
-						"1",
-						"link"
+						"1"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "users/projects/unlink",
+			"name": "projects/users",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "ahmet@hotmail.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/projects/1/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"projects",
+						"1",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users/projects",
 			"request": {
 				"auth": {
 					"type": "basic",
@@ -83,7 +128,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/1/projects/1/unlink",
+					"raw": "http://localhost:8080/users/1/projects/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -93,8 +138,53 @@
 						"users",
 						"1",
 						"projects",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "projects/users",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "ahmet@hotmail.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/projects/1/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"projects",
 						"1",
-						"unlink"
+						"users",
+						"1"
 					]
 				}
 			},

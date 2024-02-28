@@ -17,30 +17,9 @@ import java.util.HashMap;
 @RequestMapping("/projects")
 public class ProjectRestControllerImpl<T extends Project> extends BaseRestControllerImpl<T> implements ProjectRestController {
     BaseService<T> service;
-    UserProjectService userProjectService;
 
     @Autowired
-    public ProjectRestControllerImpl(@Qualifier("projectServiceImpl") BaseService<T> service,
-                                     UserProjectService userProjectService) {
+    public ProjectRestControllerImpl(@Qualifier("projectServiceImpl") BaseService<T> service) {
         super(service);
-        this.userProjectService = userProjectService;
-    }
-
-    @Override
-    @PostMapping("/{projectId}/users/{userId}/link")
-    public ResponseEntity<HashMap<String, Object>> addUserToProject(@PathVariable("projectId") int projectId,
-                                                                    @PathVariable("userId") int userId) {
-        // perform operation and return
-        OperationStatus operationStatus = ((UserProjectService) userProjectService).manageUserInProject(true, projectId, userId);
-        return operationStatus.getResponseEntity();
-    }
-
-    @Override
-    @PostMapping("/{projectId}/users/{userId}/unlink")
-    public ResponseEntity<HashMap<String, Object>> removeUserFromProject(@PathVariable("projectId") int projectId,
-                                                                         @PathVariable("userId") int userId) {
-        // perform operation and return
-        OperationStatus operationStatus = ((UserProjectService) userProjectService).manageUserInProject(false, projectId, userId);
-        return operationStatus.getResponseEntity();
     }
 }

@@ -1,0 +1,752 @@
+########################## SPRING BOOT ###########################
+------------------------------------------------------------------
+
+Development Steps:
+    Initialize:
+        https://start.spring.io/
+    ------------------------------------------------------------------
+
+    Dependencies:
+        <!-- web dependency -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- auto build -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
+        <scope>runtime</scope>
+        <optional>true</optional>
+        </dependency>
+
+        <!--jpa database related -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!--mysql related -->
+        <dependency>
+        <groupId>com.mysql</groupId>
+        <artifactId>mysql-connector-j</artifactId>
+        <scope>runtime</scope>
+        </dependency>
+
+        <!-- JpaRepository basic REST endpoints -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-rest</artifactId>
+        </dependency>
+
+        <!-- security -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- thymeleaf -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- validation -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+    ------------------------------------------------------------------
+
+    application.properties:
+      #
+      # server configurations
+      #
+      # server.port=9000
+
+      #
+      # component configurations
+      #
+        spring.main.lazy-initialization=true
+      
+      #
+      # mysql database configurations
+      #
+        spring.datasource.url=jdbc:mysql://localhost:3306/cheat-sheet
+        spring.datasource.username=root
+        spring.datasource.password=toor
+      
+      #
+      # rest properties
+      #
+        spring.data.rest.base-path=/m-api
+        spring.data.rest.default-page-size=10
+      
+      #
+      # security configurations
+      #
+        spring.security.user.name=ahmet
+        spring.security.user.password=1234
+      # logging spring security debug mode
+      # logging.level.org.springframework.security=DEBUG
+      
+      #
+      # logging configurations
+      #
+      # display warning and errors
+        logging.level.root=warn
+      # remove spring banner
+        spring.main.banner-mode=off
+      
+      #
+      # custom variables
+      #
+        app.var.appName=Mvc
+        app.var.appDescription=Spring mvc
+    ------------------------------------------------------------------
+
+    Endpoints:
+        post    -    /users      - create
+        get     -    /users      - read all
+        get     -    /users/1    - read one
+        get     -    /users/paged?currentPage=0&pageSize=5&sort=true    - read paged
+        put     -    /users/1    - update
+        delete  -    /users/1    - delete
+        patch   -    /users/1    - deactivate
+    ------------------------------------------------------------------
+
+    Entities:
+        * Do not use primitive types because we want to get null if not exist.
+        * For confidential fields use: @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+        * For relational fields use that because we do not want to create loop and relational insert: @JsonIgnore
+        * For constructor have no-parameter constructor.
+        * Create full getter setter.
+        * For boolean getter setter and isActive similar naming use this for getter: @JsonProperty("isActive")
+    ------------------------------------------------------------------
+
+Description:
+    Spring boot is a spring project that utilize web development of the java with some facilities like embedded http tompcat server ...
+    ------------------------------------------------------------------
+
+Java Installation:
+    Just remove java and install intellij when you crate project you can install jdk and then you will add jdk to env path for system add new for name part write JAVA_HOME and give C:\Users\lenovo\.jdks\openjdk-21.0.2 something like that you can get that like where java, another command java --version
+    ------------------------------------------------------------------
+
+Maven:
+    Description:
+        Project management tool. (build management and dependencies)
+        Handles library download.
+
+        In intellij you can check the maven dependencies from right side.
+    ------------------------------------------------------------------
+
+    pom.xml:
+        project object model file.
+        Includes metadata, dependencies, plugins
+
+        Project Coordinates:
+            <groupId>com.ahmetoguzergin</groupId> city
+            <artifactId>demo</artifactId>         street
+            <version>0.0.1-SNAPSHOT</version>     house number
+
+        Adding dependency:
+            <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            </dependency>
+    ------------------------------------------------------------------
+
+    mvnw file:
+        automatically download and run maven.
+    ------------------------------------------------------------------
+
+Developing Steps:
+    * Create folders with Spring Initializr or copy template from my project and rebuild it.
+    ------------------------------------------------------------------
+
+Spring Initializr:
+    https://start.spring.io/
+
+    We will initialize our app with spring init:
+        select Maven Java NOT snapshot
+        select dependencies - Spring Web
+    ------------------------------------------------------------------
+
+Resources folder:
+    application.properties file:
+        You can define server port for example.
+        You can use with @Value annotation.
+
+    static folder:
+        This folder includes static files like html, css, img, js...
+
+    templates folder:
+        thymeleaf is popular template engine.
+    ------------------------------------------------------------------
+
+Refresh Nodemon similar dependency:
+    add dependency and do not forget to load maven dependecy (reload maven from top right)
+    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+    <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+    </dependency>
+
+    configure intellij:
+        Settings -> Build,Execution,Deployment -> Compiler -> Build project automatically
+        Settings -> Advanced Settings -> allow auto-make
+    ------------------------------------------------------------------
+
+Spring Boot actuator:
+    Monitor application with endpoints.
+
+    If you want to enable actuator/info endpoint also rather than health, add these to application.properties file
+  # actuator configurations
+  # info actuator configurations
+  # management.endpoints.web.exposure.include=health,info
+    management.endpoints.web.exposure.include=*
+    management.info.env.enabled=true
+    info.app.name=My App
+    info.app.description=Vuhuu
+    info.app.extra=hello
+    ------------------------------------------------------------------
+
+Spring Boot security:
+    Add starter security to dependencies. These security dependencies will automatically restrict actuator mappings and beans endpoints, but other endpoints like info and health is not restricted.
+    ------------------------------------------------------------------
+
+Running app from cmd:
+    mvnw package
+    java -jar target\demo-0.0.1-SNAPSHOT.jar
+    or
+    mvnw spring-boot:run
+    ------------------------------------------------------------------
+
+Logging:
+    In application.properties file you can define log file name and path like that:
+        logging.file.name=my-log.log
+        logging.file.path=c:/app
+      
+      # logging configurations
+      # display warning and errors
+        logging.level.root=warn
+      # remove spring banner
+        spring.main.banner-mode=off
+    ------------------------------------------------------------------
+
+Spring Core:
+
+    Inversion Control (Ioc):
+        Managing objects.
+        Configure spring container.
+    ------------------------------------------------------------------
+
+    Dependency Injection:
+        Using dependency inversion principle.
+        When you want to get the object, you need to get the helper, and other components.
+
+          Example:
+              When you want to car from car factory, car factory assemble all the necessary components and part to construct car.
+              We will want from spring container.
+
+          Spring container primary functions:
+              Inversion of control -> create and manage objects
+              Dependency injection -> Inject objects dependencies.
+
+              Example:
+                  I want to use DemoController which use Coach. So that Coach is the dependency and I need to inject that dependency to DemoController.
+
+          Injection Types:
+              Constructor injection:
+              Use it when you have required dependencies.
+
+              Example:
+                    We will have api(/daily-workout) and controller controller will request (getDailyWorkout()) the data from the Coach(pactice 15 min).
+                        
+                        * Define interface:
+                        public interface Coach{
+                        String getDailyWorkout();
+    }
+
+        * Define class
+        // component annotation mark class as a Spring Bean to candidate for dependency injection.
+        
+        @Component
+        public class cricketCoach implements Coach{
+        @Override
+        public String getDailyWorkout(){
+        return "Parctice 15 min";
+    }
+    }
+
+        * Create rest controller:
+              @RestController
+              public class WorkoutRestController {
+              private Coach myCoach;
+              
+              @Autowired
+              public DemoController(Coach theCoach){
+              myCoach = theCoach;
+              }
+              
+              @GetMapping("/daily-workout")
+              public String getDailyWorkout() {
+              return myCoach.getDailyWorkout();
+              }
+              }
+
+              Setter injection:
+        Use it when you have optional dependencies.
+        
+        * Create setter method for inject dependency:
+              In controller crate method to set Coach to CricketCoach with @Autowired
+
+              Mulitple Component injection with Qualifier:
+        @Autowired
+        public DemoController(@Qualifier("cricketCoach") Coach theCoach){
+        myCoach = theCoach;
+    }
+
+    Define primary Component class when have multiple Component:
+        We will not need qualifier in this approach. (I recommend to use Qualifier)
+        
+        @Component
+        @Primary
+        public class CricketCoach implements Coach {
+
+    AutoWiring:
+        For dependency injection Spring can use autowiring, that mathces the class or interface and inject automatically.
+
+        Example:
+            Spring will scan @Components for the classes which implements Coach interface, and for example found CricketCoach.
+    ------------------------------------------------------------------
+
+    Lazy initialization:
+        A bean will only be initialized in the following cases:
+            - Dependency injection
+            - Explicitly requested
+
+        After @Component annotation define @Lazy annotation so that component will not initialized if its not used in above cases.
+        In globally also you can define all beans to be lazy in application.properties file:
+            spring.main.lazy-initialization=true
+    ------------------------------------------------------------------
+
+    Bean Scopes:
+        Scope refers to lifecycle of a bean.
+        Default scope is singleton.
+
+        Scope Types:
+            singleton:
+                Single shared instance of the bean.
+
+            prototype:
+                Creates a new bean instance for each container request.
+
+            request:
+                Scoped to an http web request only used for web apps.
+
+            session:
+                Scoped to an http web session only used for web apps.
+
+            global-session:
+                Scoped to an global http web session only used for web apps.
+
+        Implementation:
+            After @Component annotation
+            @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    ------------------------------------------------------------------
+
+    Bean Lifecycle:
+        Container started -> Bean instantiated -> Dependencies Injected -> Internal Spring Processing -> Custom Init Methods
+
+        Custom code can be inserted while bean initialization and bean destruction.
+
+        Post Construct:
+            Using in construction.
+
+            @PostConstruct
+            public void myConstruct(){
+            System.out.println("PostConstruct" + getClass().getSimpleName());
+            }
+
+            @PreDestroy
+            public void myDestroy(){
+            System.out.println("Destructing..." + getClass().getSimpleName());
+            }
+    ------------------------------------------------------------------
+
+    Configuration Class:
+        Description:
+            Configuration class is using to convert class to configuration class.
+            Simply when we need to use 3rd party class we may want to make it component but we cannot interfere that code so that we crate new configuration class for that.
+
+        Before class definition add @Configuration annotation and define mehtod with @Bean annotation
+
+        Use case of the @Bean
+        We are using @Bean annotation with 3rd party class. Like configuring AWS S3 storage as @Bean
+    ------------------------------------------------------------------
+
+Hibernate - JPA:
+    Hibernate helps ORM object relational programming.
+    Java Persistence Api for ORM.
+    JPA hibernate uses jdbc.
+
+    To use we need to initialize new app with dependencies.
+    https://start.spring.io/
+    MySQL Driver, Spring Data JPA, Spring Web
+
+    application.properties:
+      # mysql database configurations
+        spring.datasource.url=jdbc:mysql://localhost:3306/student_tracker
+        spring.datasource.username=root
+        spring.datasource.password=toor
+
+    Entity Class:
+        Java class that is mapped to a database table.
+        Must be annotated with @Entity
+
+    Data Access Object:
+        Responsible for interfacing with the database.
+        Common design pattern that.
+
+        Operations:
+            save()
+            fingById()
+            findAll()
+            dinfByLastName()
+            update()
+            delete()
+            deleteAll()
+
+        @Transactional annotation is used to update database so that we not need that in read operation. this annotation can be used in dao or service.
+    ------------------------------------------------------------------
+
+JPQL (Java Persistence Query Language):
+    Similar to SQL we will make queries with jpql to run queries.
+    ------------------------------------------------------------------
+
+Spring Data Jpa:
+    Instead of writing all the DAO (Data Access Object) manually spring data jpa offers these dao implementation by entity name and primary key.
+
+    Interface name: JpaRepository
+
+    We also remove @Transactional annotations because JpaRepository already write that. So that If you want to add other sql method do not forget to add @Transactional to that.
+    ------------------------------------------------------------------
+
+REST built-in:
+    Endpoint Naming:
+        post    -    /users      - create
+        get     -    /users      - read all
+        get     -    /users/1    - read one
+        put     -    /users/1    - update
+        delete  -    /users/1    - delete
+
+    Preceding naming endpoints will be automatically implemented by JpaRepository.
+    Add dependency:
+        <!-- JpaRepository basic REST endpoints -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-rest</artifactId>
+        </dependency>
+
+    Remove controller and service.
+
+
+
+    Custom naming to path:
+        If you dont give path its simple go with plural s -> students in this example.
+
+        // entity type and primary key
+        @RepositoryRestResource(path="idiots")
+        public interface StudentRepository extends JpaRepository<Student, Integer> {
+        }
+
+    Pagination:
+        This rest will return 20 element in normally. And you can make query with page number like:
+            http://localhost:8080/m-api/idiots?page=0
+
+        Also, you can change page size in properties file with:
+            spring.data.rest.default-page-size=5
+
+    Sorting:
+        http://localhost:8080/m-api/idiots?sort=firstName
+        http://localhost:8080/m-api/idiots?sort=firstName,desc
+        localhost:8080/m-api/idiots?sort=firstName,lastName,desc
+    ------------------------------------------------------------------
+
+Facade Design Pattern with Service Layer: (Ön yüz)
+    Lets say you have to implement user and user related implementation, payment and payment related implementations. Use facade design pattern to hide complexity of the operations.
+
+    Reach different service from 1 facade class.
+
+    facade -> userService & paymentService
+
+    UserService -> UserServiceImpl
+    PaymentService -> PaymentServiceImpl
+
+    UserServiceImpl -> UserDao
+    PaymentServiceImpl -> PaymentDao
+
+    UserDao -> UserDaoImpl
+    PaymentDao -> PaymentDaoImpl
+    ------------------------------------------------------------------
+
+Command Line Runner:
+    After main program runs you can run your configurations in there
+    public static void main(String[] args) {
+    SpringApplication.run(DemoApplication.class, args);
+    }
+    
+    @Bean
+    public CommandLineRunner commandLineRunner(String[] args) {
+    return runner -> {
+    System.out.println("Hello from runner");
+    };
+    }
+    ------------------------------------------------------------------
+
+Exception Handling:
+    Local:
+        * Create StudentErrorResponse Class
+        * Create StudentNotFundException Class that extends RuntimeException and add constructor numbered 2,3,4
+        * In rest service check and throw that error if there is error
+        * Handle exception with @ExceptionHandler
+
+    Global:
+        We will use Controller Advice that get the request and route to service and route service throw an exception and Controller advice will handle that exception.
+    ------------------------------------------------------------------
+
+Project build flow:
+    * Initialize project:
+          From: https://start.spring.io/
+          Select maven.
+          Dependencies:
+              Spring Web
+              Spring Data JPA
+              Spring Boot DevTools
+              MySQL Driver
+
+    * Configure intellij:
+          Settings -> Advance settings -> allow auto make ...
+          Settings -> Build Execution Deployment -> Compiler -> build project automatically
+
+    * Make configurations in application.properties
+
+    * Create entity folder and entities.
+
+    * Create dao's and Impl of that 's
+    * Create DAO's and Impl of that DAO's
+
+    * Create Service for that DAO
+
+    * Create facade and impl if needed.
+    ------------------------------------------------------------------
+
+Security:
+    Add security dependency:
+        <!-- Security -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+    Can configure security key in properties file:
+      #
+      # security configurations
+      #
+        spring.security.user.name=ahmet
+        spring.security.user.password=1234
+
+    InMemoryUserDetailsManager:
+        You can define user and passwords in there and preceding configurations will be ignored.
+
+        When you implement that you need to send request with Authorization header with postman.
+
+    Static roles:
+        @Configuration
+        public class DemoSecurityConfig {
+        
+        @Bean
+        public InMemoryUserDetailsManager userDetailsManager() {
+        UserDetails ahmet = User.builder()
+        .username("ahmet")
+        .password("{noop}1234") // noop means plain text
+        .roles("EMPLOYEE")
+        .build();
+        
+        UserDetails tuna = User.builder()
+        .username("tuna")
+        .password("{noop}1234") // noop means plain text
+        .roles("employee", "MANAGER")
+        .build();
+        
+        UserDetails kisimo = User.builder()
+        .username("kisimo")
+        .password("{noop}1234") // noop means plain text
+        .roles("employee", "manager", "ADMIN")
+        .build();
+        
+        return new InMemoryUserDetailsManager(ahmet, tuna, kisimo);
+        }
+        
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeHttpRequests(configurer ->
+        configurer
+        .requestMatchers(HttpMethod.GET, "m-api/users").hasRole("EMPLOYEE")
+        .requestMatchers(HttpMethod.GET, "m-api/users/**").hasRole("EMPLOYEE")
+        .requestMatchers(HttpMethod.POST, "m-api/users/**").hasRole("MANAGER")
+        .requestMatchers(HttpMethod.PUT, "m-api/users/**").hasRole("MANAGER")
+        .requestMatchers(HttpMethod.DELETE, "m-api/users/**").hasRole("ADMIN")
+        );
+        
+        // use http basic authentication
+        httpSecurity.httpBasic(Customizer.withDefaults());
+        
+        // disable csrf (cross site request forgery), In general rest apis do not require that
+        httpSecurity.csrf(csrf -> csrf.disable());
+        
+        return httpSecurity.build();
+        }
+        }
+
+    Dynamic roles:
+        I will get roles from database from the table authorities.
+        @Configuration
+        public class DemoSecurityConfig {
+        // dynamic way of to define users from database
+        @Bean
+        public UserDetailsManager userDetailsManager(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
+        }
+        
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeHttpRequests(configurer ->
+        configurer
+        .requestMatchers(HttpMethod.GET, "m-api/users").hasRole("EMPLOYEE")
+        .requestMatchers(HttpMethod.GET, "m-api/users/**").hasRole("EMPLOYEE")
+        .requestMatchers(HttpMethod.POST, "m-api/users/**").hasRole("MANAGER")
+        .requestMatchers(HttpMethod.PUT, "m-api/users/**").hasRole("MANAGER")
+        .requestMatchers(HttpMethod.DELETE, "m-api/users/**").hasRole("ADMIN")
+        );
+        
+        // use http basic authentication
+        httpSecurity.httpBasic(Customizer.withDefaults());
+        
+        // disable csrf (cross site request forgery), In general rest apis do not require that
+        httpSecurity.csrf(csrf -> csrf.disable());
+        
+        return httpSecurity.build();
+        }
+        }
+
+    Bcyrpt:
+        Getting bycrpt salted password:
+            https://bcryptcalculator.com/encode
+            1234: { bcrypt }$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6
+
+    Boolean body error:
+        If you have boolean value named isActive you need to use that active as in body.
+    ------------------------------------------------------------------
+
+Thymeleaf:
+    Description:
+        Thymeleaf is a java templating engine.
+        Html processed and rendered in server.
+
+    Add dependency or add in initialization:
+        Thymeleaf
+
+        <!-- thymeleaf -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+    Folder:
+        src/main/resources/templates
+        with .html extension.
+
+    Stages:
+        * Add dependency.
+        * Implement MVC Controller.
+        * Create html files in templates folder.
+
+    MVC
+    Model Control:
+        In 13 you can find how binding model is working.
+
+    Validation:
+        add bean validation.
+
+    Custom error message:
+        create that file under resources folder, messages.properties
+        add that line
+        typeMismatch.customer.age=Invalid number
+
+    custom validation:
+        create package validation
+        add custom annotation
+    ------------------------------------------------------------------
+
+Relational Mapping MySql:
+    We have different type of relations. Getters and setters can include strings not object because infinite stack trace or you can add @JsonIgnore for object
+
+    Without proper endpoint security for create and update:
+        One-To-One:
+            Example:
+                In my example I use domain name and user. user have 1 domain name. domain name is taken by 1 user.
+            Foreign Key object:
+                @OneToOne(cascade = CascadeType.ALL)
+                @JoinColumn(name = "domain_id")
+                private Domain domain;
+
+            Referenced object:
+                @OneToOne(mappedBy = "domain", cascade = CascadeType.ALL)
+                private User user;
+        ------------------------------------------------------------------
+
+        One-To-Many:
+            Example:
+                In my example I use user and issue. user can have many issues. issues can be taken by 1 user.
+            Foreign Key object:
+                @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+                @JoinColumn(name = "user_id")
+                @JsonBackReference
+                private User user;
+
+            Referenced object:
+                @OneToMany(mappedBy = "user")
+                private List<Issue> issueList;
+        ------------------------------------------------------------------
+
+        Many-ToMany:
+            Example:
+                In my example I use user and project. user can have many projects. projects can be taken by many user.
+            Foreign Key object:
+                @ManyToMany(mappedBy = "projectSet", cascade = {CascadeType.ALL})
+                @JsonBackReference
+                private Set<User> userSet = new HashSet<>();
+
+            Referenced object:
+                @ManyToMany(cascade = {CascadeType.ALL})
+                @JoinTable(
+                name = "users_projects",
+                joinColumns = {@JoinColumn(name = "user_id")},
+                inverseJoinColumns = {@JoinColumn(name = "project_id")})
+                Set<Project> projectSet = new HashSet<Project>();
+    ------------------------------------------------------------------
+
+Rebuild Project:
+    After you copy old project you need to rebuild it.
+    From tabs build -> rebuild
+    ------------------------------------------------------------------
+
+Intellij:
+    rename file:
+        shift + f6
+    add word wrap:
+        go settings. type soft-wrap and add keyboard shortcut alt + z
+    ------------------------------------------------------------------

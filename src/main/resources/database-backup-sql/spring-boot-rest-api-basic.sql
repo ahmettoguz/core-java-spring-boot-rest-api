@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: Feb 28, 2024 at 06:46 AM
+-- Generation Time: Feb 28, 2024 at 08:16 AM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.15
 
@@ -41,8 +41,8 @@ CREATE TABLE `domains` (
 --
 
 INSERT INTO `domains` (`_id`, `name`, `is_active`) VALUES
-(3, 'ahmet.com.tr', 1),
-(4, 'tuna.com.tr', 1);
+(1, 'ahmet.com.tr', 1),
+(2, 'tuna.com.tr', 1);
 
 -- --------------------------------------------------------
 
@@ -136,9 +136,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`_id`, `first_name`, `email`, `password`, `is_active`, `domain_id`) VALUES
-(1, 'ahmet', 'ahmet@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 3),
-(2, 'tuna', 'tuna@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 4),
-(5, 'kisimo', 'kisimo@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, NULL);
+(1, 'ahmet', 'ahmet@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 1),
+(2, 'tuna', 'tuna@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 2),
+(3, 'kisimo', 'kisimo@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -181,9 +181,9 @@ INSERT INTO `users_roles` (`_id`, `user_id`, `role_id`) VALUES
 (6, 1, 1),
 (7, 2, 1),
 (8, 2, 2),
-(12, 5, 1),
-(13, 5, 2),
-(14, 5, 3);
+(12, 3, 1),
+(13, 3, 2),
+(14, 3, 3);
 
 --
 -- Indexes for dumped tables

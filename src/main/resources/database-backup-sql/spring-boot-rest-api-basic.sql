@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: Feb 28, 2024 at 08:16 AM
+-- Generation Time: Feb 28, 2024 at 08:44 AM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.15
 
@@ -66,11 +66,10 @@ CREATE TABLE `issues` (
 
 INSERT INTO `issues` (`_id`, `title`, `description`, `iat`, `is_active`, `user_id`) VALUES
 (1, 'backend', 'implement controller', '/Date(1708570980000)/', 1, 1),
-(2, 'udpated issue', 'updated bugs :(', '/Date(1708570980000)/', 1, 1),
+(2, 'deployment', 'configure deployment file', '/Date(1708570980000)/', 1, 1),
 (3, 'security', 'configure keys', '/Date(1708570980000)/', 1, 2),
 (4, 'devops', 'manage node', '/Date(1708570980000)/', 1, 2),
-(5, 'marketing', 'manage advertisements', '/Date(1708570980000)/', 1, 2),
-(6, 'new issue', 'new bugs :)', '/Date(1708570980000)/', 0, NULL);
+(5, 'marketing', 'manage advertisements', '/Date(1708570980000)/', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -92,7 +91,7 @@ CREATE TABLE `projects` (
 
 INSERT INTO `projects` (`_id`, `title`, `is_active`, `progress`) VALUES
 (1, 'Skill-Catalyst', 0, 30),
-(2, 'Colors_Of_The_World', 0, 100);
+(2, 'Colors-Of-The-World', 0, 100);
 
 -- --------------------------------------------------------
 
@@ -250,7 +249,7 @@ ALTER TABLE `domains`
 -- AUTO_INCREMENT for table `issues`
 --
 ALTER TABLE `issues`
-  MODIFY `_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `projects`
@@ -268,7 +267,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users_roles`

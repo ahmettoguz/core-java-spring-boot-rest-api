@@ -1,4 +1,4 @@
-package com.aoe.restapi.model.service.relation.userproject;
+package com.aoe.restapi.model.service.relational.userproject;
 
 import com.aoe.restapi.model.entity.Project;
 import com.aoe.restapi.model.entity.User;

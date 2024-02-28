@@ -1,4 +1,4 @@
-package com.aoe.restapi.model.service.relation.userdomain;
+package com.aoe.restapi.model.service.relational.userdomain;
 
 import com.aoe.restapi.model.entity.Domain;
 import com.aoe.restapi.model.entity.User;
@@ -25,20 +25,20 @@ public class UserDomainServiceImpl implements UserDomainService {
     }
 
     @Override
-    public OperationStatus manageUserInDomain(boolean link, int userId, int domainId) {
+    public OperationStatus manageUserDomain(boolean link, int userId, int domainId) {
         // read operation for user
         OperationStatus userOperation = userService.readById(userId);
 
         if (userOperation instanceof OperationStatusError)
             return userOperation;
 
-        // read operation for project
+        // read operation for domain
         OperationStatus domainOperation = domainService.readById(domainId);
 
         if (domainOperation instanceof OperationStatusError)
             return domainOperation;
 
-        // get user and project
+        // get user and domain
         User user = ((OperationStatusSuccess<User>) userOperation).getData();
         Domain domain = ((OperationStatusSuccess<Domain>) domainOperation).getData();
 

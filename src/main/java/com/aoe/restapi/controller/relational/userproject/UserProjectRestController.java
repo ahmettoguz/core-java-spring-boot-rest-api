@@ -1,4 +1,4 @@
-package com.aoe.restapi.controller.userproject;
+package com.aoe.restapi.controller.relational.userproject;
 
 import org.springframework.http.ResponseEntity;
 

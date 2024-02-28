@@ -1,12 +1,9 @@
-package com.aoe.restapi.controller.userproject;
+package com.aoe.restapi.controller.relational.userproject;
 
-import com.aoe.restapi.controller.base.BaseRestControllerImpl;
 import com.aoe.restapi.model.entity.User;
-import com.aoe.restapi.model.service.base.BaseService;
-import com.aoe.restapi.model.service.relation.userproject.UserProjectService;
+import com.aoe.restapi.model.service.relational.userproject.UserProjectService;
 import com.aoe.restapi.utility.Status.OperationStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +11,11 @@ import java.util.HashMap;
 
 @CrossOrigin(origins = "*")
 @RestController
-public class UserProjectRestControllerImpl<T extends User> extends BaseRestControllerImpl<T> implements UserProjectRestController {
-    BaseService<T> service;
+public class UserProjectRestControllerImpl<T extends User> implements UserProjectRestController {
     UserProjectService userProjectService;
 
     @Autowired
-    public UserProjectRestControllerImpl(@Qualifier("userServiceImpl") BaseService<T> service,
-                                         UserProjectService userProjectService) {
-        super(service);
+    public UserProjectRestControllerImpl(UserProjectService userProjectService) {
         this.userProjectService = userProjectService;
     }
 

@@ -119,7 +119,11 @@ Development Steps:
     Entities:
         * Do not use primitive types because we want to get null if not exist.
         * For confidential fields use: @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-        * For relational fields use that because we do not want to create loop and relational insert: @JsonIgnore
+        * For relational fields:
+            ManyToMany: use that because we do not want to create loop and relational insert: @JsonIgnore
+            OneToOne:
+                owning entity: want to see in owner: @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+                referenced entity: prevent loop: @JsonIgnore
         * For constructor have no-parameter constructor.
         * Create full getter setter.
         * For boolean getter setter and isActive similar naming use this for getter: @JsonProperty("isActive")

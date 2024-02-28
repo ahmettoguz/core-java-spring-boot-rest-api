@@ -42,7 +42,7 @@ public class User implements Activatable, Identifiable {
             inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private Set<Project> projectSet = new HashSet<Project>();
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "domain_id")
     private Domain domain;

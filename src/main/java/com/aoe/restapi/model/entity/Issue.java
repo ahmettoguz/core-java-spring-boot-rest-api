@@ -1,17 +1,20 @@
 package com.aoe.restapi.model.entity;
 
+import com.aoe.restapi.controller.base.Identifiable;
+import com.aoe.restapi.model.service.Activatable;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "issues")
-public class Issue {
+public class Issue  implements Activatable, Identifiable {
     // fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "_id")
-    private int id;
+    private Integer id;
 
     @Column(name = "title")
     private String title;
@@ -19,35 +22,34 @@ public class Issue {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "iat")
-    private String iat;
-
     @Column(name = "is_active")
     private Boolean isActive;
 
     // relational field
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    @JsonBackReference
     private User user;
 
     // constructor
     public Issue() {
     }
 
-    public Issue(String title, String description, String iat, Boolean isActive) {
+    public Issue(Integer id, String title, String description, Boolean isActive, User user) {
+        this.id = id;
         this.title = title;
         this.description = description;
-        this.iat = iat;
         this.isActive = isActive;
+        this.user = user;
     }
 
     // getter setter
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    @Override
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -67,24 +69,16 @@ public class Issue {
         this.description = description;
     }
 
-    public String getIat() {
-        return iat;
-    }
-
-    public void setIat(String iat) {
-        this.iat = iat;
-    }
-
     @JsonProperty("isActive")
     public Boolean getActive() {
         return isActive;
     }
 
+    @Override
     public void setActive(Boolean active) {
         isActive = active;
     }
 
-    // relational getter and setter
     public User getUser() {
         return user;
     }
@@ -92,6 +86,7 @@ public class Issue {
     public void setUser(User user) {
         this.user = user;
     }
+    // relational getter and setter
 
     public Integer getUserId() {
         if (user != null)
@@ -106,8 +101,8 @@ public class Issue {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", iat='" + iat + '\'' +
                 ", isActive=" + isActive +
+                ", user=" + user +
                 '}';
     }
 }

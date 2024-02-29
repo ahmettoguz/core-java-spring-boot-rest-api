@@ -40,7 +40,7 @@ public class User implements Activatable, Identifiable {
             name = "users_projects",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "project_id")})
-    private Set<Project> projectSet = new HashSet<Project>();
+    private Set<Project> projectSet;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @OneToOne(cascade = CascadeType.ALL)
@@ -49,13 +49,13 @@ public class User implements Activatable, Identifiable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
-    private List<Issue> issueList;
+    private Set<Issue> issueSet;
 
     // constructor
     public User() {
     }
 
-    public User(Integer id, String firstName, String email, String password, Boolean isActive, Set<Project> projectSet, Domain domain, List<Issue> issueList) {
+    public User(Integer id, String firstName, String email, String password, Boolean isActive, Set<Project> projectSet, Domain domain, Set<Issue> issueSet) {
         this.id = id;
         this.firstName = firstName;
         this.email = email;
@@ -63,7 +63,7 @@ public class User implements Activatable, Identifiable {
         this.isActive = isActive;
         this.projectSet = projectSet;
         this.domain = domain;
-        this.issueList = issueList;
+        this.issueSet = issueSet;
     }
 
     // getter setter
@@ -126,18 +126,24 @@ public class User implements Activatable, Identifiable {
         this.domain = domain;
     }
 
-    public List<Issue> getIssueList() {
-        return issueList;
+    public Set<Issue> getIssueSet() {
+        return issueSet;
     }
 
-    public void setIssueList(List<Issue> issueList) {
-        this.issueList = issueList;
+    public void setIssueSet(Set<Issue> issueSet) {
+        this.issueSet = issueSet;
     }
 
     // relational getter and setter
     public List<Integer> getProjectIds() {
         return projectSet.stream()
                 .map(Project::getId)
+                .collect(Collectors.toList());
+    }
+
+    public List<Integer> getIssueIds() {
+        return issueSet.stream()
+                .map(Issue::getId)
                 .collect(Collectors.toList());
     }
 
@@ -152,7 +158,7 @@ public class User implements Activatable, Identifiable {
                 ", isActive=" + isActive +
                 ", projectSet=" + projectSet +
                 ", domain=" + domain +
-                ", issueList=" + issueList +
+                ", issueSet=" + issueSet +
                 '}';
     }
 }

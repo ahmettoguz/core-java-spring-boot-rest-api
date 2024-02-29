@@ -1,26 +1,15 @@
 package com.aoe.restapi.model.service.domain;
 
-import com.aoe.restapi.model.dao.DomainRepository;
 import com.aoe.restapi.model.entity.Domain;
-import com.aoe.restapi.model.entity.User;
 import com.aoe.restapi.model.service.base.crud.BaseCrudServiceImpl;
-import com.aoe.restapi.model.service.user.UserService;
 import com.aoe.restapi.utility.Status.OperationStatus;
 import com.aoe.restapi.utility.Status.OperationStatusError;
 import com.aoe.restapi.utility.Status.OperationStatusSuccess;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DomainServiceImpl<T extends Domain> extends BaseCrudServiceImpl<T> implements DomainService<T> {

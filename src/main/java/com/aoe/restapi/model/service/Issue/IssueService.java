@@ -1,26 +1,6 @@
 package com.aoe.restapi.model.service.Issue;
 
-import com.aoe.restapi.utility.Status.OperationStatus;
+import com.aoe.restapi.model.service.base.crud.BaseCrudService;
 
-public interface IssueService<T> {
-    // helper methods
-    OperationStatus mergeInstance(T originalInstance, T newEntity);
-
-    // create
-    OperationStatus create(T objectToInsert);
-
-    // read
-    OperationStatus readById(Integer id);
-
-    OperationStatus readAll();
-
-    OperationStatus readInstancesPagedSorted(int pageNumber, int pageSize, boolean isDescending);
-
-    // update
-    OperationStatus update(T instance);
-
-    // delete
-    OperationStatus deleteById(int id);
-
-    OperationStatus changeActivationById(int id, boolean state);
+public interface IssueService<T> extends BaseCrudService<T> {
 }

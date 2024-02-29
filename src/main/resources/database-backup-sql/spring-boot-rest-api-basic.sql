@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: Feb 28, 2024 at 08:44 AM
+-- Generation Time: Feb 29, 2024 at 02:46 PM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.15
 
@@ -55,7 +55,6 @@ CREATE TABLE `issues` (
   `_id` int NOT NULL,
   `title` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci NOT NULL,
   `description` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci NOT NULL,
-  `iat` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci NOT NULL,
   `is_active` tinyint(1) NOT NULL,
   `user_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
@@ -64,12 +63,12 @@ CREATE TABLE `issues` (
 -- Dumping data for table `issues`
 --
 
-INSERT INTO `issues` (`_id`, `title`, `description`, `iat`, `is_active`, `user_id`) VALUES
-(1, 'backend', 'implement controller', '/Date(1708570980000)/', 1, 1),
-(2, 'deployment', 'configure deployment file', '/Date(1708570980000)/', 1, 1),
-(3, 'security', 'configure keys', '/Date(1708570980000)/', 1, 2),
-(4, 'devops', 'manage node', '/Date(1708570980000)/', 1, 2),
-(5, 'marketing', 'manage advertisements', '/Date(1708570980000)/', 1, 2);
+INSERT INTO `issues` (`_id`, `title`, `description`, `is_active`, `user_id`) VALUES
+(1, 'backend', 'implement controller', 1, 1),
+(2, 'deployment', 'configure deployment file', 1, 1),
+(3, 'security', 'configure keys', 1, 2),
+(4, 'devops', 'manage node', 1, 2),
+(5, 'marketing', 'manage advertisements', 1, 2);
 
 -- --------------------------------------------------------
 

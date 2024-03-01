@@ -85,15 +85,6 @@ public abstract class BaseCrudServiceImpl<T extends Activatable> implements Base
 
     // update
     @Override
-    public OperationStatus updateMergedInstance(T instanceToUpdate) {
-        try {
-            return new OperationStatusSuccess<T>(repository.save(instanceToUpdate));
-        } catch (Exception e) {
-            return new OperationStatusError(HttpStatus.BAD_REQUEST, e);
-        }
-    }
-
-    @Override
     public OperationStatus update(T instanceToUpdate) {
         try {
             return new OperationStatusSuccess<T>(repository.save(instanceToUpdate));

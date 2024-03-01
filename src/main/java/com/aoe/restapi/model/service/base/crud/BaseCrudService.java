@@ -20,8 +20,6 @@ public interface BaseCrudService<T> extends BaseService<T> {
     OperationStatus count();
 
     // update
-    OperationStatus updateMergedInstance(T instance);
-
     OperationStatus update(T instance);
 
     // delete

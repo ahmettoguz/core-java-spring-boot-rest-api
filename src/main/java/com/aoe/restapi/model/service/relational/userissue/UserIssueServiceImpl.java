@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -54,18 +55,19 @@ public class UserIssueServiceImpl implements UserIssueService {
             if (issueSet.contains(issue))
                 return new OperationStatusError(HttpStatus.BAD_REQUEST, "user has this issue already");
 
-            // add issue to user
-            issueSet.add(issue);
+            // set issue to user
+            issue.setUser(user);
         } else {
             // unlink
             // check user has not that issue
             if (!issueSet.contains(issue))
                 return new OperationStatusError(HttpStatus.BAD_REQUEST, "user has not that issue already");
 
-            issueSet.remove(issue);
+            // remove issue from user
+            issue.setUser(null);
         }
 
         // return
-        return userService.update(user);
+        return issueService.update(issue);
     }
 }

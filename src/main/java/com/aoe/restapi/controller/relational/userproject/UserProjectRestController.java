@@ -9,7 +9,4 @@ public interface UserProjectRestController {
 
     public ResponseEntity<HashMap<String, Object>> removeUserFromProject(int userId, int projectId);
 
-    public ResponseEntity<HashMap<String, Object>> addProjectToUser(int projectId, int userId);
-
-    public ResponseEntity<HashMap<String, Object>> removeProjectFromUser(int projectId, int userId);
 }

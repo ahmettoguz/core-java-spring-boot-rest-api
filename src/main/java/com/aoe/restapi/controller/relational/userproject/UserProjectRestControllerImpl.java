@@ -37,23 +37,4 @@ public class UserProjectRestControllerImpl<T extends User> implements UserProjec
         return operationStatus.getResponseEntity();
     }
 
-
-    @Override
-    @PostMapping("projects/{projectId}/users/{userId}")
-    public ResponseEntity<HashMap<String, Object>> addProjectToUser(@PathVariable("projectId") int projectId,
-                                                                    @PathVariable("userId") int userId) {
-        // perform operation and return
-        OperationStatus operationStatus = ((UserProjectService) userProjectService).manageUserInProject(true, userId, projectId);
-        return operationStatus.getResponseEntity();
-    }
-
-    @Override
-    @DeleteMapping("projects/{projectId}/users/{userId}")
-    public ResponseEntity<HashMap<String, Object>> removeProjectFromUser(@PathVariable("projectId") int projectId,
-                                                                         @PathVariable("userId") int userId) {
-        // perform operation and return
-        OperationStatus operationStatus = ((UserProjectService) userProjectService).manageUserInProject(false, userId, projectId);
-        return operationStatus.getResponseEntity();
-    }
-
 }

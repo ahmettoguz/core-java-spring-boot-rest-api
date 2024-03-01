@@ -32,7 +32,7 @@ public class Project implements Activatable, Identifiable {
     // relational field
     @JsonIgnore
     @ManyToMany(mappedBy = "projectSet", cascade = {CascadeType.ALL})
-    private Set<User> userSet = new HashSet<>();
+    private Set<User> userSet;
 
     // constructor
     public Project() {
@@ -90,7 +90,7 @@ public class Project implements Activatable, Identifiable {
         this.userSet = userSet;
     }
 
-    // relational getter and setter
+    // relational getter
     public List<Integer> getUserIds() {
         return userSet.stream()
                 .map(User::getId)

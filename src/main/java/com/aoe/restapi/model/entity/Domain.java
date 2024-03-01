@@ -74,7 +74,7 @@ public class Domain implements Activatable, Identifiable {
         this.user = user;
     }
 
-    // relational getter and setter
+    // relational getter
     public Integer getUserId() {
         if (user == null)
             return null;

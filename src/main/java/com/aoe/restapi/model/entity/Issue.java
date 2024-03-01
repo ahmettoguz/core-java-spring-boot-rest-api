@@ -87,7 +87,7 @@ public class Issue  implements Activatable, Identifiable {
         this.user = user;
     }
 
-    // relational getter and setter
+    // relational getter
     public Integer getUserId() {
         if (user != null)
             return user.getId();

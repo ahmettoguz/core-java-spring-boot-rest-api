@@ -133,7 +133,7 @@ public class User implements Activatable, Identifiable {
         this.issueSet = issueSet;
     }
 
-    // relational getter and setter
+    // relational getter
     public List<Integer> getProjectIds() {
         return projectSet.stream()
                 .map(Project::getId)

@@ -105,7 +105,7 @@ public class Project implements Activatable, Identifiable {
                 ", title='" + title + '\'' +
                 ", progress=" + progress +
                 ", isActive=" + isActive +
-                ", userSet=" + userSet +
+//                ", userSet=" + userSet +
                 '}';
     }
 }

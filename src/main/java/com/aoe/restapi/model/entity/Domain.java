@@ -88,7 +88,7 @@ public class Domain implements Activatable, Identifiable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", isActive=" + isActive +
-                ", user=" + user +
+//                ", user=" + user +
                 '}';
     }
 }

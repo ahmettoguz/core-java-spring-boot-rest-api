@@ -102,7 +102,7 @@ public class Issue  implements Activatable, Identifiable {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", isActive=" + isActive +
-                ", user=" + user +
+//                ", user=" + user +
                 '}';
     }
 }

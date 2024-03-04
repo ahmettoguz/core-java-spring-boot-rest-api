@@ -2,6 +2,7 @@ package com.aoe.restapi.controller.relational.userissue;
 
 import com.aoe.restapi.model.entity.Issue;
 import com.aoe.restapi.model.service.relational.userissue.UserIssueService;
+import com.aoe.restapi.utility.ResponseUtil;
 import com.aoe.restapi.utility.Status.OperationStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class UserIssueRestControllerImpl<T extends Issue> implements UserIssueRe
                                                                   @PathVariable("issueId") int issueId) {
         // perform operation and return
         OperationStatus operationStatus = userIssueService.manageUserIssue(true, userId, issueId);
-        return operationStatus.getResponseEntity();
+        return ResponseUtil.getResponseWithoutData(operationStatus);
     }
 
     @Override
@@ -34,7 +35,7 @@ public class UserIssueRestControllerImpl<T extends Issue> implements UserIssueRe
                                                                        @PathVariable("issueId") int issueId) {
         // perform operation and return
         OperationStatus operationStatus = userIssueService.manageUserIssue(false, userId, issueId);
-        return operationStatus.getResponseEntity();
+        return ResponseUtil.getResponseWithoutData(operationStatus);
     }
 
 }

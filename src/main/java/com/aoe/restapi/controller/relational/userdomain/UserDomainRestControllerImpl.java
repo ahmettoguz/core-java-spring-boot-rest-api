@@ -2,6 +2,7 @@ package com.aoe.restapi.controller.relational.userdomain;
 
 import com.aoe.restapi.model.entity.User;
 import com.aoe.restapi.model.service.relational.userdomain.UserDomainService;
+import com.aoe.restapi.utility.ResponseUtil;
 import com.aoe.restapi.utility.Status.OperationStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class UserDomainRestControllerImpl<T extends User> implements UserDomainR
                                                                    @PathVariable("domainId") int domainId) {
         // perform operation and return
         OperationStatus operationStatus = userDomainService.manageUserDomain(true, userId, domainId);
-        return operationStatus.getResponseEntity();
+        return ResponseUtil.getResponseWithoutData(operationStatus);
     }
 
     @Override
@@ -34,6 +35,6 @@ public class UserDomainRestControllerImpl<T extends User> implements UserDomainR
                                                                         @PathVariable("domainId") int domainId) {
         // perform operation and return
         OperationStatus operationStatus = userDomainService.manageUserDomain(false, userId, domainId);
-        return operationStatus.getResponseEntity();
+        return ResponseUtil.getResponseWithoutData(operationStatus);
     }
 }

@@ -2,6 +2,7 @@ package com.aoe.restapi.controller.relational.userproject;
 
 import com.aoe.restapi.model.entity.User;
 import com.aoe.restapi.model.service.relational.userproject.UserProjectService;
+import com.aoe.restapi.utility.ResponseUtil;
 import com.aoe.restapi.utility.Status.OperationStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class UserProjectRestControllerImpl<T extends User> implements UserProjec
                                                                     @PathVariable("projectId") int projectId) {
         // perform operation and return
         OperationStatus operationStatus = ((UserProjectService) userProjectService).manageUserInProject(true, userId, projectId);
-        return operationStatus.getResponseEntity();
+        return ResponseUtil.getResponseWithoutData(operationStatus);
     }
 
     @Override
@@ -34,7 +35,6 @@ public class UserProjectRestControllerImpl<T extends User> implements UserProjec
                                                                          @PathVariable("projectId") int projectId) {
         // perform operation and return
         OperationStatus operationStatus = ((UserProjectService) userProjectService).manageUserInProject(false, userId, projectId);
-        return operationStatus.getResponseEntity();
+        return ResponseUtil.getResponseWithoutData(operationStatus);
     }
-
 }

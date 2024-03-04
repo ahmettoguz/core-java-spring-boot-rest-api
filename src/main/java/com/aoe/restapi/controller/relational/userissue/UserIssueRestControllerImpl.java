@@ -2,8 +2,8 @@ package com.aoe.restapi.controller.relational.userissue;
 
 import com.aoe.restapi.model.entity.Issue;
 import com.aoe.restapi.model.service.relational.userissue.UserIssueService;
+import com.aoe.restapi.utility.ResponseUtil;
 import com.aoe.restapi.utility.Status.OperationStatus;
-import com.aoe.restapi.utility.Status.OperationStatusSuccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,15 +26,7 @@ public class UserIssueRestControllerImpl<T extends Issue> implements UserIssueRe
                                                                   @PathVariable("issueId") int issueId) {
         // perform operation and return
         OperationStatus operationStatus = userIssueService.manageUserIssue(true, userId, issueId);
-        ResponseEntity<HashMap<String, Object>> responseEntity = operationStatus.getResponseEntity();
-
-        // change data field if operation is success
-        if (operationStatus instanceof OperationStatusSuccess<?>)
-            if (responseEntity.hasBody()) {
-                responseEntity.getBody().put("data", "relational operation success");
-            }
-
-        return responseEntity;
+        return ResponseUtil.getResponseWithoutData(operationStatus);
     }
 
     @Override
@@ -43,15 +35,7 @@ public class UserIssueRestControllerImpl<T extends Issue> implements UserIssueRe
                                                                        @PathVariable("issueId") int issueId) {
         // perform operation and return
         OperationStatus operationStatus = userIssueService.manageUserIssue(false, userId, issueId);
-        ResponseEntity<HashMap<String, Object>> responseEntity = operationStatus.getResponseEntity();
-
-        // change data field if operation is success
-        if (operationStatus instanceof OperationStatusSuccess<?>)
-            if (responseEntity.hasBody()) {
-                responseEntity.getBody().put("data", "relational operation success");
-            }
-
-        return responseEntity;
+        return ResponseUtil.getResponseWithoutData(operationStatus);
     }
 
 }

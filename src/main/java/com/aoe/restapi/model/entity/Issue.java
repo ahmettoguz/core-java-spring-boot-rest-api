@@ -1,29 +1,18 @@
 package com.aoe.restapi.model.entity;
 
-import com.aoe.restapi.controller.base.Identifiable;
-import com.aoe.restapi.model.service.Activatable;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.aoe.restapi.model.entity.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "issues")
-public class Issue  implements Activatable, Identifiable {
+public class Issue extends BaseEntity {
     // fields
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "_id")
-    private Integer id;
-
     @Column(name = "title")
     private String title;
 
     @Column(name = "description")
     private String description;
-
-    @Column(name = "is_active")
-    private Boolean isActive;
 
     // relational field
     @JsonIgnore
@@ -35,24 +24,13 @@ public class Issue  implements Activatable, Identifiable {
     public Issue() {
     }
 
-    public Issue(Integer id, String title, String description, Boolean isActive, User user) {
-        this.id = id;
+    public Issue(String title, String description, User user) {
         this.title = title;
         this.description = description;
-        this.isActive = isActive;
         this.user = user;
     }
 
     // getter setter
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -67,16 +45,6 @@ public class Issue  implements Activatable, Identifiable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @JsonProperty("isActive")
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    @Override
-    public void setActive(Boolean active) {
-        isActive = active;
     }
 
     public User getUser() {
@@ -95,13 +63,12 @@ public class Issue  implements Activatable, Identifiable {
     }
 
     // to string
+
     @Override
     public String toString() {
-        return "Issue{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
+        return super.toString() + "Issue{" +
+                "title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", isActive=" + isActive +
 //                ", user=" + user +
                 '}';
     }

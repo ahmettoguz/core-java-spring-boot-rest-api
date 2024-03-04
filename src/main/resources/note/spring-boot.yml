@@ -743,6 +743,22 @@ Relational Mapping MySql:
                 Set<Project> projectSet = new HashSet<Project>();
     ------------------------------------------------------------------
 
+Database timestamps:
+    In code I have these:
+        @CreationTimestamp
+        @Column(name = "created_at", updatable = false)
+        private LocalDateTime createdAt;
+        
+        @UpdateTimestamp
+        @Column(name = "updated_at")
+        private LocalDateTime updatedAt;
+
+    And In database I have add 
+    created_at and updated_at fields as timestamp and nullable
+    ALTER TABLE `domains` ADD `created_at` TIMESTAMP NULL AFTER `_id`, ADD `updated_at` TIMESTAMP NULL AFTER `created_at`;
+    ------------------------------------------------------------------
+
+
 Rebuild Project:
     After you copy old project you need to rebuild it.
     From tabs build -> rebuild

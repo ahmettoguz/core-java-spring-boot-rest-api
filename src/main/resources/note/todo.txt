@@ -1,5 +1,1 @@
-
-
-check project and rearrange code in explanation
-
 rearrange counts and get requests with consideration isActive

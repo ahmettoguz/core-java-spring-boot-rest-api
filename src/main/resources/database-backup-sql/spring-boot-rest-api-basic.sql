@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: Feb 29, 2024 at 02:46 PM
+-- Generation Time: Mar 04, 2024 at 05:33 AM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.15
 
@@ -32,6 +32,8 @@ USE `spring-boot-rest-api-basic`;
 DROP TABLE IF EXISTS `domains`;
 CREATE TABLE `domains` (
   `_id` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci NOT NULL,
   `is_active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_turkish_ci;
@@ -40,9 +42,9 @@ CREATE TABLE `domains` (
 -- Dumping data for table `domains`
 --
 
-INSERT INTO `domains` (`_id`, `name`, `is_active`) VALUES
-(1, 'ahmet.com.tr', 1),
-(2, 'tuna.com.tr', 1);
+INSERT INTO `domains` (`_id`, `created_at`, `updated_at`, `name`, `is_active`) VALUES
+(1, NULL, NULL, 'ahmet.com.tr', 1),
+(2, NULL, NULL, 'tuna.com.tr', 1);
 
 -- --------------------------------------------------------
 
@@ -53,6 +55,8 @@ INSERT INTO `domains` (`_id`, `name`, `is_active`) VALUES
 DROP TABLE IF EXISTS `issues`;
 CREATE TABLE `issues` (
   `_id` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `title` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci NOT NULL,
   `description` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci NOT NULL,
   `is_active` tinyint(1) NOT NULL,
@@ -63,12 +67,12 @@ CREATE TABLE `issues` (
 -- Dumping data for table `issues`
 --
 
-INSERT INTO `issues` (`_id`, `title`, `description`, `is_active`, `user_id`) VALUES
-(1, 'backend', 'implement controller', 1, 1),
-(2, 'deployment', 'configure deployment file', 1, 1),
-(3, 'security', 'configure keys', 1, 2),
-(4, 'devops', 'manage node', 1, 2),
-(5, 'marketing', 'manage advertisements', 1, 2);
+INSERT INTO `issues` (`_id`, `created_at`, `updated_at`, `title`, `description`, `is_active`, `user_id`) VALUES
+(1, NULL, NULL, 'backend', 'implement controller', 1, 1),
+(2, NULL, NULL, 'deployment', 'configure deployment file', 1, 1),
+(3, NULL, NULL, 'security', 'configure keys', 1, 2),
+(4, NULL, NULL, 'devops', 'manage node', 1, 2),
+(5, NULL, NULL, 'marketing', 'manage advertisements', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -79,6 +83,8 @@ INSERT INTO `issues` (`_id`, `title`, `description`, `is_active`, `user_id`) VAL
 DROP TABLE IF EXISTS `projects`;
 CREATE TABLE `projects` (
   `_id` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `title` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci NOT NULL,
   `is_active` tinyint(1) NOT NULL,
   `progress` int NOT NULL
@@ -88,9 +94,9 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`_id`, `title`, `is_active`, `progress`) VALUES
-(1, 'Skill-Catalyst', 0, 30),
-(2, 'Colors-Of-The-World', 0, 100);
+INSERT INTO `projects` (`_id`, `created_at`, `updated_at`, `title`, `is_active`, `progress`) VALUES
+(1, NULL, NULL, 'Skill-Catalyst', 0, 30),
+(2, NULL, NULL, 'Colors-Of-The-World', 0, 100);
 
 -- --------------------------------------------------------
 
@@ -122,6 +128,8 @@ INSERT INTO `roles` (`_id`, `role`) VALUES
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `_id` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `first_name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci DEFAULT NULL,
   `email` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci NOT NULL,
   `password` varchar(68) CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci NOT NULL,
@@ -133,10 +141,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`_id`, `first_name`, `email`, `password`, `is_active`, `domain_id`) VALUES
-(1, 'ahmet', 'ahmet@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 1),
-(2, 'tuna', 'tuna@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 2),
-(3, 'kisimo', 'kisimo@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, NULL);
+INSERT INTO `users` (`_id`, `created_at`, `updated_at`, `first_name`, `email`, `password`, `is_active`, `domain_id`) VALUES
+(1, NULL, NULL, 'ahmet', 'ahmet@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 1),
+(2, NULL, NULL, 'tuna', 'tuna@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 2),
+(3, NULL, NULL, 'kisimo', 'kisimo@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, NULL);
 
 -- --------------------------------------------------------
 

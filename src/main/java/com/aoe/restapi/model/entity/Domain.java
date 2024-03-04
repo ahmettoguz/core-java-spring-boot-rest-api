@@ -5,12 +5,25 @@ import com.aoe.restapi.model.service.Activatable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Entity
 @Table(name = "domains")
 public class Domain implements Activatable, Identifiable {
     // fields
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "_id")
@@ -74,6 +87,22 @@ public class Domain implements Activatable, Identifiable {
         this.user = user;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     // relational getter
     public Integer getUserId() {
         if (user == null)
@@ -82,10 +111,13 @@ public class Domain implements Activatable, Identifiable {
     }
 
     // toString
+
     @Override
     public String toString() {
         return "Domain{" +
-                "id=" + id +
+                "createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", id=" + id +
                 ", name='" + name + '\'' +
                 ", isActive=" + isActive +
 //                ", user=" + user +

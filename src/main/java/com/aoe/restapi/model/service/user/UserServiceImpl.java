@@ -46,4 +46,21 @@ public class UserServiceImpl<T extends User> extends BaseCrudServiceImpl<T> impl
             return new OperationStatusError(HttpStatus.BAD_REQUEST, e);
         }
     }
+
+    // custom create method for encrypt password
+    @Override
+    public OperationStatus create(T objectToInsert) {
+
+        String password = objectToInsert.getPassword();
+
+        // encrypt password
+
+        objectToInsert.setPassword("encrypted password");
+
+        try {
+            return new OperationStatusSuccess<T>(repository.save(objectToInsert));
+        } catch (Exception e) {
+            return new OperationStatusError(HttpStatus.BAD_REQUEST, e);
+        }
+    }
 }

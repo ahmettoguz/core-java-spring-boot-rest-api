@@ -5,6 +5,7 @@ import com.aoe.restapi.model.service.base.crud.BaseCrudServiceImpl;
 import com.aoe.restapi.utility.Status.OperationStatus;
 import com.aoe.restapi.utility.Status.OperationStatusError;
 import com.aoe.restapi.utility.Status.OperationStatusSuccess;
+import com.aoe.restapi.utility.auth.AuthUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
@@ -50,12 +51,8 @@ public class UserServiceImpl<T extends User> extends BaseCrudServiceImpl<T> impl
     // custom create method for encrypt password
     @Override
     public OperationStatus create(T objectToInsert) {
-
-        String password = objectToInsert.getPassword();
-
         // encrypt password
-
-        objectToInsert.setPassword("encrypted password");
+        objectToInsert.setPassword(AuthUtil.getEncryptedText(objectToInsert.getPassword()));
 
         try {
             return new OperationStatusSuccess<T>(repository.save(objectToInsert));

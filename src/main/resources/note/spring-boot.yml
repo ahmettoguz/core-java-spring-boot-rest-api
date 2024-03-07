@@ -769,4 +769,7 @@ Intellij:
         shift + f6
     add word wrap:
         go settings. type soft-wrap and add keyboard shortcut alt + z
+
+    open terminal:
+            alt + f12
     ------------------------------------------------------------------

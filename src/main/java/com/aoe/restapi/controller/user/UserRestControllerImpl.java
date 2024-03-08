@@ -60,4 +60,21 @@ public class UserRestControllerImpl<T extends User> extends BaseRestControllerIm
 
         return operationStatus.getResponseEntity();
     }
+
+    @Override
+    @GetMapping("/search")
+    public ResponseEntity<HashMap<String, Object>> searchUsersByFirstName(@RequestBody HashMap<String, String> requestBody) {
+        // check request body
+        if (!requestBody.containsKey("firstName"))
+            return new OperationStatusError(HttpStatus.BAD_REQUEST).getResponseEntity();
+
+        // get input
+        String firstName = requestBody.get("firstName");
+
+        // get users
+        OperationStatus operationStatus = ((UserService<User>) service).searchUsersByFirstName(firstName);
+
+        // return
+        return operationStatus.getResponseEntity();
+    }
 }

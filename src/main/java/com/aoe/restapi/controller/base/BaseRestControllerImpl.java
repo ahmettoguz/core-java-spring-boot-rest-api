@@ -50,18 +50,16 @@ public abstract class BaseRestControllerImpl<T extends Identifiable> implements 
     @GetMapping("/paged")
     public ResponseEntity<HashMap<String, Object>> readAllInstancesPagedSorted(
             @RequestBody(required = false) HashMap<String, String> requestBody) {
-        // re-initialize request body to be able to perform getOrDefault
-        if (requestBody == null) {
-            requestBody = new HashMap<>();
-        }
+        // Initialize a new HashMap if the requestBody is null
+        requestBody = requestBody == null ? new HashMap<>() : requestBody;
 
-        // get input from body
-        int page = Integer.parseInt(requestBody.getOrDefault("page", "0"));
-        int size = Integer.parseInt(requestBody.getOrDefault("size", "5"));
+        // get page inputs from body
+        int pageNumber = Integer.parseInt(requestBody.getOrDefault("pageNumber", "0"));
+        int pageSize = Integer.parseInt(requestBody.getOrDefault("pageSize", "5"));
         boolean isDescending = Boolean.parseBoolean(requestBody.getOrDefault("isDescending", "false"));
 
         // perform operation and return
-        OperationStatus operationStatus = ((BaseCrudService<T>) service).readInstancesPagedSorted(page, size, isDescending);
+        OperationStatus operationStatus = ((BaseCrudService<T>) service).readInstancesPagedSorted(pageNumber, pageSize, isDescending);
         return operationStatus.getResponseEntity();
     }
 

@@ -8,4 +8,7 @@ public interface UserService<T> extends BaseCrudService<T> {
     public OperationStatus create(T objectToInsert);
 
     public OperationStatus updatePassword(T objectToUpdate, String newPassword);
+
+
+    public OperationStatus searchUsersByFirstName(String searchText);
 }

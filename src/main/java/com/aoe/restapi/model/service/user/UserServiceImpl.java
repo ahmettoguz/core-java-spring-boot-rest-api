@@ -1,5 +1,6 @@
 package com.aoe.restapi.model.service.user;
 
+import com.aoe.restapi.model.dao.UserRepository;
 import com.aoe.restapi.model.entity.User;
 import com.aoe.restapi.model.service.base.crud.BaseCrudServiceImpl;
 import com.aoe.restapi.utility.Status.OperationStatus;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl<T extends User> extends BaseCrudServiceImpl<T> implements UserService<T> {
@@ -69,6 +72,16 @@ public class UserServiceImpl<T extends User> extends BaseCrudServiceImpl<T> impl
 
         try {
             return new OperationStatusSuccess<T>(repository.save(objectToUpdate));
+        } catch (Exception e) {
+            return new OperationStatusError(HttpStatus.BAD_REQUEST, e);
+        }
+    }
+
+    // search users by their first names
+    @Override
+    public OperationStatus searchUsersByFirstName(String searchText) {
+        try {
+            return new OperationStatusSuccess<List<User>>(((UserRepository) repository).findByFirstName(searchText));
         } catch (Exception e) {
             return new OperationStatusError(HttpStatus.BAD_REQUEST, e);
         }

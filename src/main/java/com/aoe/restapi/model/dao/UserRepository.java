@@ -1,6 +1,8 @@
 package com.aoe.restapi.model.dao;
 
 import com.aoe.restapi.model.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -9,5 +11,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Integer> {
     User findByEmail(String email);
 
-    List<User> findByFirstName(String firstName);
+    Page<User> findByFirstName(String exactFirstName, Pageable pageable);
+
+    Page<User> findByFirstNameContaining(String partialFirstName, Pageable pageable);
 }

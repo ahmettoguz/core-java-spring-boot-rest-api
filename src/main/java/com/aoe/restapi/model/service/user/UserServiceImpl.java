@@ -8,6 +8,10 @@ import com.aoe.restapi.utility.Status.OperationStatusError;
 import com.aoe.restapi.utility.Status.OperationStatusSuccess;
 import com.aoe.restapi.utility.auth.AuthUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -77,13 +81,34 @@ public class UserServiceImpl<T extends User> extends BaseCrudServiceImpl<T> impl
         }
     }
 
-    // search users by their first names
+    // search users by their first names (exact match)
     @Override
-    public OperationStatus searchUsersByFirstName(String searchText) {
+    public OperationStatus searchUsersByExactFirstName(String exactFirstName, int pageNumber, int pageSize, boolean isDescending) {
         try {
-            return new OperationStatusSuccess<List<User>>(((UserRepository) repository).findByFirstName(searchText));
+            Sort sort = Sort.by(isDescending ? Sort.Direction.DESC : Sort.Direction.ASC, "id");
+            Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+            List<T> instances = ((Page<T>) ((UserRepository) repository).findByFirstNameContaining(exactFirstName, pageable)).getContent();
+
+            return new OperationStatusSuccess<List<T>>(instances);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return new OperationStatusError(HttpStatus.BAD_REQUEST, e);
+        }
+    }
+
+    // search users by their first names (partial)
+    @Override
+    public OperationStatus searchUsersByPartialFirstName(String partialFirstName, int pageNumber, int pageSize, boolean isDescending) {
+        try {
+            Sort sort = Sort.by(isDescending ? Sort.Direction.DESC : Sort.Direction.ASC, "id");
+            Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+            List<T> instances = ((Page<T>) ((UserRepository) repository).findByFirstNameContaining(partialFirstName, pageable)).getContent();
+
+            return new OperationStatusSuccess<List<T>>(instances);
         } catch (Exception e) {
             return new OperationStatusError(HttpStatus.BAD_REQUEST, e);
         }
     }
+
+
 }

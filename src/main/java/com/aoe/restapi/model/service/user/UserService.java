@@ -9,6 +9,7 @@ public interface UserService<T> extends BaseCrudService<T> {
 
     public OperationStatus updatePassword(T objectToUpdate, String newPassword);
 
+    public OperationStatus searchUsersByExactFirstName(String exactFirstName, int pageNumber, int pageSize, boolean isDescending);
 
-    public OperationStatus searchUsersByFirstName(String searchText);
+    public OperationStatus searchUsersByPartialFirstName(String partialFirstName, int pageNumber, int pageSize, boolean isDescending);
 }

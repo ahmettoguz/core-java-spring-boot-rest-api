@@ -62,17 +62,44 @@ public class UserRestControllerImpl<T extends User> extends BaseRestControllerIm
     }
 
     @Override
-    @GetMapping("/search")
-    public ResponseEntity<HashMap<String, Object>> searchUsersByFirstName(@RequestBody HashMap<String, String> requestBody) {
+    @GetMapping("/search/exact")
+    public ResponseEntity<HashMap<String, Object>> searchUsersByExactFirstName(@RequestBody HashMap<String, String> requestBody) {
         // check request body
         if (!requestBody.containsKey("firstName"))
             return new OperationStatusError(HttpStatus.BAD_REQUEST).getResponseEntity();
 
         // get input
-        String firstName = requestBody.get("firstName");
+        String exactFirstName = requestBody.get("firstName");
+
+        // get page inputs from body
+        int pageNumber = Integer.parseInt(requestBody.getOrDefault("pageNumber", "0"));
+        int pageSize = Integer.parseInt(requestBody.getOrDefault("pageSize", "5"));
+        boolean isDescending = Boolean.parseBoolean(requestBody.getOrDefault("isDescending", "false"));
 
         // get users
-        OperationStatus operationStatus = ((UserService<User>) service).searchUsersByFirstName(firstName);
+        OperationStatus operationStatus = ((UserService<User>) service).searchUsersByExactFirstName(exactFirstName, pageNumber, pageSize, isDescending);
+
+        // return
+        return operationStatus.getResponseEntity();
+    }
+
+    @Override
+    @GetMapping("/search/partial")
+    public ResponseEntity<HashMap<String, Object>> searchUsersByPartialFirstName(@RequestBody HashMap<String, String> requestBody) {
+        // check request body
+        if (!requestBody.containsKey("firstName"))
+            return new OperationStatusError(HttpStatus.BAD_REQUEST).getResponseEntity();
+
+        // get input
+        String partialFirstName = requestBody.get("firstName");
+
+        // get page inputs from body
+        int pageNumber = Integer.parseInt(requestBody.getOrDefault("pageNumber", "0"));
+        int pageSize = Integer.parseInt(requestBody.getOrDefault("pageSize", "5"));
+        boolean isDescending = Boolean.parseBoolean(requestBody.getOrDefault("isDescending", "false"));
+
+        // get users
+        OperationStatus operationStatus = ((UserService<User>) service).searchUsersByPartialFirstName(partialFirstName, pageNumber, pageSize, isDescending);
 
         // return
         return operationStatus.getResponseEntity();

@@ -30,7 +30,6 @@ public class AuthRestControllerImpl implements AuthRestController {
         // perform operation and return
         OperationStatus operationStatus = authService.findUserByEmail(email);
 
-        System.out.println(operationStatus);
         return operationStatus.getResponseEntity();
     }
 }

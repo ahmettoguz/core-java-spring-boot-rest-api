@@ -773,3 +773,37 @@ Intellij:
     open terminal:
             alt + f12
     ------------------------------------------------------------------
+
+Aop:
+    Without changing the logic of the implemented systems or services you can place this configurable code with reuse.
+    In general its used for security, logging, analytics, alerts
+
+    Aspect:
+        Module of code for a cross-cutting concern.
+
+    Advice:
+        What action is taken and when it should be applied.
+
+        Types:
+            before advice:
+                Run before the method.
+            after finally advice:
+                run after the method (finally).
+            after returning advice:
+                run after method (success execution).
+            after throwing advice:
+                run after method (exception thrown).
+            around advice:
+                run before and after method.
+
+    Join Point:
+        When to apply code during program execution.
+
+    Pointcut:
+        A predicate expression for where advice should be applied.
+
+    Weaving:
+        Connecting aspects to target objects to create an advised objects.
+
+    
+    ------------------------------------------------------------------

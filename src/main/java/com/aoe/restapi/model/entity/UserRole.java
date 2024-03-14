@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "users")
+@Table(name = "roles")
 public class UserRole {
     // fields
     @Id

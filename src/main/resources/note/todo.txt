@@ -1,1 +1,7 @@
-rearrange counts and get requests with consideration isActive
+
+add lombook
+
+add jwt authentication
+
+configure postgresql
+

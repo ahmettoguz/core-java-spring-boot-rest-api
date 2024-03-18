@@ -35,20 +35,19 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String getUsernameFromToken(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(Keys.hmacShaKeyFor(secret.getBytes()))
+    public String getIdFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(generateKey())
                 .build()
                 .parseClaimsJws(token)
-                .getBody();
-
-        return claims.getSubject();
+                .getBody()
+                .getSubject();
     }
 
     public boolean validateToken(String token) {
         try {
             Jwts.parser()
-                    .setSigningKey(Keys.hmacShaKeyFor(secret.getBytes()))
+                    .setSigningKey(generateKey())
                     .build()
                     .parseClaimsJws(token);
             return true;

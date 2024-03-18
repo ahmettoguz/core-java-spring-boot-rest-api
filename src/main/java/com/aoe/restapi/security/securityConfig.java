@@ -14,14 +14,6 @@ public class securityConfig {
                 .authorizeRequests()
                 .anyRequest().permitAll();
 
-//        http.csrf(csrf -> csrf.disable())
-//                .authorizeRequests()
-//                .dispatcherTypeMatchers(HttpMethod.GET).permitAll()
-//                .anyRequest().authenticated()
-//                .and().httpBasic(httpBasic -> {
-//                });
-
-
         return http.build();
     }
 }

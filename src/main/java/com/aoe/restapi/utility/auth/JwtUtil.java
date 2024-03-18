@@ -18,8 +18,12 @@ public class JwtUtil {
     @Value("${jwt.expirationHours}")
     private int expirationHours;
 
+    private Key generateKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes());
+    }
+
     public String generateToken(Integer id) {
-        Key key = Keys.hmacShaKeyFor(secret.getBytes());
+        Key key = generateKey();
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expirationHours * 3600000);
 

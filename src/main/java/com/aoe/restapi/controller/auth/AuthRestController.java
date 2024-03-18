@@ -8,4 +8,6 @@ import java.util.HashMap;
 
 public interface AuthRestController {
     public ResponseEntity<HashMap<String, Object>> login(LoginRequestDto loginRequestDto);
+
+    public ResponseEntity<HashMap<String, Object>> validateToken(String token);
 }

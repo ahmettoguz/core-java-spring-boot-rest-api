@@ -52,16 +52,15 @@ public class AuthRestControllerImpl implements AuthRestController {
         }
     }
 
-//    // This endpoint is for validating the token. It can be used to check if a token is valid.
-//    @GetMapping("/validate")
-//    public ResponseEntity<?> validateToken(@RequestHeader("Authorization") String token) {
-//        String jwt = token.substring(7); // Remove "Bearer " from the token
-//        boolean isValid = jwtUtil.validateToken(jwt);
-//
-//        if (isValid) {
-//            return ResponseEntity.ok("Token is valid");
-//        } else {
-//            return ResponseEntity.status(401).body("Invalid token");
-//        }
-//    }
+    @PostMapping("/validate")
+    public ResponseEntity<HashMap<String, Object>> validateToken(@RequestHeader("Authorization") String token) {
+        String jwt = token.substring(7); // Remove "Bearer " from the token
+        boolean isValid = jwtUtil.validateToken(jwt);
+
+        if (isValid) {
+            return new OperationStatusSuccess<String>("Token is valid").getResponseEntity();
+        } else {
+            return new OperationStatusError(HttpStatus.UNAUTHORIZED).getResponseEntity();
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.aoe.restapi.utility.Status;
 
 import com.aoe.restapi.utility.LogUtility.LogUtility;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -11,6 +12,8 @@ public class OperationStatusSuccess<T> extends OperationStatus {
     private T data;
 
     private String message;
+
+    private HttpHeaders headers;
 
     // constructor
     public OperationStatusSuccess() {
@@ -24,6 +27,18 @@ public class OperationStatusSuccess<T> extends OperationStatus {
         message = LogUtility.getMessage();
     }
 
+    public OperationStatusSuccess(T data, HashMap<String, String> headerMap) {
+        super(HttpStatus.OK, true);
+        this.data = data;
+        message = LogUtility.getMessage();
+
+        // add headers
+        headers = new HttpHeaders();
+        for (Map.Entry<String, String> entry : headerMap.entrySet()) {
+            headers.add(entry.getKey(), entry.getValue());
+        }
+    }
+
     // methods
     @Override
     public ResponseEntity<HashMap<String, Object>> getResponseEntity() {
@@ -32,7 +47,13 @@ public class OperationStatusSuccess<T> extends OperationStatus {
         responseData.put("state", this.getState());
         responseData.put("data", data);
 
-        return new ResponseEntity<HashMap<String, Object>>(responseData, this.getStatus());
+        // put headers if exist
+        HttpHeaders responseHeaders = null;
+        if (headers != null && !headers.isEmpty()) {
+            responseHeaders = headers;
+        }
+
+        return new ResponseEntity<HashMap<String, Object>>(responseData, responseHeaders, this.getStatus());
     }
 
     // getter setter

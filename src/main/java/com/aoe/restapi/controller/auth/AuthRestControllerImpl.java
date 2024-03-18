@@ -1,8 +1,8 @@
 package com.aoe.restapi.controller.auth;
 
-import com.aoe.restapi.dto.JwtResponseDto;
 import com.aoe.restapi.dto.LoginRequestDto;
-import com.aoe.restapi.model.service.auth.AuthService;
+import com.aoe.restapi.model.entity.User;
+import com.aoe.restapi.model.service.user.UserService;
 import com.aoe.restapi.utility.Status.OperationStatusError;
 import com.aoe.restapi.utility.Status.OperationStatusSuccess;
 import com.aoe.restapi.utility.auth.JwtUtil;
@@ -19,37 +19,39 @@ import java.util.HashMap;
 public class AuthRestControllerImpl implements AuthRestController {
 
     private JwtUtil jwtUtil;
-    AuthService authService;
+
+    private UserService<User> userService;
 
     @Autowired
-    public AuthRestControllerImpl(JwtUtil jwtUtil, AuthService authService) {
+    public AuthRestControllerImpl(JwtUtil jwtUtil, UserService<User> userService) {
         this.jwtUtil = jwtUtil;
-        this.authService = authService;
+        this.userService = userService;
     }
-
-
-//    @Override
-//    @PostMapping("/login")
-//    public ResponseEntity<HashMap<String, Object>> login(@RequestBody(required = false) User user) {
-//        String email = user.getEmail();
-//        String password = user.getPassword();
-//
-//        // perform operation and return
-//        OperationStatus operationStatus = authService.findUserByEmail(email);
-//
-//        return operationStatus.getResponseEntity();
-//    }
 
     @PostMapping("/login")
     public ResponseEntity<HashMap<String, Object>> login(@RequestBody LoginRequestDto loginRequestDto) {
+        // get inputs
+        String email = loginRequestDto.getEmail();
+        String password = loginRequestDto.getPassword();
+
+        // get user id
+//        userService.
+//        OperationStatus operationStatus = authService.findUserByEmail(email);
+
         boolean isAuthenticated = true;
-        if (isAuthenticated) {
-            // If the user is authenticated, generate a JWT token.
-            String token = jwtUtil.generateToken(loginRequestDto.getId());
-            return new OperationStatusSuccess<String>(token).getResponseEntity();
-        } else {
+        if (!isAuthenticated)
             return new OperationStatusError(HttpStatus.UNAUTHORIZED).getResponseEntity();
-        }
+
+        // todo
+        int userId = 1;
+        String token = "Bearer " + jwtUtil.generateToken(userId);
+
+        // add token to header
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", token);
+
+        // return response
+        return new OperationStatusSuccess<String>(token, headers).getResponseEntity();
     }
 
     @PostMapping("/validate")

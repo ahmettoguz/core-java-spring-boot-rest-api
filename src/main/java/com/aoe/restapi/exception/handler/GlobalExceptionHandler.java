@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<HashMap<String, Object>> handleAuthenticationException(AuthenticationException ex) {
-        return new OperationStatusError(HttpStatus.UNAUTHORIZED, ex.getMessage()).getResponseEntity();
+        return new OperationStatusError(HttpStatus.FORBIDDEN, ex.getMessage()).getResponseEntity();
     }
 
     @ExceptionHandler(CommonException.class)

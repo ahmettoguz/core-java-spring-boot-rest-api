@@ -1,4 +1,4 @@
-package com.aoe.restapi.utility.LogUtility;
+package com.aoe.restapi.utility.log;
 
 public class LogUtility {
     public static <T> void consoleLog(T message) {

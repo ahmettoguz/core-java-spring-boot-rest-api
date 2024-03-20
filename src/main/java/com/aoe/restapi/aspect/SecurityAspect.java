@@ -1,12 +1,9 @@
 package com.aoe.restapi.aspect;
 
 import com.aoe.restapi.exception.exception.AuthorizationException;
-import com.aoe.restapi.exception.exception.JwtNotValidException;
-import com.aoe.restapi.utility.Status.OperationStatusError;
 import com.aoe.restapi.utility.aop.AopUtil;
 import com.aoe.restapi.utility.auth.JwtUtil;
 import com.aoe.restapi.utility.facade.UtilFacade;
-import com.aoe.restapi.utility.http.HttpUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -14,7 +11,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Aspect

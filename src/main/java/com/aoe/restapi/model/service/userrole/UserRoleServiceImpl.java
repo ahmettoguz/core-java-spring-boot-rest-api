@@ -1,15 +1,14 @@
 package com.aoe.restapi.model.service.userrole;
 
 import com.aoe.restapi.model.entity.UserRole;
-import com.aoe.restapi.utility.Status.OperationStatus;
-import com.aoe.restapi.utility.Status.OperationStatusError;
-import com.aoe.restapi.utility.Status.OperationStatusSuccess;
+import com.aoe.restapi.utility.status.OperationStatus;
+import com.aoe.restapi.utility.status.OperationStatusError;
+import com.aoe.restapi.utility.status.OperationStatusSuccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

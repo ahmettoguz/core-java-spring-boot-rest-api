@@ -3,7 +3,7 @@ package com.aoe.restapi.controller.relational.userdomain;
 import com.aoe.restapi.model.entity.User;
 import com.aoe.restapi.model.service.relational.userdomain.UserDomainService;
 import com.aoe.restapi.utility.http.ResponseUtil;
-import com.aoe.restapi.utility.Status.OperationStatus;
+import com.aoe.restapi.utility.status.OperationStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

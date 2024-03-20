@@ -1,7 +1,7 @@
 package com.aoe.restapi.model.service.base.crud;
 
 import com.aoe.restapi.model.service.base.BaseService;
-import com.aoe.restapi.utility.Status.OperationStatus;
+import com.aoe.restapi.utility.status.OperationStatus;
 
 public interface BaseCrudService<T> extends BaseService<T> {
     // helper methods

@@ -2,9 +2,9 @@ package com.aoe.restapi.controller.base;
 
 import com.aoe.restapi.model.service.base.BaseService;
 import com.aoe.restapi.model.service.base.crud.BaseCrudService;
-import com.aoe.restapi.utility.Status.OperationStatus;
-import com.aoe.restapi.utility.Status.OperationStatusError;
-import com.aoe.restapi.utility.Status.OperationStatusSuccess;
+import com.aoe.restapi.utility.status.OperationStatus;
+import com.aoe.restapi.utility.status.OperationStatusError;
+import com.aoe.restapi.utility.status.OperationStatusSuccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

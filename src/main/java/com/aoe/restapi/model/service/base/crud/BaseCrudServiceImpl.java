@@ -1,9 +1,9 @@
 package com.aoe.restapi.model.service.base.crud;
 
 import com.aoe.restapi.model.service.Activatable;
-import com.aoe.restapi.utility.Status.OperationStatus;
-import com.aoe.restapi.utility.Status.OperationStatusError;
-import com.aoe.restapi.utility.Status.OperationStatusSuccess;
+import com.aoe.restapi.utility.status.OperationStatus;
+import com.aoe.restapi.utility.status.OperationStatusError;
+import com.aoe.restapi.utility.status.OperationStatusSuccess;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

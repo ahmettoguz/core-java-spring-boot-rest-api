@@ -4,7 +4,7 @@ package com.aoe.restapi.exception.handler;
 import com.aoe.restapi.exception.exception.AuthorizationException;
 import com.aoe.restapi.exception.exception.AuthorizationHeaderException;
 import com.aoe.restapi.exception.exception.JwtNotValidException;
-import com.aoe.restapi.utility.Status.OperationStatusError;
+import com.aoe.restapi.utility.status.OperationStatusError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

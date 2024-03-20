@@ -5,3 +5,7 @@ add jwt authentication
 
 configure postgresql
 
+
+
+
+eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNzEwOTIxOTkyLCJleHAiOjE3MTEwMDgzOTJ9.kMgdq_WCRcmsk1KT3T5cYvXr8o-csTOl_sOdp2bIXX84w0yUBT5W-6CItVGYUGcjYlaY5Wut793t8SrH1BcXgQ

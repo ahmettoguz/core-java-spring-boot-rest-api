@@ -1,6 +1,6 @@
-package com.aoe.restapi.utility.Status;
+package com.aoe.restapi.utility.status;
 
-import com.aoe.restapi.utility.LogUtility.LogUtility;
+import com.aoe.restapi.utility.log.LogUtility;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

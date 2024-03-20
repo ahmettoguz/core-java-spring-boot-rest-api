@@ -1,10 +1,7 @@
 package com.aoe.restapi.exception.handler;
 
 
-import com.aoe.restapi.exception.exception.AuthenticationException;
-import com.aoe.restapi.exception.exception.AuthorizationException;
-import com.aoe.restapi.exception.exception.AuthorizationHeaderException;
-import com.aoe.restapi.exception.exception.JwtNotValidException;
+import com.aoe.restapi.exception.exception.*;
 import com.aoe.restapi.utility.status.OperationStatusError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,5 +30,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<HashMap<String, Object>> handleAuthenticationException(AuthenticationException ex) {
         return new OperationStatusError(HttpStatus.UNAUTHORIZED, ex.getMessage()).getResponseEntity();
+    }
+
+    @ExceptionHandler(CommonException.class)
+    public ResponseEntity<HashMap<String, Object>> handleCommonException(CommonException ex) {
+        // todo change and remove that
+        return new OperationStatusError(HttpStatus.TOO_MANY_REQUESTS, ex.getMessage()).getResponseEntity();
     }
 }

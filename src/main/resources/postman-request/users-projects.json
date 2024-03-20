@@ -9,21 +9,6 @@
 		{
 			"name": "users/projects",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "ahmet@hotmail.com",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -46,52 +31,6 @@
 						"users",
 						"1",
 						"projects",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "projects/users",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "ahmet@hotmail.com",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/projects/1/users/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"projects",
-						"1",
-						"users",
 						"1"
 					]
 				}
@@ -101,21 +40,6 @@
 		{
 			"name": "users/projects",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "ahmet@hotmail.com",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "string"
-						}
-					]
-				},
 				"method": "DELETE",
 				"header": [],
 				"body": {
@@ -138,52 +62,6 @@
 						"users",
 						"1",
 						"projects",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "projects/users",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "ahmet@hotmail.com",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/projects/1/users/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"projects",
-						"1",
-						"users",
 						"1"
 					]
 				}

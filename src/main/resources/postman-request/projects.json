@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c58f8008-ed31-4c9f-9d8e-d8a7d29fcde6",
+		"_postman_id": "1209ea0a-a4fc-4dc1-beeb-d1b66665ca6b",
 		"name": "spring-boot-projects",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26266539"
@@ -9,21 +9,6 @@
 		{
 			"name": "projects",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "ahmet@hotmail.com",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -42,21 +27,6 @@
 		{
 			"name": "projects/1",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "ahmet@hotmail.com",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -80,26 +50,11 @@
 				"disableBodyPruning": true
 			},
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "ahmet@hotmail.com",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 2,\r\n    \"isDescending\": false\r\n}",
+					"raw": "{\r\n    \"pageNumber\": 0,\r\n    \"pageSize\": 2,\r\n    \"isDescending\": false\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -127,21 +82,6 @@
 				"disableBodyPruning": true
 			},
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "ahmet@hotmail.com",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -171,21 +111,6 @@
 		{
 			"name": "projects",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "ahmet@hotmail.com",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -214,21 +139,6 @@
 		{
 			"name": "projects/5",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "ahmet@hotmail.com",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "string"
-						}
-					]
-				},
 				"method": "PUT",
 				"header": [],
 				"body": {
@@ -257,21 +167,6 @@
 		{
 			"name": "projects/4",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "ahmet@hotmail.com",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "string"
-						}
-					]
-				},
 				"method": "DELETE",
 				"header": [],
 				"url": {
@@ -291,21 +186,6 @@
 		{
 			"name": "projects/6/deactivate",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "ahmet@hotmail.com",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "string"
-						}
-					]
-				},
 				"method": "PATCH",
 				"header": [],
 				"url": {
@@ -326,21 +206,6 @@
 		{
 			"name": "projects/6/activate",
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "ahmet@hotmail.com",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "string"
-						}
-					]
-				},
 				"method": "PATCH",
 				"header": [],
 				"url": {

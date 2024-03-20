@@ -2,7 +2,7 @@ package com.aoe.restapi.controller.relational.userissue;
 
 import com.aoe.restapi.model.entity.Issue;
 import com.aoe.restapi.model.service.relational.userissue.UserIssueService;
-import com.aoe.restapi.utility.ResponseUtil;
+import com.aoe.restapi.utility.http.ResponseUtil;
 import com.aoe.restapi.utility.Status.OperationStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

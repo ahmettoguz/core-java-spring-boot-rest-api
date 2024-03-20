@@ -4,7 +4,7 @@ import com.aoe.restapi.controller.base.BaseRestControllerImpl;
 import com.aoe.restapi.model.entity.User;
 import com.aoe.restapi.model.service.base.BaseService;
 import com.aoe.restapi.model.service.user.UserService;
-import com.aoe.restapi.utility.ResponseUtil;
+import com.aoe.restapi.utility.http.ResponseUtil;
 import com.aoe.restapi.utility.Status.OperationStatus;
 import com.aoe.restapi.utility.Status.OperationStatusError;
 import com.aoe.restapi.utility.Status.OperationStatusSuccess;

@@ -1,4 +1,4 @@
-package com.aoe.restapi.utility.httputil;
+package com.aoe.restapi.utility.http;
 
 import com.aoe.restapi.exception.exception.AuthorizationHeaderException;
 import jakarta.servlet.http.HttpServletRequest;

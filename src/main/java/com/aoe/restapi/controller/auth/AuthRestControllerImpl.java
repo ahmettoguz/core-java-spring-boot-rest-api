@@ -3,8 +3,10 @@ package com.aoe.restapi.controller.auth;
 import com.aoe.restapi.dto.LoginRequestDto;
 import com.aoe.restapi.model.entity.User;
 import com.aoe.restapi.model.service.user.UserService;
+import com.aoe.restapi.utility.Status.OperationStatus;
 import com.aoe.restapi.utility.Status.OperationStatusError;
 import com.aoe.restapi.utility.Status.OperationStatusSuccess;
+import com.aoe.restapi.utility.auth.AuthUtil;
 import com.aoe.restapi.utility.auth.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,16 +36,22 @@ public class AuthRestControllerImpl implements AuthRestController {
         String email = loginRequestDto.getEmail();
         String password = loginRequestDto.getPassword();
 
-        // get user id
-//        userService.
-//        OperationStatus operationStatus = authService.findUserByEmail(email);
+        // read operation
+        OperationStatus operationStatus = userService.findByEmail(email);
 
-        boolean isAuthenticated = true;
-        if (!isAuthenticated)
+        // if cannot find user with that email return
+        if (operationStatus instanceof OperationStatusError)
             return new OperationStatusError(HttpStatus.UNAUTHORIZED).getResponseEntity();
 
-        // todo
-        int userId = 1;
+        // get user
+        User user = (User) ((OperationStatusSuccess) operationStatus).getData();
+
+        // check password
+        if (!AuthUtil.compareText(user.getPassword(), password))
+            return new OperationStatusError(HttpStatus.UNAUTHORIZED).getResponseEntity();
+
+        // generate jwt token
+        int userId = user.getId();
         String token = "Bearer " + jwtUtil.generateToken(userId);
 
         // add token to header

@@ -12,4 +12,8 @@ public class AuthUtil {
     public static String getEncryptedText(String plainText) {
         return bCryptPasswordEncoder.encode(plainText);
     }
+
+    public static Boolean compareText(String encryptedText, String plainText) {
+        return bCryptPasswordEncoder.matches(plainText, encryptedText);
+    }
 }

@@ -1,8 +1,8 @@
 package com.aoe.restapi.aspect;
 
+import com.aoe.restapi.exception.exception.JwtNotValidException;
 import com.aoe.restapi.utility.auth.JwtUtil;
 import com.aoe.restapi.utility.httputil.HttpUtil;
-import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -11,8 +11,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Aspect
 @Order(1)
@@ -48,8 +46,9 @@ public class SecurityAspect {
 
         // validate jwt token
         if (!jwtUtil.validateToken(jwtToken))
-            System.out.println("Jwt not valid");
-        // todo throw ex and handle it
+            throw new JwtNotValidException();
+
+        System.out.println("jwt is valid");
 
 
 //        // Get the arguments

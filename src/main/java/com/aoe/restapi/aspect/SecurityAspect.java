@@ -1,8 +1,12 @@
 package com.aoe.restapi.aspect;
 
+import com.aoe.restapi.exception.exception.AuthorizationException;
 import com.aoe.restapi.exception.exception.JwtNotValidException;
+import com.aoe.restapi.utility.Status.OperationStatusError;
+import com.aoe.restapi.utility.aop.AopUtil;
 import com.aoe.restapi.utility.auth.JwtUtil;
-import com.aoe.restapi.utility.httputil.HttpUtil;
+import com.aoe.restapi.utility.facade.UtilFacade;
+import com.aoe.restapi.utility.http.HttpUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -10,17 +14,22 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Order(1)
 @Component
 public class SecurityAspect {
-
     private JwtUtil jwtUtil;
 
-    public SecurityAspect(JwtUtil jwtUtil) {
+    private UtilFacade utilFacade;
+    private AopUtil aopUtil;
+
+    public SecurityAspect(JwtUtil jwtUtil, UtilFacade utilFacade, AopUtil aopUtil) {
         this.jwtUtil = jwtUtil;
+        this.utilFacade = utilFacade;
+        this.aopUtil = aopUtil;
     }
 
     @Autowired
@@ -41,43 +50,20 @@ public class SecurityAspect {
     // advice user
     @Before("updateUserPassword()")
     public void updateUserPassword(JoinPoint joinPoint) {
-        // get token from header
-        String jwtToken = HttpUtil.getTokenFromHeader();
+        // perform jwt operations
+        int userId = utilFacade.performJwtOperations();
 
-        // validate jwt token
-        if (!jwtUtil.validateToken(jwtToken))
-            throw new JwtNotValidException();
+        // get arguments
+        Object[] args = aopUtil.getArguments(joinPoint);
 
-        System.out.println("jwt is valid");
+        // get target id from argument
+        int targetId = Integer.parseInt(args[0].toString());
 
+        if (userId != targetId)
+            throw new AuthorizationException();
 
-//        // Get the arguments
-//        Object[] args = joinPoint.getArgs();
-//
-//        // Check if there are any arguments
-//        if (args.length == 0) {
-//            // Throw an exception if no arguments are found
-//            throw new IllegalArgumentException("No arguments provided to the method.");
-//        }
-//
-//        // Print the first argument
-//        System.out.println("First argument: " + args[0].toString());
-
-
-        Object[] args = joinPoint.getArgs();
-        System.out.println("Arguments:");
-        for (Object a : args)
-            System.out.println(a.toString());
-
-//
 //        MethodSignature msig = (MethodSignature) joinPoint.getSignature();
-//
-//
 //        System.out.println("infos about aop:\nSigniture: " + msig);
-//
-//
-//
-//        System.out.println("@Before is running for: readAllUsers");
     }
 
     @Before("pointcutRead()")

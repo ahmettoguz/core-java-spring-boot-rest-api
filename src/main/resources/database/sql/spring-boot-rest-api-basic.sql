@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: Mar 14, 2024 at 09:30 AM
+-- Generation Time: Mar 20, 2024 at 05:30 AM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.15
 
@@ -142,9 +142,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`_id`, `created_at`, `updated_at`, `first_name`, `email`, `password`, `is_active`, `domain_id`) VALUES
-(1, NULL, NULL, 'ahmet', 'ahmet@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 1),
-(2, NULL, NULL, 'tuna', 'tuna@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 2),
-(3, NULL, NULL, 'kisimo', 'kisimo@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, NULL);
+(1, NULL, NULL, 'ahmet', 'ahmet@hotmail.com', '$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 1),
+(2, NULL, NULL, 'tuna', 'tuna@hotmail.com', '$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 2),
+(3, NULL, NULL, 'kisimo', 'kisimo@hotmail.com', '$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, NULL);
 
 -- --------------------------------------------------------
 

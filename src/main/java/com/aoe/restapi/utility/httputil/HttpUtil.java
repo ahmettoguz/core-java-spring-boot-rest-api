@@ -1,5 +1,6 @@
 package com.aoe.restapi.utility.httputil;
 
+import com.aoe.restapi.exception.exception.AuthorizationHeaderException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -19,8 +20,7 @@ public class HttpUtil {
 
         // Check if the header is not null and starts with "Bearer"
         if (header == null || !header.startsWith("Bearer "))
-            return null;
-        // todo handle and throw good exception
+            throw new AuthorizationHeaderException();
 
         return removePrecedingBearer(header);
     }

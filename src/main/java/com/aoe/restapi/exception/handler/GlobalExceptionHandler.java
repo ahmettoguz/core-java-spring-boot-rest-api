@@ -1,6 +1,7 @@
 package com.aoe.restapi.exception.handler;
 
 
+import com.aoe.restapi.exception.exception.AuthenticationException;
 import com.aoe.restapi.exception.exception.AuthorizationException;
 import com.aoe.restapi.exception.exception.AuthorizationHeaderException;
 import com.aoe.restapi.exception.exception.JwtNotValidException;
@@ -26,6 +27,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthorizationException.class)
     public ResponseEntity<HashMap<String, Object>> handleAuthorizationException(AuthorizationException ex) {
+        return new OperationStatusError(HttpStatus.UNAUTHORIZED, ex.getMessage()).getResponseEntity();
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<HashMap<String, Object>> handleAuthenticationException(AuthenticationException ex) {
         return new OperationStatusError(HttpStatus.UNAUTHORIZED, ex.getMessage()).getResponseEntity();
     }
 }

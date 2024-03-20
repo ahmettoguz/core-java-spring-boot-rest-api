@@ -13,24 +13,26 @@ public class OperationStatusSuccess<T> extends OperationStatus {
 
     private String message;
 
+    private String stackTrace;
+
     private HttpHeaders headers;
 
     // constructor
     public OperationStatusSuccess() {
         super(HttpStatus.OK, true);
-        message = LogUtility.getMessage();
+        stackTrace = LogUtility.getStackTrace();
     }
 
     public OperationStatusSuccess(T data) {
         super(HttpStatus.OK, true);
         this.data = data;
-        message = LogUtility.getMessage();
+        stackTrace = LogUtility.getStackTrace();
     }
 
     public OperationStatusSuccess(T data, HashMap<String, String> headerMap) {
         super(HttpStatus.OK, true);
         this.data = data;
-        message = LogUtility.getMessage();
+        stackTrace = LogUtility.getStackTrace();
 
         // add headers
         headers = new HttpHeaders();

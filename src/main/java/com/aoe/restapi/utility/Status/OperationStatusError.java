@@ -11,29 +11,29 @@ public class OperationStatusError extends OperationStatus {
     private String error;
     private String message;
     private List<String> warnings;
+    private String stackTrace;
 
     // constructor
-
     public OperationStatusError(HttpStatus status) {
         super(status, false);
-        message = LogUtility.getMessage();
+        stackTrace = LogUtility.getStackTrace();
     }
 
     public OperationStatusError(HttpStatus status, Exception e) {
         super(status, false);
         error = e.toString();
-        message = LogUtility.getMessage();
+        stackTrace = LogUtility.getStackTrace();
     }
 
-    public OperationStatusError(HttpStatus status, String customMessage) {
+    public OperationStatusError(HttpStatus status, String message) {
         super(status, false);
-        message = customMessage;
+        stackTrace = LogUtility.getStackTrace();
     }
 
     public OperationStatusError(HttpStatus status, List<String> warnings) {
         super(status, false);
         this.warnings = warnings;
-        message = LogUtility.getMessage();
+        stackTrace = LogUtility.getStackTrace();
     }
 
     // methods
@@ -43,6 +43,8 @@ public class OperationStatusError extends OperationStatus {
         responseData.put("status", this.getStatus());
         responseData.put("state", this.getState());
         responseData.put("message", message);
+        responseData.put("stackTrace", stackTrace);
+
         if (warnings != null && !warnings.isEmpty()) {
             responseData.put("warnings", warnings);
         }

@@ -9,18 +9,20 @@ public class LogUtility {
         System.out.println(fileName + ":" + lineNumber + " - " + message.toString());
     }
 
-    public static String getMessage() {
+    public static String getStackTrace() {
+        int level = 3;
+
         // Get the call stack
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 
         // Adjusted index to get the caller's class name
-        String callingClassName = stackTrace[3].getClassName();
+        String callingClassName = stackTrace[level].getClassName();
 
         // Extract only the class name
         String plainClassName = callingClassName.substring(callingClassName.lastIndexOf('.') + 1);
 
         // Adjusted index to get the caller's method name
-        String callingMethodName = stackTrace[3].getMethodName();
+        String callingMethodName = stackTrace[level].getMethodName();
 
         return "Class: " + plainClassName + ", Method: " + callingMethodName;
     }

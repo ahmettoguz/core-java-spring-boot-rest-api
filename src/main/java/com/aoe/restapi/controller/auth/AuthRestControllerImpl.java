@@ -64,13 +64,7 @@ public class AuthRestControllerImpl implements AuthRestController {
 
     @PostMapping("/validate")
     public ResponseEntity<HashMap<String, Object>> validateToken(@RequestHeader("Authorization") String token) {
-        String jwt = token.substring(7); // Remove "Bearer " from the token
-        boolean isValid = jwtUtil.validateToken(jwt);
-
-        if (isValid) {
-            return new OperationStatusSuccess<String>("Token is valid").getResponseEntity();
-        } else {
-            return new OperationStatusError(HttpStatus.UNAUTHORIZED).getResponseEntity();
-        }
+        // operation is handled with aop
+        return new OperationStatusSuccess<String>("Token is valid").getResponseEntity();
     }
 }

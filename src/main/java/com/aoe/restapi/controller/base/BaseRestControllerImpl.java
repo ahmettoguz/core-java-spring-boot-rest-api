@@ -98,14 +98,6 @@ public abstract class BaseRestControllerImpl<T extends Identifiable> implements 
         return operationStatus.getResponseEntity();
     }
 
-    // delete
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HashMap<String, Object>> deleteInstance(@PathVariable int id) {
-        // perform operation and return
-        OperationStatus operationStatus = ((BaseCrudService<T>) service).deleteById(id);
-        return operationStatus.getResponseEntity();
-    }
-
     @PatchMapping("/{id}/deactivate")
     public ResponseEntity<HashMap<String, Object>> deactivateInstanceById(@PathVariable int id) {
         // perform operation and return
@@ -117,6 +109,14 @@ public abstract class BaseRestControllerImpl<T extends Identifiable> implements 
     public ResponseEntity<HashMap<String, Object>> activateInstanceById(@PathVariable int id) {
         // perform operation and return
         OperationStatus operationStatus = ((BaseCrudService<T>) service).changeActivationById(id, true);
+        return operationStatus.getResponseEntity();
+    }
+
+    // delete
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HashMap<String, Object>> deleteInstance(@PathVariable int id) {
+        // perform operation and return
+        OperationStatus operationStatus = ((BaseCrudService<T>) service).deleteById(id);
         return operationStatus.getResponseEntity();
     }
 }

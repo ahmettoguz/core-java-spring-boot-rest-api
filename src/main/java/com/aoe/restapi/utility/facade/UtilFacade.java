@@ -28,4 +28,13 @@ public class UtilFacade {
         int userId = Integer.parseInt(jwtUtil.getIdFromToken(jwtToken));
         return userId;
     }
+
+    public void commonJwtAuthentication() {
+        // get token from header
+        String jwtToken = HttpUtil.getTokenFromHeader();
+
+        // validate jwt token
+        if (!jwtUtil.validateToken(jwtToken))
+            throw new JwtNotValidException();
+    }
 }

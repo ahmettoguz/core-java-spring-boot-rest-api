@@ -27,6 +27,7 @@ public class OperationStatusError extends OperationStatus {
 
     public OperationStatusError(HttpStatus status, String message) {
         super(status, false);
+        this.message = message;
         stackTrace = LogUtility.getStackTrace();
     }
 

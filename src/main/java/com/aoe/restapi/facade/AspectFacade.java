@@ -54,11 +54,11 @@ public class AspectFacade {
         return Integer.parseInt(jwtUtil.getIdFromToken(jwtToken));
     }
 
-    public void restrictAccess(User user, JoinPoint joinPoint) {
+    public void restrictAccess() {
         throw new AuthorizationException();
     }
 
-    public void authorizeWithId(User user, JoinPoint joinPoint) {
+    public boolean authorizeWithId(User user, JoinPoint joinPoint) {
         // get arguments
         Object[] args = this.getArguments(joinPoint);
 
@@ -69,10 +69,11 @@ public class AspectFacade {
         int targetId = Integer.parseInt(args[0].toString());
 
         if (userId != targetId)
-            throw new AuthorizationException();
+            return false;
+        return true;
     }
 
-    public void authorizeWithRole(User user, String[] allowedRoles) {
+    public boolean authorizeWithRole(User user, String[] allowedRoles) {
         Set<String> userRoles = user.getRoleSet().stream()
                 .map(UserRole::getName)
                 .collect(Collectors.toSet());
@@ -80,17 +81,16 @@ public class AspectFacade {
         boolean hasAnyRole = Arrays.stream(allowedRoles)
                 .anyMatch(userRoles::contains);
 
-        if (!hasAnyRole) {
-            throw new AuthorizationException();
-        }
+        return hasAnyRole;
     }
 
-    public void compareIdWithList(List<Integer> userHasIds, int targetId) {
+    public boolean compareIdWithList(List<Integer> userHasIds, int targetId) {
         if (!userHasIds.contains(targetId))
-            throw new AuthorizationException();
+            return false;
+        return true;
     }
 
-    public void authorizeUserHaveIssueId(User user, JoinPoint joinPoint) {
+    public boolean authorizeUserHaveIssueId(User user, JoinPoint joinPoint) {
         // get arguments
         Object[] args = this.getArguments(joinPoint);
 
@@ -101,6 +101,6 @@ public class AspectFacade {
         List<Integer> userIssueIds = user.getIssueIds();
 
         // make comparison
-        this.compareIdWithList(userIssueIds, targetId);
+        return this.compareIdWithList(userIssueIds, targetId);
     }
 }

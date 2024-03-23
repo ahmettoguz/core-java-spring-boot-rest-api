@@ -65,6 +65,9 @@ public class SecurityAspect {
 
         // todo allow admin at the beginning and return if its admin
 
+
+        boolean isAuthorized = false;
+
         // restrict endpoint according to target
         if (targetClass instanceof DomainRestControllerImpl<?>) {
             switch (targetMethodName) {
@@ -84,19 +87,21 @@ public class SecurityAspect {
                     break;
 
                 case "mergeUpdatedInstance": // PUT - /domains/{id}
-                    aspectFacade.authorizeWithId(user, joinPoint);
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithId(user, joinPoint);
+                    if (!isAuthorized) aspectFacade.restrictAccess();
                     break;
 
                 case "deactivateInstanceById": // PATCH - /domains/${id}/deactivate
-                    aspectFacade.authorizeWithId(user, joinPoint);
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithId(user, joinPoint);
+                    if (!isAuthorized) aspectFacade.restrictAccess();
                     break;
 
                 case "activateInstanceById": // PATCH - /domains/${id}/activate
-                    aspectFacade.restrictAccess(user, joinPoint);
+                    aspectFacade.restrictAccess();
                     break;
 
                 case "deleteInstance": // DELETE - /domains/${id}
-                    aspectFacade.restrictAccess(user, joinPoint);
+                    aspectFacade.restrictAccess();
                     break;
 
                 default:
@@ -108,38 +113,45 @@ public class SecurityAspect {
                     break;
 
                 case "readInstances": // GET - /issues
-                    aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    if (!isAuthorized) aspectFacade.restrictAccess();
                     break;
 
                 case "readInstanceById": // GET - /issues/{id}
-                    aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
-                    aspectFacade.authorizeUserHaveIssueId(user, joinPoint);
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeUserHaveIssueId(user, joinPoint);
+                    if (!isAuthorized) aspectFacade.restrictAccess();
                     break;
 
                 case "readAllInstancesPagedSorted": // GET - /issues/paged
-                    aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    if (!isAuthorized) aspectFacade.restrictAccess();
                     break;
 
                 case "count": // GET - /issues/count
-                    aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    if (!isAuthorized) aspectFacade.restrictAccess();
                     break;
 
                 case "mergeUpdatedInstance": // PUT - /issues/{id}
-                    aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
-                    aspectFacade.authorizeUserHaveIssueId(user, joinPoint);
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeUserHaveIssueId(user, joinPoint);
+                    if (!isAuthorized) aspectFacade.restrictAccess();
                     break;
 
                 case "deactivateInstanceById": // PATCH - /issues/${id}/deactivate
-                    aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
-                    aspectFacade.authorizeUserHaveIssueId(user, joinPoint);
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeUserHaveIssueId(user, joinPoint);
+                    if (!isAuthorized) aspectFacade.restrictAccess();
                     break;
 
                 case "activateInstanceById": // PATCH - /issues/${id}/activate
-                    aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    if (!isAuthorized) aspectFacade.restrictAccess();
                     break;
 
                 case "deleteInstance": // DELETE - /issues/${id}
-                    aspectFacade.restrictAccess(user, joinPoint);
+                    aspectFacade.restrictAccess();
                     break;
 
                 default:

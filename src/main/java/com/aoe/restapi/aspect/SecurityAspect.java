@@ -1,9 +1,11 @@
 package com.aoe.restapi.aspect;
 
 import com.aoe.restapi.constants.RoleEnum;
+import com.aoe.restapi.controller.auth.AuthRestControllerImpl;
 import com.aoe.restapi.controller.domain.DomainRestControllerImpl;
 import com.aoe.restapi.controller.issue.IssueRestControllerImpl;
 import com.aoe.restapi.controller.project.ProjectRestControllerImpl;
+import com.aoe.restapi.controller.user.UserRestControllerImpl;
 import com.aoe.restapi.exception.exception.CommonException;
 import com.aoe.restapi.facade.AspectFacade;
 import com.aoe.restapi.model.entity.User;
@@ -32,14 +34,25 @@ public class SecurityAspect {
     }
 
     // pointcut for all endpoints except login
-    @Pointcut("execution(* com.aoe.restapi.controller..*(..)) " +
-            "&& !execution(* com.aoe.restapi.controller.auth.*.login(..))")
+    @Pointcut("execution(* com.aoe.restapi.controller..*(..))")
     public void commonEndpoint() {
     }
 
     // advice for role authentication
     @Before("commonEndpoint()")
     public void commonEndpoint(JoinPoint joinPoint) {
+        // get target of the advice
+        Object targetClass = joinPoint.getTarget();
+        String targetMethodName = joinPoint.getSignature().getName();
+
+        // System.out.println("targetMethodName: " + targetMethodName);
+        // System.out.println("targetClass: " + targetClass);
+
+        // allow endpoints that has not any authentication
+        if (targetClass instanceof AuthRestControllerImpl && targetMethodName.equalsIgnoreCase("login") ||
+                targetClass instanceof UserRestControllerImpl<?> && targetMethodName.equalsIgnoreCase("createInstance"))
+            return;
+
         // validate jwt
         aspectFacade.commonJwtAuthentication();
 
@@ -57,14 +70,9 @@ public class SecurityAspect {
         // get user
         User user = (User) ((OperationStatusSuccess) operationStatus).getData();
 
-        // get target of the advice
-        Object targetClass = joinPoint.getTarget();
-        String targetMethodName = joinPoint.getSignature().getName();
-
-        // System.out.println("targetMethodName: " + targetMethodName);
-        // System.out.println("targetClass: " + targetClass);
-
-        // todo allow admin at the beginning and return if its admin
+        // allow endpoints for admin
+        if (aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.ADMIN.getName()}))
+            return;
 
 
         boolean isAuthorized = false;

@@ -60,8 +60,8 @@ public class SecurityAspect {
         Object targetClass = joinPoint.getTarget();
         String targetMethodName = joinPoint.getSignature().getName();
 
-//        System.out.println("targetMethodName: " + targetMethodName);
-//        System.out.println("targetClass: " + targetClass);
+        // System.out.println("targetMethodName: " + targetMethodName);
+        // System.out.println("targetClass: " + targetClass);
 
         // todo allow admin at the beginning and return if its admin
 
@@ -112,24 +112,30 @@ public class SecurityAspect {
                     break;
 
                 case "readInstanceById": // GET - /issues/{id}
+                    aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    aspectFacade.authorizeUserHaveIssueId(user, joinPoint);
                     break;
 
                 case "readAllInstancesPagedSorted": // GET - /issues/paged
+                    aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
                     break;
 
                 case "count": // GET - /issues/count
+                    aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
                     break;
 
                 case "mergeUpdatedInstance": // PUT - /issues/{id}
-                    aspectFacade.authorizeWithId(user, joinPoint);
+                    aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    aspectFacade.authorizeUserHaveIssueId(user, joinPoint);
                     break;
 
                 case "deactivateInstanceById": // PATCH - /issues/${id}/deactivate
-                    aspectFacade.authorizeWithId(user, joinPoint);
+                    aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    aspectFacade.authorizeUserHaveIssueId(user, joinPoint);
                     break;
 
                 case "activateInstanceById": // PATCH - /issues/${id}/activate
-                    aspectFacade.restrictAccess(user, joinPoint);
+                    aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
                     break;
 
                 case "deleteInstance": // DELETE - /issues/${id}
@@ -139,7 +145,6 @@ public class SecurityAspect {
                 default:
                     throw new CommonException();
             }
-        } else if (targetClass instanceof DomainRestControllerImpl<?>) {
         }
     }
 }

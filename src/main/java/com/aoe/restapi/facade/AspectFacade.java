@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -82,5 +83,24 @@ public class AspectFacade {
         if (!hasAnyRole) {
             throw new AuthorizationException();
         }
+    }
+
+    public void compareIdWithList(List<Integer> userHasIds, int targetId) {
+        if (!userHasIds.contains(targetId))
+            throw new AuthorizationException();
+    }
+
+    public void authorizeUserHaveIssueId(User user, JoinPoint joinPoint) {
+        // get arguments
+        Object[] args = this.getArguments(joinPoint);
+
+        // get target id from argument
+        int targetId = Integer.parseInt(args[0].toString());
+
+        // get users issue ids
+        List<Integer> userIssueIds = user.getIssueIds();
+
+        // make comparison
+        this.compareIdWithList(userIssueIds, targetId);
     }
 }

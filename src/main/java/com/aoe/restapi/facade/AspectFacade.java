@@ -54,7 +54,7 @@ public class AspectFacade {
     }
 
     public void restrictAccess(User user, JoinPoint joinPoint) {
-        this.authorizeWithRole(user, new String[]{"admin"});
+        throw new AuthorizationException();
     }
 
     public void authorizeWithId(User user, JoinPoint joinPoint) {

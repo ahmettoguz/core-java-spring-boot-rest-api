@@ -103,4 +103,18 @@ public class AspectFacade {
         // make comparison
         return this.compareIdWithList(userIssueIds, targetId);
     }
+
+    public boolean authorizeUserHaveProjectId(User user, JoinPoint joinPoint) {
+        // get arguments
+        Object[] args = this.getArguments(joinPoint);
+
+        // get target id from argument
+        int targetId = Integer.parseInt(args[0].toString());
+
+        // get users issue ids
+        List<Integer> userProjectIds = user.getProjectIds();
+
+        // make comparison
+        return this.compareIdWithList(userProjectIds, targetId);
+    }
 }

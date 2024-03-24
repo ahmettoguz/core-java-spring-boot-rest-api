@@ -7,7 +7,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 public class HttpUtil {
 
-    private static String removePrecedingBearer(String token) {
+    public static String removePrecedingBearer(String token) {
         return token.substring(7);
     }
 

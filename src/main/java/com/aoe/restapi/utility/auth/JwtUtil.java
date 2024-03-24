@@ -1,5 +1,7 @@
 package com.aoe.restapi.utility.auth;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -32,6 +34,14 @@ public class JwtUtil {
                 .setExpiration(expiryDate)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
+    }
+
+    public Claims parseToken(String token) {
+        Jws<Claims> jws = Jwts.parser()
+                .setSigningKey(generateKey())
+                .build()
+                .parseClaimsJws(token);
+        return jws.getBody();
     }
 
     public String getIdFromToken(String token) {

@@ -1,11 +1,251 @@
 
 add lombook
 
-add jwt authentication
+servis düzeyinde exception yönet
 
 configure postgresql
 
+configure deployment
 
 
+user: 1:
+eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzExMjc4NTQyLCJleHAiOjE3MTM4NzA1NDJ9.GXJS_TdBY68DlGrJ1pw-_2gAVkSxFnyHy3DlbRmbLWWfZI3cY2q1T4KTuyrNtKQVWZ4XVNMR3UrZIConWIhgNw
 
-eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNzEwOTIxOTkyLCJleHAiOjE3MTEwMDgzOTJ9.kMgdq_WCRcmsk1KT3T5cYvXr8o-csTOl_sOdp2bIXX84w0yUBT5W-6CItVGYUGcjYlaY5Wut793t8SrH1BcXgQ
+porject manager: 2:
+eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNzExMjc4NjE3LCJleHAiOjE3MTM4NzA2MTd9.uLBRYt5NazLc5EGIVJAg1ZAjftjIVkhZI9MG69VVU4Pt1WFtBf5VOpP6Sc3IqNOe8Fdu3tZZLRtc4MTg9IZGyw
+
+admin: 3:
+eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNzExMjc4NjMzLCJleHAiOjE3MTM4NzA2MzN9.2I6_TxPSE7v9HhuL28FtfKDDesBUuG_xfOznHqDpVgMpKRWglXv1rpDHwcu4G-RV-DkUdhH05Za1NaLNwVznkQ
+
+
+delete user throws exception but also delete
+
+Endpoint Security
+    Auth:
+        POST:
+            /auth/login
+                no authentication
+
+            /auth/validate
+                jwt authentication
+    ----------------------------------------------------
+
+    Domains:
+        POST:
+            /domains
+                jwt authentication
+
+        GET:
+            /domains
+                jwt authentication
+
+            /domains/{id}
+                jwt authentication
+
+            /domains/paged
+                jwt authentication
+
+            /domains/count
+                jwt authentication
+
+        PUT:
+            /domains/{id}
+                jwt authentication
+                user with that id can access
+
+        PATCH:
+            /domains/${id}/deactivate
+                jwt authentication
+                user with that id can access
+
+            /domains/${id}/activate
+                jwt authentication
+                restricted for all
+
+        DELETE:
+            /domains/${id}
+                jwt authentication
+                restricted for all
+    ----------------------------------------------------
+
+    Issues:
+        POST:
+            /issues
+                jwt authentication
+
+        GET:
+            /issues
+                jwt authentication
+                project manager can access
+
+            /issues/{id}
+                jwt authentication
+                project manager can access
+                user that have issue id can access
+
+            /issues/paged
+                jwt authentication
+                project manager can access
+
+            /issues/count
+                jwt authentication
+                project manager can access
+
+        PUT:
+            /issues/{id}
+                jwt authentication
+                project manager can access
+                user that have issue id can access
+
+        PATCH:
+            /issues/${id}/deactivate
+                jwt authentication
+                project manager can access
+                user that have issue id can access
+
+            /issues/${id}/activate
+                jwt authentication
+                project manager can access
+
+        DELETE:
+            /issues/${id}
+                jwt authentication
+                restricted for all
+    ----------------------------------------------------
+
+    Projects:
+        POST:
+            /projects
+                jwt authentication
+                project manager can access
+
+        GET:
+            /projects
+                jwt authentication
+                project manager can access
+
+            /projects/{id}
+                jwt authentication
+                project manager can access
+                user that have project id can access
+
+            /projects/paged
+                jwt authentication
+                project manager can access
+
+            /projects/count
+                jwt authentication
+                project manager can access
+
+        PUT:
+            /projects/{id}
+                jwt authentication
+                project manager can access
+                user that have project id can access
+
+        PATCH:
+            /projects/${id}/deactivate
+                jwt authentication
+                project manager can access
+
+            /projects/${id}/activate
+                jwt authentication
+                restricted for all
+
+        DELETE:
+            /projects/${id}
+                jwt authentication
+                restricted for all
+    ----------------------------------------------------
+
+    Users:
+        POST:
+            /users
+                no authentication
+
+        GET:
+            /users
+                jwt authentication
+                project manager can access
+
+            /users/{id}
+                jwt authentication
+                project manager can access
+                user with that id can access
+
+            /users/paged
+                jwt authentication
+                project manager can access
+
+            /users/count
+                jwt authentication
+                project manager can access
+
+            /users/search/exact
+                jwt authentication
+                project manager can access
+
+            /users/search/partial
+                jwt authentication
+                project manager can access
+
+        PUT:
+            /users/{id}
+                jwt authentication
+                user with that id can access
+
+        PATCH:
+            /users/${id}/password
+                jwt authentication
+                user with that id can access
+
+            /users/${id}/deactivate
+                jwt authentication
+                project manager can access
+                user with that id can access
+
+            /users/${id}/activate
+                jwt authentication
+                project manager can access
+
+        DELETE:
+            /users/${id}
+                jwt authentication
+                restricted for all
+    ----------------------------------------------------
+    
+    Users-Domains:
+        POST:
+            /users/${userId}/domains/${domainId}
+                jwt authentication
+                user with that user id can access
+
+        DELETE:
+            /users/${userId}/domains/${domainId}
+                jwt authentication
+                user with that user id can access
+    ----------------------------------------------------
+    
+    Users-Issues:
+        POST:
+            /users/${userId}/issues/${issueId}
+                jwt authentication
+                project manager can access
+
+        DELETE:
+            /users/${userId}/issues/${issueId}
+                jwt authentication
+                project manager can access
+    ----------------------------------------------------
+    
+    Users-Projects:
+        POST:
+            /users/${userId}/projects/${issueId}
+                jwt authentication
+                project manager can access
+
+        DELETE:
+            /users/${userId}/issues/${issueId}
+                jwt authentication
+                project manager can access
+    ----------------------------------------------------

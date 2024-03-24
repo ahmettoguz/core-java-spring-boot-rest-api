@@ -15,7 +15,7 @@ public class JwtUtil {
     private String secret;
 
     @Value("${jwt.expirationHours}")
-    private int expirationHours;
+    private long expirationHours;
 
     private Key generateKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());

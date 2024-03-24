@@ -46,7 +46,7 @@ public class User extends BaseEntity {
     private Domain domain;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Issue> issueSet;
 
     // constructor

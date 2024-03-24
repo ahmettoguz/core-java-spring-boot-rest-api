@@ -5,6 +5,9 @@ import com.aoe.restapi.controller.auth.AuthRestControllerImpl;
 import com.aoe.restapi.controller.domain.DomainRestControllerImpl;
 import com.aoe.restapi.controller.issue.IssueRestControllerImpl;
 import com.aoe.restapi.controller.project.ProjectRestControllerImpl;
+import com.aoe.restapi.controller.relational.userdomain.UserDomainRestControllerImpl;
+import com.aoe.restapi.controller.relational.userissue.UserIssueRestControllerImpl;
+import com.aoe.restapi.controller.relational.userproject.UserProjectRestControllerImpl;
 import com.aoe.restapi.controller.user.UserRestControllerImpl;
 import com.aoe.restapi.exception.exception.CommonException;
 import com.aoe.restapi.facade.AspectFacade;
@@ -232,6 +235,132 @@ public class SecurityAspect {
                 case "deleteInstance": // DELETE - /projects/${id}
                     aspectFacade.restrictAccess();
 
+                    break;
+
+                default:
+                    throw new CommonException();
+            }
+        } else if (targetClass instanceof UserRestControllerImpl<?>) {
+            switch (targetMethodName) {
+                case "createInstance": // POST - /users
+                    break;
+
+                case "readInstances": // GET - /users
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                case "readInstanceById": // GET - /users/{id}
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithId(user, joinPoint);
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                case "readAllInstancesPagedSorted": // GET - /users/paged
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                case "count": // GET - /users/count
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                case "searchUsersByExactFirstName": // GET - /users/search/exact
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                case "searchUsersByPartialFirstName": // GET - /users/search/partial
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                case "mergeUpdatedInstance": // PUT - /users/{id}
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithId(user, joinPoint);
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                case "updateUserPassword": // PATCH - /users/${id}/password
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithId(user, joinPoint);
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                case "deactivateInstanceById": // PATCH - /users/${id}/deactivate
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithId(user, joinPoint);
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                case "activateInstanceById": // PATCH - /users/${id}/activate
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                case "deleteInstance": // DELETE - /users/${id}
+                    aspectFacade.restrictAccess();
+
+                    break;
+
+                default:
+                    throw new CommonException();
+            }
+        } else if (targetClass instanceof UserDomainRestControllerImpl<?>) {
+            switch (targetMethodName) {
+                case "addDomainToUser": // POST - /users/{userId}/domains/{domainId}
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithId(user, joinPoint);
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                case "removeDomainFromUser": // DELETE - /users/{userId}/domains/{domainId}
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithId(user, joinPoint);
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                default:
+                    throw new CommonException();
+            }
+        } else if (targetClass instanceof UserIssueRestControllerImpl<?>) {
+            switch (targetMethodName) {
+                case "addIssueToUser": // POST - /users/${userId}/domains/${domainId}
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                case "removeIssueFromUser": // DELETE - /users/${userId}/domains/${domainId}
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                default:
+                    throw new CommonException();
+            }
+        } else if (targetClass instanceof UserProjectRestControllerImpl<?>) {
+            switch (targetMethodName) {
+                case "addUserToProject": // POST - /users/${userId}/projects/${issueId}
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                case "removeUserFromProject": // DELETE - /users/${userId}/issues/${issueId}
+                    isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
                     break;
 
                 default:

@@ -1,6 +1,7 @@
-package com.aoe.restapi.utility.Status;
+package com.aoe.restapi.utility.status;
 
-import com.aoe.restapi.utility.LogUtility.LogUtility;
+import com.aoe.restapi.utility.log.LogUtility;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -12,16 +13,32 @@ public class OperationStatusSuccess<T> extends OperationStatus {
 
     private String message;
 
+    private String stackTrace;
+
+    private HttpHeaders headers;
+
     // constructor
     public OperationStatusSuccess() {
         super(HttpStatus.OK, true);
-        message = LogUtility.getMessage();
+        stackTrace = LogUtility.getStackTrace();
     }
 
     public OperationStatusSuccess(T data) {
         super(HttpStatus.OK, true);
         this.data = data;
-        message = LogUtility.getMessage();
+        stackTrace = LogUtility.getStackTrace();
+    }
+
+    public OperationStatusSuccess(T data, HashMap<String, String> headerMap) {
+        super(HttpStatus.OK, true);
+        this.data = data;
+        stackTrace = LogUtility.getStackTrace();
+
+        // add headers
+        headers = new HttpHeaders();
+        for (Map.Entry<String, String> entry : headerMap.entrySet()) {
+            headers.add(entry.getKey(), entry.getValue());
+        }
     }
 
     // methods
@@ -32,7 +49,13 @@ public class OperationStatusSuccess<T> extends OperationStatus {
         responseData.put("state", this.getState());
         responseData.put("data", data);
 
-        return new ResponseEntity<HashMap<String, Object>>(responseData, this.getStatus());
+        // put headers if exist
+        HttpHeaders responseHeaders = null;
+        if (headers != null && !headers.isEmpty()) {
+            responseHeaders = headers;
+        }
+
+        return new ResponseEntity<HashMap<String, Object>>(responseData, responseHeaders, this.getStatus());
     }
 
     // getter setter

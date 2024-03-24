@@ -1,4 +1,4 @@
-package com.aoe.restapi.utility.Status;
+package com.aoe.restapi.utility.status;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

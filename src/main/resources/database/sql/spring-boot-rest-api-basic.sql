@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: Mar 04, 2024 at 05:33 AM
+-- Generation Time: Mar 20, 2024 at 05:30 AM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.15
 
@@ -107,17 +107,17 @@ INSERT INTO `projects` (`_id`, `created_at`, `updated_at`, `title`, `is_active`,
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
   `_id` int NOT NULL,
-  `role` varchar(50) NOT NULL
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`_id`, `role`) VALUES
-(1, 'ROLE_EMPLOYEE'),
-(2, 'ROLE_MANAGER'),
-(3, 'ROLE_ADMIN');
+INSERT INTO `roles` (`_id`, `name`) VALUES
+(1, 'user'),
+(2, 'project manager'),
+(3, 'admin');
 
 -- --------------------------------------------------------
 
@@ -142,9 +142,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`_id`, `created_at`, `updated_at`, `first_name`, `email`, `password`, `is_active`, `domain_id`) VALUES
-(1, NULL, NULL, 'ahmet', 'ahmet@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 1),
-(2, NULL, NULL, 'tuna', 'tuna@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 2),
-(3, NULL, NULL, 'kisimo', 'kisimo@hotmail.com', '{bcrypt}$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, NULL);
+(1, NULL, NULL, 'ahmet', 'ahmet@hotmail.com', '$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 1),
+(2, NULL, NULL, 'tuna', 'tuna@hotmail.com', '$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 2),
+(3, NULL, NULL, 'kisimo', 'kisimo@hotmail.com', '$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -174,7 +174,6 @@ INSERT INTO `users_projects` (`user_id`, `project_id`) VALUES
 
 DROP TABLE IF EXISTS `users_roles`;
 CREATE TABLE `users_roles` (
-  `_id` int NOT NULL,
   `user_id` int NOT NULL,
   `role_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -183,13 +182,13 @@ CREATE TABLE `users_roles` (
 -- Dumping data for table `users_roles`
 --
 
-INSERT INTO `users_roles` (`_id`, `user_id`, `role_id`) VALUES
-(6, 1, 1),
-(7, 2, 1),
-(8, 2, 2),
-(12, 3, 1),
-(13, 3, 2),
-(14, 3, 3);
+INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES
+(1, 1),
+(2, 1),
+(2, 2),
+(3, 1),
+(3, 2),
+(3, 3);
 
 --
 -- Indexes for dumped tables
@@ -231,6 +230,7 @@ ALTER TABLE `users`
 -- Indexes for table `users_projects`
 --
 ALTER TABLE `users_projects`
+  ADD PRIMARY KEY (`user_id`,`project_id`),
   ADD KEY `user_id` (`user_id`,`project_id`),
   ADD KEY `project_id` (`project_id`);
 
@@ -238,7 +238,7 @@ ALTER TABLE `users_projects`
 -- Indexes for table `users_roles`
 --
 ALTER TABLE `users_roles`
-  ADD PRIMARY KEY (`_id`),
+  ADD PRIMARY KEY (`user_id`,`role_id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `role` (`role_id`);
 
@@ -275,12 +275,6 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `users`
   MODIFY `_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `users_roles`
---
-ALTER TABLE `users_roles`
-  MODIFY `_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables

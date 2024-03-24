@@ -21,10 +21,10 @@ public interface BaseRestController<T> {
     // update
     public ResponseEntity<HashMap<String, Object>> mergeUpdatedInstance(int id, T newInstance);
 
-    // delete
-    public ResponseEntity<HashMap<String, Object>> deleteInstance(int id);
-
     public ResponseEntity<HashMap<String, Object>> deactivateInstanceById(int id);
 
     public ResponseEntity<HashMap<String, Object>> activateInstanceById(int id);
+
+    // delete
+    public ResponseEntity<HashMap<String, Object>> deleteInstance(int id);
 }

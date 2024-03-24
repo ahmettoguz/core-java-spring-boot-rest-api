@@ -1,7 +1,7 @@
-package com.aoe.restapi.utility;
+package com.aoe.restapi.utility.http;
 
-import com.aoe.restapi.utility.Status.OperationStatus;
-import com.aoe.restapi.utility.Status.OperationStatusSuccess;
+import com.aoe.restapi.utility.status.OperationStatus;
+import com.aoe.restapi.utility.status.OperationStatusSuccess;
 import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;

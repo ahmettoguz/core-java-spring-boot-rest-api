@@ -3,9 +3,9 @@ package com.aoe.restapi.model.service.user;
 import com.aoe.restapi.model.dao.UserRepository;
 import com.aoe.restapi.model.entity.User;
 import com.aoe.restapi.model.service.base.crud.BaseCrudServiceImpl;
-import com.aoe.restapi.utility.Status.OperationStatus;
-import com.aoe.restapi.utility.Status.OperationStatusError;
-import com.aoe.restapi.utility.Status.OperationStatusSuccess;
+import com.aoe.restapi.utility.status.OperationStatus;
+import com.aoe.restapi.utility.status.OperationStatusError;
+import com.aoe.restapi.utility.status.OperationStatusSuccess;
 import com.aoe.restapi.utility.auth.AuthUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -81,14 +81,25 @@ public class UserServiceImpl<T extends User> extends BaseCrudServiceImpl<T> impl
         }
     }
 
+
+    // findByEmail
+    @Override
+    public OperationStatus findByEmail(String email) {
+        try {
+            return new OperationStatusSuccess<User>(((UserRepository) repository).findByEmail(email));
+        } catch (Exception e) {
+            return new OperationStatusError(HttpStatus.BAD_REQUEST, e);
+        }
+    }
+
     // search users by their first names (exact match)
     @Override
     public OperationStatus searchUsersByExactFirstName(String exactFirstName, int pageNumber, int pageSize, boolean isDescending) {
         try {
             Sort sort = Sort.by(isDescending ? Sort.Direction.DESC : Sort.Direction.ASC, "id");
             Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-            List<T> instances = ((Page<T>) ((UserRepository) repository).findByFirstNameContaining(exactFirstName, pageable)).getContent();
-
+            List<T> instances = ((Page<T>) ((UserRepository) repository).findByFirstName(exactFirstName, pageable)).getContent();
+            
             return new OperationStatusSuccess<List<T>>(instances);
         } catch (Exception e) {
             System.out.println(e.toString());

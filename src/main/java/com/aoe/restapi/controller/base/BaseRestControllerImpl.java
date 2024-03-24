@@ -2,9 +2,9 @@ package com.aoe.restapi.controller.base;
 
 import com.aoe.restapi.model.service.base.BaseService;
 import com.aoe.restapi.model.service.base.crud.BaseCrudService;
-import com.aoe.restapi.utility.Status.OperationStatus;
-import com.aoe.restapi.utility.Status.OperationStatusError;
-import com.aoe.restapi.utility.Status.OperationStatusSuccess;
+import com.aoe.restapi.utility.status.OperationStatus;
+import com.aoe.restapi.utility.status.OperationStatusError;
+import com.aoe.restapi.utility.status.OperationStatusSuccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -98,14 +98,6 @@ public abstract class BaseRestControllerImpl<T extends Identifiable> implements 
         return operationStatus.getResponseEntity();
     }
 
-    // delete
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HashMap<String, Object>> deleteInstance(@PathVariable int id) {
-        // perform operation and return
-        OperationStatus operationStatus = ((BaseCrudService<T>) service).deleteById(id);
-        return operationStatus.getResponseEntity();
-    }
-
     @PatchMapping("/{id}/deactivate")
     public ResponseEntity<HashMap<String, Object>> deactivateInstanceById(@PathVariable int id) {
         // perform operation and return
@@ -117,6 +109,14 @@ public abstract class BaseRestControllerImpl<T extends Identifiable> implements 
     public ResponseEntity<HashMap<String, Object>> activateInstanceById(@PathVariable int id) {
         // perform operation and return
         OperationStatus operationStatus = ((BaseCrudService<T>) service).changeActivationById(id, true);
+        return operationStatus.getResponseEntity();
+    }
+
+    // delete
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HashMap<String, Object>> deleteInstance(@PathVariable int id) {
+        // perform operation and return
+        OperationStatus operationStatus = ((BaseCrudService<T>) service).deleteById(id);
         return operationStatus.getResponseEntity();
     }
 }

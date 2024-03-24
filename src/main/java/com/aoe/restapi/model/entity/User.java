@@ -27,6 +27,14 @@ public class User extends BaseEntity {
     @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
+            name = "users_roles",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    private Set<UserRole> roleSet;
+
+    @JsonIgnore
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
             name = "users_projects",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "project_id")})
@@ -38,17 +46,18 @@ public class User extends BaseEntity {
     private Domain domain;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Issue> issueSet;
 
     // constructor
     public User() {
     }
 
-    public User(String firstName, String email, String password, Set<Project> projectSet, Domain domain, Set<Issue> issueSet) {
+    public User(String firstName, String email, String password, Set<UserRole> roleSet, Set<Project> projectSet, Domain domain, Set<Issue> issueSet) {
         this.firstName = firstName;
         this.email = email;
         this.password = password;
+        this.roleSet = roleSet;
         this.projectSet = projectSet;
         this.domain = domain;
         this.issueSet = issueSet;
@@ -103,6 +112,14 @@ public class User extends BaseEntity {
         this.issueSet = issueSet;
     }
 
+    public Set<UserRole> getRoleSet() {
+        return roleSet;
+    }
+
+    public void setRoleSet(Set<UserRole> roleSet) {
+        this.roleSet = roleSet;
+    }
+
     // relational getter
     public List<Integer> getProjectIds() {
         if (projectSet == null)
@@ -110,6 +127,16 @@ public class User extends BaseEntity {
         else {
             return projectSet.stream()
                     .map(Project::getId)
+                    .collect(Collectors.toList());
+        }
+    }
+
+    public List<Integer> getRoleIds() {
+        if (roleSet == null)
+            return null;
+        else {
+            return roleSet.stream()
+                    .map(UserRole::getId)
                     .collect(Collectors.toList());
         }
     }
@@ -127,10 +154,11 @@ public class User extends BaseEntity {
     // to string
     @Override
     public String toString() {
-        return super.toString() + "User{" +
+        return "User{" +
                 "firstName='" + firstName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", roleSet=" + roleSet +
                 ", projectSet=" + projectSet +
                 ", domain=" + domain +
                 ", issueSet=" + issueSet +

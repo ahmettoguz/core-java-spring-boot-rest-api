@@ -120,7 +120,7 @@ public abstract class BaseCrudServiceImpl<T extends Activatable> implements Base
             if (readOperation.isPresent()) {
                 T instance = readOperation.get();
 
-                instance.setActive(state);
+                instance.setIsActive(state);
                 repository.save(instance);
                 return new OperationStatusSuccess<T>(instance);
             } else

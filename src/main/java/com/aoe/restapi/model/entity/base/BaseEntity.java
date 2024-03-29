@@ -2,14 +2,16 @@ package com.aoe.restapi.model.entity.base;
 
 import com.aoe.restapi.controller.base.Identifiable;
 import com.aoe.restapi.model.service.Activatable;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
-
+@Data
+@NoArgsConstructor
 @MappedSuperclass
 public abstract class BaseEntity implements Activatable, Identifiable {
     // fields
@@ -28,51 +30,4 @@ public abstract class BaseEntity implements Activatable, Identifiable {
 
     @Column(name = "is_active")
     private Boolean isActive;
-
-    // getters and setters
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @JsonProperty("isActive")
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    @Override
-    public void setActive(Boolean active) {
-        isActive = active;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    // toString
-    @Override
-    public String toString() {
-        return "BaseEntity{" +
-                "id=" + id +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", isActive=" + isActive +
-                '}';
-    }
 }

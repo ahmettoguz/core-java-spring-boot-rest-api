@@ -4,11 +4,15 @@ import com.aoe.restapi.model.entity.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
@@ -49,77 +53,6 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Issue> issueSet;
 
-    // constructor
-    public User() {
-    }
-
-    public User(String firstName, String email, String password, Set<UserRole> roleSet, Set<Project> projectSet, Domain domain, Set<Issue> issueSet) {
-        this.firstName = firstName;
-        this.email = email;
-        this.password = password;
-        this.roleSet = roleSet;
-        this.projectSet = projectSet;
-        this.domain = domain;
-        this.issueSet = issueSet;
-    }
-
-    // getter setter
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Project> getProjectSet() {
-        return projectSet;
-    }
-
-    public void setProjectSet(Set<Project> projectSet) {
-        this.projectSet = projectSet;
-    }
-
-    public Domain getDomain() {
-        return domain;
-    }
-
-    public void setDomain(Domain domain) {
-        this.domain = domain;
-    }
-
-    public Set<Issue> getIssueSet() {
-        return issueSet;
-    }
-
-    public void setIssueSet(Set<Issue> issueSet) {
-        this.issueSet = issueSet;
-    }
-
-    public Set<UserRole> getRoleSet() {
-        return roleSet;
-    }
-
-    public void setRoleSet(Set<UserRole> roleSet) {
-        this.roleSet = roleSet;
-    }
-
     // relational getter
     public List<Integer> getProjectIds() {
         if (projectSet == null)
@@ -149,19 +82,5 @@ public class User extends BaseEntity {
                     .map(Issue::getId)
                     .collect(Collectors.toList());
         }
-    }
-
-    // to string
-    @Override
-    public String toString() {
-        return "User{" +
-                "firstName='" + firstName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", roleSet=" + roleSet +
-                ", projectSet=" + projectSet +
-                ", domain=" + domain +
-                ", issueSet=" + issueSet +
-                '}';
     }
 }

@@ -1,7 +1,6 @@
 const addContext = require("mochawesome/addContext");
 const axios = require("axios");
 
-
 // Use dynamic import for chai
 let chai;
 let expect;

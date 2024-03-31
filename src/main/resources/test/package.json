@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha api.test.js --reporter mochawesome",
-    "testt": "mocha api.test.js --reporter mochawesome --reporter-options output=./mochawesome-report --grep 'git'"
+    "parallel": "mocha '**/*.spec.js' --parallel --reporter mochawesome --require mochawesome/register",
+    "test": "mocha '**/*.spec.js' --reporter mochawesome",
+    "spec": "mocha './test/spec/health-check.spec.js' --reporter mochawesome",
+    "grep": "npm run test -- --grep"
   },
   "keywords": [],
   "author": "",

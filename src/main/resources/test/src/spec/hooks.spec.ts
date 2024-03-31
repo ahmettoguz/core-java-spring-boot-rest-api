@@ -11,6 +11,5 @@ before(async () => {
 });
 
 after(async () => {
-  // Your code to run after all tests have completed
   console.log("All tests have completed.");
 });

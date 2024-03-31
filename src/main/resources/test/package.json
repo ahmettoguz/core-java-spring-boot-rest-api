@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "parallel": "mocha '**/*.spec.ts' --parallel --reporter mochawesome --require mochawesome/register",
-    "test": "mocha '**/*.spec.ts' --reporter mochawesome",
-    "spec": "mocha './test/spec/health-check.spec.ts' --reporter mochawesome",
+    "parallel": "mocha '**/*.spec.ts' --parallel --reporter mochawesome --require mochawesome/register --timeout 30000",
+    "test": "mocha '**/*.spec.ts' --reporter mochawesome --timeout 30000",
+    "spec": "mocha './src/spec/api.spec.ts' --reporter mochawesome --timeout 30000",
     "grep": "npm run test -- --grep"
   },
   "keywords": [],

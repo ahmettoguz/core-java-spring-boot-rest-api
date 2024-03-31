@@ -3,6 +3,7 @@ package com.aoe.restapi.aspect;
 import com.aoe.restapi.constants.RoleEnum;
 import com.aoe.restapi.controller.auth.AuthRestControllerImpl;
 import com.aoe.restapi.controller.domain.DomainRestControllerImpl;
+import com.aoe.restapi.controller.healthcheck.HealthCheckRestControllerImpl;
 import com.aoe.restapi.controller.issue.IssueRestControllerImpl;
 import com.aoe.restapi.controller.project.ProjectRestControllerImpl;
 import com.aoe.restapi.controller.relational.userdomain.UserDomainRestControllerImpl;
@@ -53,7 +54,9 @@ public class SecurityAspect {
 
         // allow endpoints that has not any authentication
         if (targetClass instanceof AuthRestControllerImpl && targetMethodName.equalsIgnoreCase("login") ||
-                targetClass instanceof UserRestControllerImpl<?> && targetMethodName.equalsIgnoreCase("createInstance"))
+                targetClass instanceof UserRestControllerImpl<?> && targetMethodName.equalsIgnoreCase("createInstance") ||
+                targetClass instanceof HealthCheckRestControllerImpl
+        )
             return;
 
         // validate jwt

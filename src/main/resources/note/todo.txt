@@ -21,6 +21,15 @@ eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNzExMjc4NjMzLCJleHAiOjE3MTM4NzA2MzN
 delete user throws exception but also delete
 
 Endpoint Security
+    HealthCheck:
+        GET:
+            /health-check
+                no authentication
+
+            /health-check/info
+                no authentication
+    ----------------------------------------------------
+
     Auth:
         POST:
             /auth/login

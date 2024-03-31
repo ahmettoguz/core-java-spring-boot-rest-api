@@ -45,6 +45,8 @@ public class AuthRestControllerImpl implements AuthRestController {
         // if cannot find user with that email return
         if (operationStatus instanceof OperationStatusError)
             return new OperationStatusError(HttpStatus.UNAUTHORIZED).getResponseEntity();
+        if (((OperationStatusSuccess) operationStatus).getData() == null)
+            return new OperationStatusError(HttpStatus.UNAUTHORIZED).getResponseEntity();
 
         // get user
         User user = (User) ((OperationStatusSuccess) operationStatus).getData();

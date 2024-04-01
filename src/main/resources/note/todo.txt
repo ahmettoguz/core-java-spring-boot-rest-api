@@ -23,238 +23,238 @@ delete user throws exception but also delete
 Endpoint Security
     HealthCheck:
         GET:
-            /health-check
+            /api/health-check
                 no authentication
 
-            /health-check/info
+            /api/health-check/info
                 no authentication
     ----------------------------------------------------
 
     Auth:
         POST:
-            /auth/login
+            /api/auth/login
                 no authentication
 
-            /auth/validate
+            /api/auth/validate
                 jwt authentication
     ----------------------------------------------------
 
     Domains:
         POST:
-            /domains
+            /api/domains
                 jwt authentication
 
         GET:
-            /domains
+            /api/domains
                 jwt authentication
 
-            /domains/{id}
+            /api/domains/{id}
                 jwt authentication
 
-            /domains/paged
+            /api/domains/paged
                 jwt authentication
 
-            /domains/count
+            /api/domains/count
                 jwt authentication
 
         PUT:
-            /domains/{id}
+            /api/domains/{id}
                 jwt authentication
                 user with that id can access
 
         PATCH:
-            /domains/${id}/deactivate
+            /api/domains/${id}/deactivate
                 jwt authentication
                 user with that id can access
 
-            /domains/${id}/activate
+            /api/domains/${id}/activate
                 jwt authentication
                 restricted for all
 
         DELETE:
-            /domains/${id}
+            /api/domains/${id}
                 jwt authentication
                 restricted for all
     ----------------------------------------------------
 
     Issues:
         POST:
-            /issues
+            /api/issues
                 jwt authentication
 
         GET:
-            /issues
+            /api/issues
                 jwt authentication
                 project manager can access
 
-            /issues/{id}
+            /api/issues/{id}
                 jwt authentication
                 project manager can access
                 user that have issue id can access
 
-            /issues/paged
+            /api/issues/paged
                 jwt authentication
                 project manager can access
 
-            /issues/count
+            /api/issues/count
                 jwt authentication
                 project manager can access
 
         PUT:
-            /issues/{id}
+            /api/issues/{id}
                 jwt authentication
                 project manager can access
                 user that have issue id can access
 
         PATCH:
-            /issues/${id}/deactivate
+            /api/issues/${id}/deactivate
                 jwt authentication
                 project manager can access
                 user that have issue id can access
 
-            /issues/${id}/activate
+            /api/issues/${id}/activate
                 jwt authentication
                 project manager can access
 
         DELETE:
-            /issues/${id}
+            /api/issues/${id}
                 jwt authentication
                 restricted for all
     ----------------------------------------------------
 
     Projects:
         POST:
-            /projects
+            /api/projects
                 jwt authentication
                 project manager can access
 
         GET:
-            /projects
+            /api/projects
                 jwt authentication
                 project manager can access
 
-            /projects/{id}
+            /api/projects/{id}
                 jwt authentication
                 project manager can access
                 user that have project id can access
 
-            /projects/paged
+            /api/projects/paged
                 jwt authentication
                 project manager can access
 
-            /projects/count
+            /api/projects/count
                 jwt authentication
                 project manager can access
 
         PUT:
-            /projects/{id}
+            /api/projects/{id}
                 jwt authentication
                 project manager can access
                 user that have project id can access
 
         PATCH:
-            /projects/${id}/deactivate
+            /api/projects/${id}/deactivate
                 jwt authentication
                 project manager can access
 
-            /projects/${id}/activate
+            /api/projects/${id}/activate
                 jwt authentication
                 restricted for all
 
         DELETE:
-            /projects/${id}
+            /api/projects/${id}
                 jwt authentication
                 restricted for all
     ----------------------------------------------------
 
     Users:
         POST:
-            /users
+            /api/users
                 no authentication
 
         GET:
-            /users
+            /api/users
                 jwt authentication
                 project manager can access
 
-            /users/{id}
+            /api/users/{id}
                 jwt authentication
                 project manager can access
                 user with that id can access
 
-            /users/paged
+            /api/users/paged
                 jwt authentication
                 project manager can access
 
-            /users/count
+            /api/users/count
                 jwt authentication
                 project manager can access
 
-            /users/search/exact
+            /api/users/search/exact
                 jwt authentication
                 project manager can access
 
-            /users/search/partial
+            /api/users/search/partial
                 jwt authentication
                 project manager can access
 
         PUT:
-            /users/{id}
+            /api/users/{id}
                 jwt authentication
                 user with that id can access
 
         PATCH:
-            /users/${id}/password
+            /api/users/${id}/password
                 jwt authentication
                 user with that id can access
 
-            /users/${id}/deactivate
+            /api/users/${id}/deactivate
                 jwt authentication
                 project manager can access
                 user with that id can access
 
-            /users/${id}/activate
+            /api/users/${id}/activate
                 jwt authentication
                 project manager can access
 
         DELETE:
-            /users/${id}
+            /api/users/${id}
                 jwt authentication
                 restricted for all
     ----------------------------------------------------
     
     Users-Domains:
         POST:
-            /users/${userId}/domains/${domainId}
+            /api/users/${userId}/domains/${domainId}
                 jwt authentication
                 user with that user id can access
 
         DELETE:
-            /users/${userId}/domains/${domainId}
+            /api/users/${userId}/domains/${domainId}
                 jwt authentication
                 user with that user id can access
     ----------------------------------------------------
     
     Users-Issues:
         POST:
-            /users/${userId}/issues/${issueId}
+            /api/users/${userId}/issues/${issueId}
                 jwt authentication
                 project manager can access
 
         DELETE:
-            /users/${userId}/issues/${issueId}
+            /api/users/${userId}/issues/${issueId}
                 jwt authentication
                 project manager can access
     ----------------------------------------------------
     
     Users-Projects:
         POST:
-            /users/${userId}/projects/${issueId}
+            /api/users/${userId}/projects/${issueId}
                 jwt authentication
                 project manager can access
 
         DELETE:
-            /users/${userId}/issues/${issueId}
+            /api/users/${userId}/issues/${issueId}
                 jwt authentication
                 project manager can access
     ----------------------------------------------------

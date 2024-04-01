@@ -5,7 +5,7 @@ npm run test
 npm run parallel
 
 ### run test with argument
-npm run grep -- 'git'
+npm run grep -- 'health-check'
 
 ### run test with specific spec file
 npm run spec

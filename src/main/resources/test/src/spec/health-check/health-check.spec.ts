@@ -1,16 +1,6 @@
 const addContext = require("mochawesome/addContext");
 const axios = require("axios");
 
-// Use dynamic import for chai
-let chai;
-let expect;
-
-before(async () => {
-  const chaiModule = await import("chai");
-  chai = chaiModule;
-  expect = chai.expect;
-});
-
 describe("health-check", function () {
   it("/api/health-check", async function () {
     // add context information
@@ -19,8 +9,8 @@ describe("health-check", function () {
     // make request
     const response = await axios.get("http://localhost:8080/api/health-check");
 
-    // make assertion
-    expect(response.status).to.equal(200);
+    // check status
+    if (response.status !== 200) throw new Error();
   });
 
   it("/api/health-check/info", async function () {
@@ -32,18 +22,14 @@ describe("health-check", function () {
       "http://localhost:8080/api/health-check/info"
     );
 
-    // check conditions
-    let isValid = true;
+    // check status
+    if (response.status != 200) throw new Error();
 
-    if (response.status != 200) isValid = false;
-
+    // check data field
     if (
       response.data.data.description === undefined ||
       response.data.data.name === undefined
     )
-      isValid = false;
-
-    // make assertion
-    expect(isValid).to.equal(true);
+      throw new Error();
   });
 });

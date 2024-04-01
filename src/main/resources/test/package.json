@@ -5,19 +5,17 @@
   "main": "index.js",
   "scripts": {
     "parallel": "mocha '**/*.spec.ts' --parallel --reporter mochawesome --require mochawesome/register --timeout 30000",
-    "test": "mocha '**/*.spec.ts' --reporter mochawesome --timeout 30000",
-    "spec": "mocha './src/spec/api.spec.ts' --reporter mochawesome --timeout 30000",
+    "test": "mocha '**/*.spec.ts' './src/hook/sync.hook.ts' --reporter mochawesome --timeout 30000",
+    "spec": "mocha './src/spec/health-check/health-check.spec.ts' './src/hook/sync.hook.ts' --reporter mochawesome --timeout 30000",
     "grep": "npm run test -- --grep"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/chai": "^4.3.14",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.12.2",
     "axios": "^1.6.8",
-    "chai": "^5.1.0",
     "mocha": "^10.4.0",
     "mochawesome": "^7.1.3"
   }

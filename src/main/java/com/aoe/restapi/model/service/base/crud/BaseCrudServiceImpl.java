@@ -47,6 +47,8 @@ public abstract class BaseCrudServiceImpl<T extends Activatable> implements Base
             }
 
         } catch (Exception e) {
+//            System.out.println(e);
+//            e.printStackTrace();
             return new OperationStatusError(HttpStatus.BAD_REQUEST, e);
         }
     }

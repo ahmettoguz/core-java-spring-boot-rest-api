@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Entity
 @Table(name = "roles")
-public class UserRole {
+public class Role {
     // fields
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

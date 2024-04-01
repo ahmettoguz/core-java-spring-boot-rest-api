@@ -4,7 +4,7 @@ import com.aoe.restapi.exception.exception.ArgException;
 import com.aoe.restapi.exception.exception.AuthorizationException;
 import com.aoe.restapi.exception.exception.JwtNotValidException;
 import com.aoe.restapi.model.entity.User;
-import com.aoe.restapi.model.entity.UserRole;
+import com.aoe.restapi.model.entity.Role;
 import com.aoe.restapi.utility.auth.JwtUtil;
 import com.aoe.restapi.utility.http.HttpUtil;
 import org.aspectj.lang.JoinPoint;
@@ -75,7 +75,7 @@ public class AspectFacade {
 
     public boolean authorizeWithRole(User user, String[] allowedRoles) {
         Set<String> userRoles = user.getRoleSet().stream()
-                .map(UserRole::getName)
+                .map(Role::getName)
                 .collect(Collectors.toSet());
 
         boolean hasAnyRole = Arrays.stream(allowedRoles)

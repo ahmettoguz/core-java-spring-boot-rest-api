@@ -34,7 +34,7 @@ public class User extends BaseEntity {
             name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<UserRole> roleSet;
+    private Set<Role> roleSet;
 
     @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -69,7 +69,7 @@ public class User extends BaseEntity {
             return null;
         else {
             return roleSet.stream()
-                    .map(UserRole::getId)
+                    .map(Role::getId)
                     .collect(Collectors.toList());
         }
     }

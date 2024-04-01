@@ -20,7 +20,6 @@ describe("Api Tests [health-check]", function () {
     addContext(this, "Checking app informations.");
 
     // make request
-
     const response = await axios.get(`${App.baseUrl}/api/health-check/info`);
 
     // check status

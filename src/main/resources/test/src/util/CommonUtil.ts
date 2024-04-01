@@ -51,6 +51,37 @@ class CommonUtil {
   static async sleepInMs(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
+
+  /* 
+    // usage
+    const randomWord = CommonUtil.generateRandomWord();
+   */
+  static generateRandomWord() {
+    const characters = "abcdefghijklmnopqrstuvwxyz";
+    let randomWord = "";
+
+    while (randomWord.length < 6) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      const randomChar = characters.charAt(randomIndex);
+
+      randomWord += randomChar;
+    }
+
+    // add ms
+    randomWord += "_" + String(Date.now()).slice(-5);
+
+    return randomWord;
+  }
+
+  static extractJwtToken(response) {
+    const authorizationHeader = response.headers["authorization"];
+
+    // check
+    if (!authorizationHeader || !authorizationHeader.startsWith("Bearer "))
+      throw new Error("Invalid authorization header");
+
+    return authorizationHeader.substring(7);
+  }
 }
 
 module.exports = CommonUtil;

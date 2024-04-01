@@ -7,6 +7,10 @@ configure postgresql
 
 configure deployment
 
+user creation with same email prevention
+
+userrole relational implementation and controller
+
 
 user: 1:
 eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzExMjc4NTQyLCJleHAiOjE3MTM4NzA1NDJ9.GXJS_TdBY68DlGrJ1pw-_2gAVkSxFnyHy3DlbRmbLWWfZI3cY2q1T4KTuyrNtKQVWZ4XVNMR3UrZIConWIhgNw

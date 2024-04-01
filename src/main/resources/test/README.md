@@ -9,3 +9,5 @@ npm run grep -- 'health-check'
 
 ### run test with specific spec file
 npm run spec
+
+cls

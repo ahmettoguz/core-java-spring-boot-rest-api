@@ -1,128 +1,103 @@
+# Endpoint Authentication and Authorization Requirements
 
-add lombook
+HealthCheck:
+    GET:
+        /api/health-check
+            no authentication
 
-servis düzeyinde exception yönet
+        /api/health-check/info
+            no authentication
+----------------------------------------------------
 
-configure postgresql
+Auth:
+    POST:
+        /api/auth/login
+            no authentication
 
-configure deployment
+        /api/auth/validate
+            jwt authentication
+----------------------------------------------------
 
-user creation with same email prevention
+Domains:
+    POST:
+        /api/domains
+            jwt authentication
 
-userrole relational implementation and controller
+    GET:
+        /api/domains
+            jwt authentication
 
+        /api/domains/{id}
+            jwt authentication
 
-user: 1:
-eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzExMjc4NTQyLCJleHAiOjE3MTM4NzA1NDJ9.GXJS_TdBY68DlGrJ1pw-_2gAVkSxFnyHy3DlbRmbLWWfZI3cY2q1T4KTuyrNtKQVWZ4XVNMR3UrZIConWIhgNw
+        /api/domains/paged
+            jwt authentication
 
-porject manager: 2:
-eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNzExMjc4NjE3LCJleHAiOjE3MTM4NzA2MTd9.uLBRYt5NazLc5EGIVJAg1ZAjftjIVkhZI9MG69VVU4Pt1WFtBf5VOpP6Sc3IqNOe8Fdu3tZZLRtc4MTg9IZGyw
+        /api/domains/count
+            jwt authentication
 
-admin: 3:
-eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNzExMjc4NjMzLCJleHAiOjE3MTM4NzA2MzN9.2I6_TxPSE7v9HhuL28FtfKDDesBUuG_xfOznHqDpVgMpKRWglXv1rpDHwcu4G-RV-DkUdhH05Za1NaLNwVznkQ
+    PUT:
+        /api/domains/{id}
+            jwt authentication
+            user with that id can access
 
+    PATCH:
+        /api/domains/${id}/deactivate
+            jwt authentication
+            user with that id can access
 
-delete user throws exception but also delete
+        /api/domains/${id}/activate
+            jwt authentication
+            restricted for all
 
-Endpoint Security
-    HealthCheck:
-        GET:
-            /api/health-check
-                no authentication
+    DELETE:
+        /api/domains/${id}
+            jwt authentication
+            restricted for all
+----------------------------------------------------
 
-            /api/health-check/info
-                no authentication
-    ----------------------------------------------------
+Issues:
+    POST:
+        /api/issues
+            jwt authentication
 
-    Auth:
-        POST:
-            /api/auth/login
-                no authentication
+    GET:
+        /api/issues
+            jwt authentication
+            project manager can access
 
-            /api/auth/validate
-                jwt authentication
-    ----------------------------------------------------
+        /api/issues/{id}
+            jwt authentication
+            project manager can access
+            user that have issue id can access
 
-    Domains:
-        POST:
-            /api/domains
-                jwt authentication
+        /api/issues/paged
+            jwt authentication
+            project manager can access
 
-        GET:
-            /api/domains
-                jwt authentication
+        /api/issues/count
+            jwt authentication
+            project manager can access
 
-            /api/domains/{id}
-                jwt authentication
+    PUT:
+        /api/issues/{id}
+            jwt authentication
+            project manager can access
+            user that have issue id can access
 
-            /api/domains/paged
-                jwt authentication
+    PATCH:
+        /api/issues/${id}/deactivate
+            jwt authentication
+            project manager can access
+            user that have issue id can access
 
-            /api/domains/count
-                jwt authentication
+        /api/issues/${id}/activate
+            jwt authentication
+            project manager can access
 
-        PUT:
-            /api/domains/{id}
-                jwt authentication
-                user with that id can access
-
-        PATCH:
-            /api/domains/${id}/deactivate
-                jwt authentication
-                user with that id can access
-
-            /api/domains/${id}/activate
-                jwt authentication
-                restricted for all
-
-        DELETE:
-            /api/domains/${id}
-                jwt authentication
-                restricted for all
-    ----------------------------------------------------
-
-    Issues:
-        POST:
-            /api/issues
-                jwt authentication
-
-        GET:
-            /api/issues
-                jwt authentication
-                project manager can access
-
-            /api/issues/{id}
-                jwt authentication
-                project manager can access
-                user that have issue id can access
-
-            /api/issues/paged
-                jwt authentication
-                project manager can access
-
-            /api/issues/count
-                jwt authentication
-                project manager can access
-
-        PUT:
-            /api/issues/{id}
-                jwt authentication
-                project manager can access
-                user that have issue id can access
-
-        PATCH:
-            /api/issues/${id}/deactivate
-                jwt authentication
-                project manager can access
-                user that have issue id can access
-
-            /api/issues/${id}/activate
-                jwt authentication
-                project manager can access
-
-        DELETE:
-            /api/issues/${id}
-                jwt authentication
+    DELETE:
+        /api/issues/${id}
+            jwt authentication
                 restricted for all
     ----------------------------------------------------
 
@@ -226,7 +201,20 @@ Endpoint Security
                 jwt authentication
                 restricted for all
     ----------------------------------------------------
-    
+
+    Users-Roles:
+        POST:
+            /api/users/{userId}/roles/{roleId}
+                jwt authentication
+                user with project manager role and roleId is 1 can access
+
+
+        DELETE:
+            /api/users/{userId}/roles/{roleId}
+                jwt authentication
+                user with project manager role and roleId is 1 can access
+    ----------------------------------------------------
+
     Users-Domains:
         POST:
             /api/users/${userId}/domains/${domainId}
@@ -238,7 +226,7 @@ Endpoint Security
                 jwt authentication
                 user with that user id can access
     ----------------------------------------------------
-    
+
     Users-Issues:
         POST:
             /api/users/${userId}/issues/${issueId}
@@ -250,7 +238,7 @@ Endpoint Security
                 jwt authentication
                 project manager can access
     ----------------------------------------------------
-    
+
     Users-Projects:
         POST:
             /api/users/${userId}/projects/${issueId}

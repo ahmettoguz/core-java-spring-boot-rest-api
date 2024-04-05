@@ -1,35 +1,29 @@
 const addContext = require("mochawesome/addContext");
-const axios = require("axios");
 
-const App = require("../../app/App.ts");
+const HealthCheckFacade = require("../../facade/HealthCheckFacade.ts");
 
 describe("Api Tests [health-check]", function () {
   it("/api/health-check", async function () {
     // add context information
     addContext(this, "Checking server status.");
 
-    // make request
-    const response = await axios.get(`${App.baseUrl}/api/health-check`);
-
-    // check status
-    if (response.status !== 200) throw new Error();
+    // perform action
+    try {
+      await HealthCheckFacade.checkServerStatus();
+    } catch (error) {
+      throw error;
+    }
   });
 
   it("/api/health-check/info", async function () {
     // add context information
     addContext(this, "Checking app informations.");
 
-    // make request
-    const response = await axios.get(`${App.baseUrl}/api/health-check/info`);
-
-    // check status
-    if (response.status !== 200) throw new Error();
-
-    // check data field
-    if (
-      response.data.data.description === undefined ||
-      response.data.data.name === undefined
-    )
-      throw new Error();
+    // perform action
+    try {
+      await HealthCheckFacade.checkAppInformation();
+    } catch (error) {
+      throw error;
+    }
   });
 });

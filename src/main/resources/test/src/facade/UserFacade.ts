@@ -26,8 +26,6 @@ class UserFacade {
     // set initialized values
     App[role.name] = response.data.data;
     App[role.name].password = Constant.password;
-
-    console.log(App[role.name]);
   }
 }
 

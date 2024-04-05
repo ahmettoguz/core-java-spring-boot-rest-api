@@ -10,7 +10,7 @@ const UserFacade = require("../../facade/UserFacade.ts");
 const RoleFacade = require("../../facade/RoleFacade.ts");
 const AuthFacade = require("../../facade/AuthFacade.ts");
 
-describe("Initializing Environment", function () {
+describe("Initializing Environment [init]", function () {
   it("user creation", async function () {
     // context of the test
     addContext(this, "Creating user.");

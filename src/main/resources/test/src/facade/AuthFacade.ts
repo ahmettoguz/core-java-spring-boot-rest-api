@@ -26,6 +26,34 @@ class AuthFacade {
     // set initialized value
     App[role.name].jwt = token;
   }
+
+  static async validate(jwt) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+
+    // make request
+    const response = await axios.post(
+      `${Constant.baseUrl}/api/auth/validate`,
+      null,
+      config
+    );
+
+    // check status
+    if (response.status !== 200) throw new Error();
+
+    // check expiration time
+    if (response.data.exp <= new Date()) {
+      throw new Error();
+    }
+
+    // check body
+    if (response.data.body === undefined && response.data.body === null) {
+      throw new Error();
+    }
+  }
 }
 
 module.exports = AuthFacade;

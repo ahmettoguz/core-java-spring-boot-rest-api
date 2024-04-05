@@ -26,7 +26,7 @@ public class AspectFacade {
         this.jwtUtil = jwtUtil;
     }
 
-    public Object[] getArguments(JoinPoint joinPoint) {
+    public int getArgument(JoinPoint joinPoint, int argumentIndex) {
         // get the arguments
         Object[] args = joinPoint.getArgs();
 
@@ -34,7 +34,7 @@ public class AspectFacade {
         if (args.length == 0)
             throw new ArgException();
 
-        return args;
+        return Integer.parseInt(args[argumentIndex].toString());
     }
 
     public void commonJwtAuthentication() {
@@ -59,14 +59,12 @@ public class AspectFacade {
     }
 
     public boolean authorizeWithId(User user, JoinPoint joinPoint) {
-        // get arguments
-        Object[] args = this.getArguments(joinPoint);
+        // get target id from argument
+        int targetId = this.getArgument(joinPoint, 0);
 
         // get user id
         int userId = user.getId();
 
-        // get target id from argument
-        int targetId = Integer.parseInt(args[0].toString());
 
         if (userId != targetId)
             return false;
@@ -91,11 +89,8 @@ public class AspectFacade {
     }
 
     public boolean authorizeUserHaveIssueId(User user, JoinPoint joinPoint) {
-        // get arguments
-        Object[] args = this.getArguments(joinPoint);
-
         // get target id from argument
-        int targetId = Integer.parseInt(args[0].toString());
+        int targetId = this.getArgument(joinPoint, 0);
 
         // get users issue ids
         List<Integer> userIssueIds = user.getIssueIds();
@@ -105,11 +100,8 @@ public class AspectFacade {
     }
 
     public boolean authorizeUserHaveProjectId(User user, JoinPoint joinPoint) {
-        // get arguments
-        Object[] args = this.getArguments(joinPoint);
-
         // get target id from argument
-        int targetId = Integer.parseInt(args[0].toString());
+        int targetId = this.getArgument(joinPoint, 0);
 
         // get users issue ids
         List<Integer> userProjectIds = user.getProjectIds();
@@ -117,4 +109,13 @@ public class AspectFacade {
         // make comparison
         return this.compareIdWithList(userProjectIds, targetId);
     }
+
+    public boolean isTargetUser(JoinPoint joinPoint) {
+        // get target id from argument
+        int targetId = this.getArgument(joinPoint, 1);
+
+        // make comparison
+        return targetId == 1;
+    }
+
 }

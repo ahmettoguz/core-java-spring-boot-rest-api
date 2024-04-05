@@ -9,6 +9,7 @@ import com.aoe.restapi.controller.project.ProjectRestControllerImpl;
 import com.aoe.restapi.controller.relational.userdomain.UserDomainRestControllerImpl;
 import com.aoe.restapi.controller.relational.userissue.UserIssueRestControllerImpl;
 import com.aoe.restapi.controller.relational.userproject.UserProjectRestControllerImpl;
+import com.aoe.restapi.controller.relational.userrole.UserRoleRestControllerImpl;
 import com.aoe.restapi.controller.user.UserRestControllerImpl;
 import com.aoe.restapi.exception.exception.CommonException;
 import com.aoe.restapi.facade.AspectFacade;
@@ -362,6 +363,25 @@ public class SecurityAspect {
 
                 case "removeUserFromProject": // DELETE - /users/${userId}/issues/${issueId}
                     isAuthorized = isAuthorized ? true : aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()});
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                default:
+                    throw new CommonException();
+            }
+        } else if (targetClass instanceof UserRoleRestControllerImpl<?>) {
+            switch (targetMethodName) {
+                case "addUserRole": // POST - /users/${userId}/projects/${issueId}
+                    isAuthorized = isAuthorized ? true : (aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()}) &&
+                            aspectFacade.isTargetUser(joinPoint));
+
+                    if (!isAuthorized) aspectFacade.restrictAccess();
+                    break;
+
+                case "removeUserRole": // DELETE - /users/${userId}/issues/${issueId}
+                    isAuthorized = isAuthorized ? true : (aspectFacade.authorizeWithRole(user, new String[]{RoleEnum.PROJECT_MANAGER.getName()}) &&
+                            aspectFacade.isTargetUser(joinPoint));
 
                     if (!isAuthorized) aspectFacade.restrictAccess();
                     break;

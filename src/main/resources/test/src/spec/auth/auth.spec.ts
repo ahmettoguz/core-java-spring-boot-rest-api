@@ -13,7 +13,7 @@ describe("Authentication Tests [auth]", function () {
 
     //perform action
     try {
-      AuthFacade.validate(App.admin.jwt);
+      await AuthFacade.validate(App.admin.jwt);
     } catch (error) {
       throw error;
     }

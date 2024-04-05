@@ -1,9 +1,4 @@
 const addContext = require("mochawesome/addContext");
-const axios = require("axios");
-
-const Constant = require("../../constant/Constant.ts");
-const App = require("../../app/App.ts");
-const CommonUtil = require("../../util/CommonUtil.ts");
 const RoleEnum = require("../../enum/RoleEnum.ts");
 
 const UserFacade = require("../../facade/UserFacade.ts");
@@ -24,13 +19,12 @@ describe("Initializing Environment [init]", function () {
   });
 
   it("user role grant", async function () {
-    // TODO add token to grant access request to admin token
     // context of the test
     addContext(this, "Granting user role to created user.");
 
     // perform action
     try {
-      RoleFacade.addRoleToUser(RoleEnum.USER);
+      await RoleFacade.addRoleToUser(RoleEnum.USER);
     } catch (error) {
       throw error;
     }
@@ -66,7 +60,7 @@ describe("Initializing Environment [init]", function () {
 
     // perform action
     try {
-      RoleFacade.addRoleToUser(RoleEnum.PROJECTMANAGER);
+      await RoleFacade.addRoleToUser(RoleEnum.PROJECTMANAGER);
     } catch (error) {
       throw error;
     }
@@ -102,7 +96,7 @@ describe("Initializing Environment [init]", function () {
 
     // perform action
     try {
-      RoleFacade.addRoleToUser(RoleEnum.ADMIN);
+      await RoleFacade.addRoleToUser(RoleEnum.ADMIN);
     } catch (error) {
       throw error;
     }

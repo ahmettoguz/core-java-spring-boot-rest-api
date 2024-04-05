@@ -1,133 +1,122 @@
 const addContext = require("mochawesome/addContext");
 const axios = require("axios");
 
+const Constant = require("../../constant/Constant.ts");
 const App = require("../../app/App.ts");
 const CommonUtil = require("../../util/CommonUtil.ts");
+const RoleEnum = require("../../enum/RoleEnum.ts");
+
+const UserFacade = require("../../facade/UserFacade.ts");
+const RoleFacade = require("../../facade/RoleFacade.ts");
+const AuthFacade = require("../../facade/AuthFacade.ts");
 
 describe("Initializing Environment", function () {
   it("user creation", async function () {
+    // context of the test
     addContext(this, "Creating user.");
 
-    const body = {
-      firstName: "apiTestName",
-      email: `${CommonUtil.generateRandomWord()}@hotmail.com`,
-      password: "apiTestPassword",
-      isActive: true,
-    };
+    //perform action
+    try {
+      await UserFacade.createUser(RoleEnum.USER);
+    } catch (error) {
+      throw error;
+    }
+  });
 
-    // make request
-    const response = await axios.post("http://localhost:8080/api/users", body);
+  it("user role grant", async function () {
+    // TODO add token to grant access request to admin token
+    // context of the test
+    addContext(this, "Granting user role to created user.");
 
-    // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
-
-    App.user = response.data.data;
-    App.user.password = "apiTestPassword";
+    // perform action
+    try {
+      RoleFacade.addRoleToUser(RoleEnum.USER);
+    } catch (error) {
+      throw error;
+    }
   });
 
   it("user login", async function () {
+    // context of the test
     addContext(this, "Login as user.");
 
-    const url = "http://localhost:8080/api/auth/login";
-    const body = {
-      email: App.user.email,
-      password: App.user.password,
-    };
-
-    // make request
-    const response = await axios.post(url, body);
-
-    // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
-
-    // get token
-    const token = CommonUtil.extractJwtToken(response);
-    App.user.jwt = token;
+    // perform action
+    try {
+      await AuthFacade.login(RoleEnum.USER);
+    } catch (error) {
+      throw error;
+    }
   });
 
   it("project manager creation", async function () {
+    // context of the test
     addContext(this, "Creating project manager.");
 
-    const body = {
-      firstName: "apiTestName",
-      email: `${CommonUtil.generateRandomWord()}@hotmail.com`,
-      password: "apiTestPassword",
-      isActive: true,
-    };
+    //perform action
+    try {
+      await UserFacade.createUser(RoleEnum.PROJECTMANAGER);
+    } catch (error) {
+      throw error;
+    }
+  });
 
-    // make request
-    const response = await axios.post("http://localhost:8080/api/users", body);
+  it("project manager role grant", async function () {
+    // context of the test
+    addContext(this, "Granting project manager role to created user.");
 
-    // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
-
-    App.projectManager = response.data.data;
-    App.projectManager.password = "apiTestPassword";
+    // perform action
+    try {
+      RoleFacade.addRoleToUser(RoleEnum.PROJECTMANAGER);
+    } catch (error) {
+      throw error;
+    }
   });
 
   it("project manager login", async function () {
+    // context of the test
     addContext(this, "Login as project manager.");
 
-    const url = "http://localhost:8080/api/auth/login";
-    const body = {
-      email: App.projectManager.email,
-      password: App.projectManager.password,
-    };
-
-    // make request
-    const response = await axios.post(url, body);
-
-    // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
-
-    // get token
-    const token = CommonUtil.extractJwtToken(response);
-    App.projectManager.jwt = token;
+    // perform action
+    try {
+      await AuthFacade.login(RoleEnum.PROJECTMANAGER);
+    } catch (error) {
+      throw error;
+    }
   });
 
   it("admin creation", async function () {
+    // context of the test
     addContext(this, "Creating admin.");
 
-    const body = {
-      firstName: "apiTestName",
-      email: `${CommonUtil.generateRandomWord()}@hotmail.com`,
-      password: "apiTestPassword",
-      isActive: true,
-    };
+    //perform action
+    try {
+      await UserFacade.createUser(RoleEnum.ADMIN);
+    } catch (error) {
+      throw error;
+    }
+  });
 
-    // make request
-    const response = await axios.post("http://localhost:8080/api/users", body);
+  it("admin role grant", async function () {
+    // context of the test
+    addContext(this, "Granting admin role to created user.");
 
-    // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
-
-    App.admin = response.data.data;
-    App.admin.password = "apiTestPassword";
+    // perform action
+    try {
+      RoleFacade.addRoleToUser(RoleEnum.ADMIN);
+    } catch (error) {
+      throw error;
+    }
   });
 
   it("admin login", async function () {
+    // context of the test
     addContext(this, "Login as admin.");
 
-    const url = "http://localhost:8080/api/auth/login";
-    const body = {
-      email: App.admin.email,
-      password: App.admin.password,
-    };
-
-    // make request
-    const response = await axios.post(url, body);
-
-    // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
-
-    // get token
-    const token = CommonUtil.extractJwtToken(response);
-    App.admin.jwt = token;
+    // perform action
+    try {
+      await AuthFacade.login(RoleEnum.ADMIN);
+    } catch (error) {
+      throw error;
+    }
   });
 });

@@ -1,0 +1,94 @@
+{
+	"info": {
+		"_postman_id": "a591ed88-e467-47c9-a026-c6966278a878",
+		"name": "spring-boot-users-roles",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26266539"
+	},
+	"item": [
+		{
+			"name": "users/roles",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNzExMjc4NjE3LCJleHAiOjE3MTM4NzA2MTd9.uLBRYt5NazLc5EGIVJAg1ZAjftjIVkhZI9MG69VVU4Pt1WFtBf5VOpP6Sc3IqNOe8Fdu3tZZLRtc4MTg9IZGyw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/users/1/roles/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"1",
+						"roles",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users/roles",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzExMjc4NTQyLCJleHAiOjE3MTM4NzA1NDJ9.GXJS_TdBY68DlGrJ1pw-_2gAVkSxFnyHy3DlbRmbLWWfZI3cY2q1T4KTuyrNtKQVWZ4XVNMR3UrZIConWIhgNw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/users/1/roles/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"1",
+						"roles",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

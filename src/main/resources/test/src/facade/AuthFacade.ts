@@ -28,6 +28,8 @@ class AuthFacade {
   }
 
   static async validate(jwt) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/auth/validate`;
     const config = {
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -35,11 +37,7 @@ class AuthFacade {
     };
 
     // make request
-    const response = await axios.post(
-      `${Constant.baseUrl}/api/auth/validate`,
-      null,
-      config
-    );
+    const response = await axios.post(url, null, config);
 
     // check status
     if (response.status !== 200) throw new Error();

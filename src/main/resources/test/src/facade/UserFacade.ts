@@ -4,17 +4,12 @@ const Constant = require("../constant/Constant.ts");
 const App = require("../app/App.ts");
 const CommonUtil = require("../util/CommonUtil.ts");
 
-class UserFacade {
-  static async createUser(role) {
-    const url = `${Constant.baseUrl}/api/users`;
+const AuthFacade = require("../facade/AuthFacade.ts");
 
+class UserFacade {
+  static async createUser(body, user) {
     // prepare request
-    const body = {
-      firstName: `${Constant.preKey}${role.name}`,
-      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
-      password: `${Constant.preKey}Password`,
-      isActive: true,
-    };
+    const url = `${Constant.baseUrl}/api/users`;
 
     // make request
     const response = await axios.post(url, body);
@@ -23,9 +18,30 @@ class UserFacade {
     if (response.status !== 200) throw new Error();
     if (response.data === undefined) throw new Error();
 
-    // set initialized values
-    App[role.name] = response.data.data;
-    App[role.name].password = Constant.password;
+    // set user
+    Object.assign(user, response.data.data);
+    user.password = body.password;
+  }
+
+  static async readUserWithId(id, user) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/users/${id}`;
+
+    const config = {
+      headers: {
+        Authorization: user.jwt,
+      },
+    };
+
+    // make request
+    const response = await axios.get(url, config);
+
+    // check response
+    if (response.status !== 200) throw new Error();
+    if (response.data === undefined) throw new Error();
+
+    // return response data
+    return response.data.data;
   }
 }
 

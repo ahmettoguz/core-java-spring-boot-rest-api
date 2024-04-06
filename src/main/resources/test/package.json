@@ -6,6 +6,7 @@
   "scripts": {
     "parallel": "mocha '**/*.spec.ts' --parallel --reporter mochawesome --require mochawesome/register --timeout 30000",
     "test": "cls && mocha '**/*.spec.ts' './src/hook/sync.hook.ts' --reporter mochawesome --timeout 30000",
+    "ts": "tsc && mocha 'dist/**/*.spec.js' './dist/src/hook/sync.hook.js' --reporter mochawesome --timeout 30000",
     "spec": "mocha './src/spec/health-check/health-check.spec.ts' './src/hook/sync.hook.ts' --reporter mochawesome --timeout 30000",
     "grep": "npm run test -- --grep"
   },
@@ -17,6 +18,7 @@
     "@types/node": "^20.12.2",
     "axios": "^1.6.8",
     "mocha": "^10.4.0",
-    "mochawesome": "^7.1.3"
+    "mochawesome": "^7.1.3",
+    "typescript": "^5.4.4"
   }
 }

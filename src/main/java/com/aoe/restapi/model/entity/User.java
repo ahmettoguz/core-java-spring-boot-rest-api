@@ -4,15 +4,17 @@ import com.aoe.restapi.model.entity.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
@@ -34,7 +36,7 @@ public class User extends BaseEntity {
             name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<UserRole> roleSet;
+    private Set<Role> roleSet;
 
     @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -44,7 +46,8 @@ public class User extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private Set<Project> projectSet;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    //    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "domain_id")
     private Domain domain;
@@ -69,7 +72,7 @@ public class User extends BaseEntity {
             return null;
         else {
             return roleSet.stream()
-                    .map(UserRole::getId)
+                    .map(Role::getId)
                     .collect(Collectors.toList());
         }
     }

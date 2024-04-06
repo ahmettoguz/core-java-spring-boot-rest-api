@@ -1,17 +1,23 @@
 package com.aoe.restapi.constants;
 
 public enum RoleEnum {
-    PROJECT_MANAGER("project manager"),
-    ADMIN("admin"),
-    User("user");
+    USER("user", 1),
+    PROJECT_MANAGER("project manager", 2),
+    ADMIN("admin", 3);
 
     private final String name;
+    private final int id;
 
-    RoleEnum(String name) {
+    RoleEnum(String name, int id) {
         this.name = name;
+        this.id = id;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getId() {
+        return id;
     }
 }

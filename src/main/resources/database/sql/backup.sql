@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: Mar 20, 2024 at 05:30 AM
+-- Generation Time: Apr 05, 2024 at 11:18 AM
 -- Server version: 8.3.0
 -- PHP Version: 8.2.15
 
@@ -43,8 +43,8 @@ CREATE TABLE `domains` (
 --
 
 INSERT INTO `domains` (`_id`, `created_at`, `updated_at`, `name`, `is_active`) VALUES
-(1, NULL, NULL, 'ahmet.com.tr', 1),
-(2, NULL, NULL, 'tuna.com.tr', 1);
+(1, '2024-04-05 14:09:19', '2024-04-05 14:09:19', 'ahmet.com.tr', 1),
+(2, '2024-04-05 14:09:57', '2024-04-05 14:09:57', 'tuna.com.tr', 1);
 
 -- --------------------------------------------------------
 
@@ -68,11 +68,11 @@ CREATE TABLE `issues` (
 --
 
 INSERT INTO `issues` (`_id`, `created_at`, `updated_at`, `title`, `description`, `is_active`, `user_id`) VALUES
-(1, NULL, NULL, 'backend', 'implement controller', 1, 1),
-(2, NULL, NULL, 'deployment', 'configure deployment file', 1, 1),
-(3, NULL, NULL, 'security', 'configure keys', 1, 2),
-(4, NULL, NULL, 'devops', 'manage node', 1, 2),
-(5, NULL, NULL, 'marketing', 'manage advertisements', 1, 2);
+(1, '2024-04-05 14:10:21', '2024-04-05 14:10:21', 'backend', 'implement controller', 1, 3),
+(2, '2024-04-01 14:10:30', '2024-04-01 14:10:30', 'deployment', 'configure deployment file', 1, 3),
+(3, '2024-04-03 14:10:41', '2024-04-03 14:10:41', 'security', 'configure keys', 1, 2),
+(4, '2024-04-04 14:10:48', '2024-04-04 14:10:48', 'devops', 'manage node', 1, 2),
+(5, '2024-04-06 14:10:55', '2024-04-06 14:10:55', 'marketing', 'manage advertisements', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -95,8 +95,8 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`_id`, `created_at`, `updated_at`, `title`, `is_active`, `progress`) VALUES
-(1, NULL, NULL, 'Skill-Catalyst', 0, 30),
-(2, NULL, NULL, 'Colors-Of-The-World', 0, 100);
+(1, '2024-04-05 14:16:48', '2024-04-05 14:16:48', 'Skill-Catalyst', 1, 30),
+(2, '2024-04-05 14:16:58', '2024-04-05 14:16:58', 'Colors-Of-The-World', 1, 100);
 
 -- --------------------------------------------------------
 
@@ -115,9 +115,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`_id`, `name`) VALUES
-(1, 'user'),
+(1, 'admin'),
 (2, 'project manager'),
-(3, 'admin');
+(3, 'user');
 
 -- --------------------------------------------------------
 
@@ -142,9 +142,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`_id`, `created_at`, `updated_at`, `first_name`, `email`, `password`, `is_active`, `domain_id`) VALUES
-(1, NULL, NULL, 'ahmet', 'ahmet@hotmail.com', '$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 1),
-(2, NULL, NULL, 'tuna', 'tuna@hotmail.com', '$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 2),
-(3, NULL, NULL, 'kisimo', 'kisimo@hotmail.com', '$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, NULL);
+(1, '2024-04-05 14:11:14', '2024-04-05 14:11:14', 'admin', 'admin@hotmail.com', '$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, NULL),
+(2, '2024-04-05 14:11:55', '2024-04-05 14:11:55', 'tuna', 'tuna@hotmail.com', '$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 2),
+(3, '2024-04-05 14:12:17', '2024-04-05 14:12:17', 'ahmet', 'ahmet@hotmail.com', '$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, 1),
+(4, '2024-04-05 14:15:25', '2024-04-05 14:15:25', 'kısmet', 'kısmet@hotmail.com', '$2a$10$RaU93TnN0W29vcEa9tIbKukiDlyPdXzXa3xC0BYx4nTzUP3zKWT/6', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -163,8 +164,9 @@ CREATE TABLE `users_projects` (
 --
 
 INSERT INTO `users_projects` (`user_id`, `project_id`) VALUES
-(1, 1),
-(1, 2);
+(2, 1),
+(3, 1),
+(3, 2);
 
 -- --------------------------------------------------------
 
@@ -184,10 +186,7 @@ CREATE TABLE `users_roles` (
 
 INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES
 (1, 1),
-(2, 1),
 (2, 2),
-(3, 1),
-(3, 2),
 (3, 3);
 
 --
@@ -224,6 +223,7 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`_id`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `domain_id` (`domain_id`);
 
 --
@@ -274,7 +274,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

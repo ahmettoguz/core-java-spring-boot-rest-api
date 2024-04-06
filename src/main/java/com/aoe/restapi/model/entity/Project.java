@@ -3,15 +3,17 @@ package com.aoe.restapi.model.entity;
 import com.aoe.restapi.model.entity.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "projects")
 public class Project extends BaseEntity {

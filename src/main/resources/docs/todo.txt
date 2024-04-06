@@ -1,0 +1,5 @@
+servis düzeyinde exception yönet
+
+configure postgresql
+
+configure deployment

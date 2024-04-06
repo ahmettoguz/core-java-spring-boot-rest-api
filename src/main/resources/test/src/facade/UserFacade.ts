@@ -39,6 +39,27 @@ class UserFacade {
     // return response data
     return response.data.data;
   }
+
+  static async readAllUsers(user) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/users`;
+
+    const config = {
+      headers: {
+        Authorization: user.jwt,
+      },
+    };
+
+    // make request
+    const response = await axios.get(url, config);
+
+    // check response
+    if (response.status !== 200) throw new Error();
+    if (response.data === undefined) throw new Error();
+
+    // return response data
+    return response.data.data;
+  }
 }
 
 module.exports = UserFacade;

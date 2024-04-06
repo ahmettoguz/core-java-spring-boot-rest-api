@@ -6,7 +6,7 @@ const AuthFacade = require("../../facade/AuthFacade.ts");
 
 before(async () => {});
 
-describe("Authentication Tests [auth]", function () {
+describe("Authentication Authorization Tests [auth.spec]", function () {
   it("/api/auth/validate", async function () {
     // add context information
     addContext(this, "Validating jwt token.");

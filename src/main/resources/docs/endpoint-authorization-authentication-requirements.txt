@@ -18,6 +18,62 @@ Auth [✅]:
             jwt authentication
 ----------------------------------------------------
 
+Users []:
+    POST:
+        /api/users
+            no authentication
+
+    GET:
+        /api/users
+            jwt authentication
+            project manager can access
+
+        /api/users/{id}
+            jwt authentication
+            project manager can access
+            user with that id can access
+
+        /api/users/paged
+            jwt authentication
+            project manager can access
+
+        /api/users/count
+            jwt authentication
+            project manager can access
+
+        /api/users/search/exact
+            jwt authentication
+            project manager can access
+
+        /api/users/search/partial
+            jwt authentication
+            project manager can access
+
+    PUT:
+        /api/users/{id}
+            jwt authentication
+            user with that id can access
+
+    PATCH:
+        /api/users/${id}/password
+            jwt authentication
+            user with that id can access
+
+        /api/users/${id}/deactivate
+            jwt authentication
+            project manager can access
+            user with that id can access
+
+        /api/users/${id}/activate
+            jwt authentication
+            project manager can access
+
+    DELETE:
+        /api/users/${id}
+            jwt authentication
+            restricted for all
+----------------------------------------------------
+
 Domains []:
     POST:
         /api/domains
@@ -143,62 +199,6 @@ Projects []:
 
     DELETE:
         /api/projects/${id}
-            jwt authentication
-            restricted for all
-----------------------------------------------------
-
-Users []:
-    POST:
-        /api/users
-            no authentication
-
-    GET:
-        /api/users
-            jwt authentication
-            project manager can access
-
-        /api/users/{id}
-            jwt authentication
-            project manager can access
-            user with that id can access
-
-        /api/users/paged
-            jwt authentication
-            project manager can access
-
-        /api/users/count
-            jwt authentication
-            project manager can access
-
-        /api/users/search/exact
-            jwt authentication
-            project manager can access
-
-        /api/users/search/partial
-            jwt authentication
-            project manager can access
-
-    PUT:
-        /api/users/{id}
-            jwt authentication
-            user with that id can access
-
-    PATCH:
-        /api/users/${id}/password
-            jwt authentication
-            user with that id can access
-
-        /api/users/${id}/deactivate
-            jwt authentication
-            project manager can access
-            user with that id can access
-
-        /api/users/${id}/activate
-            jwt authentication
-            project manager can access
-
-    DELETE:
-        /api/users/${id}
             jwt authentication
             restricted for all
 ----------------------------------------------------

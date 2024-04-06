@@ -45,26 +45,40 @@ describe("User Tests [user.spec]", function () {
       throw new Error();
   });
 
-  // it("[GET] /api/users/{id}", async function () {
-  //   // add context information
-  //   addContext(this, "Reading user with id.");
+  it("[GET] /api/users/{id}", async function () {
+    // add context information
+    addContext(this, "Reading user with id.");
 
-  //   // create user first
-  //   // prepare body
-  //   const body = {
-  //     firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-  //     email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
-  //     password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-  //     isActive: true,
-  //   };
+    // create user first
+    // prepare body
+    const body = {
+      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+      password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      isActive: true,
+    };
 
-  //   //perform action
-  //   let user;
-  //   try {
-  //     user = await UserFacade.createUser(body);
-  //   } catch (error) {
-  //     throw error;
-  //   }
+    // perform action
+    let userToCreate: any = {};
+    try {
+      await UserFacade.createUser(body, userToCreate);
+    } catch (error) {
+      throw error;
+    }
 
-  // });
+    // read created user
+    let userRead;
+    try {
+      userRead = await UserFacade.readUserWithId(userToCreate.id, App.admin);
+    } catch (error) {
+      throw error;
+    }
+
+    // compare users
+    if (
+      userToCreate.id != userRead.id ||
+      userToCreate.firstName != userRead.firstName
+    )
+      throw new Error();
+  });
 });

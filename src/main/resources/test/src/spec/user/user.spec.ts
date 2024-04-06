@@ -22,14 +22,12 @@ describe("User Tests [user.spec]", function () {
     };
 
     // perform action
-    let userToCreate = { id: null };
+    let userToCreate: any = {};
     try {
       await UserFacade.createUser(body, userToCreate);
     } catch (error) {
       throw error;
     }
-
-    console.log(App.admin);
 
     // read created user
     let userRead;
@@ -39,7 +37,12 @@ describe("User Tests [user.spec]", function () {
       throw error;
     }
 
-    console.log(userRead);
+    // compare users
+    if (
+      userToCreate.id != userRead.id ||
+      userToCreate.firstName != userRead.firstName
+    )
+      throw new Error();
   });
 
   // it("[GET] /api/users/{id}", async function () {

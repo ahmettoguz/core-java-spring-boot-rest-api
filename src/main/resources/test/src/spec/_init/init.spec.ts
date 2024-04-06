@@ -37,11 +37,22 @@ describe("Initialization Tests [init.spec]", function () {
     // context of the test
     addContext(this, "Login as admin.");
 
+    // prepare body
+    const body = {
+      email: App.admin.email,
+      password: App.admin.password,
+    };
+
     // perform action
+    let token;
     try {
-      await AuthFacade.login(RoleEnum.ADMIN);
+      // get token
+      token = await AuthFacade.login(body);
     } catch (error) {
       throw error;
     }
+
+    // set token
+    App.admin.jwt = token;
   });
 });

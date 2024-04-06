@@ -3,6 +3,7 @@ const addContext = require("mochawesome/addContext");
 const RoleEnum = require("../../enum/RoleEnum.ts");
 const App = require("../../app/App.ts");
 const Constant = require("../../constant/Constant.ts");
+const CommonUtil = require("../../util/CommonUtil.ts");
 
 const UserFacade = require("../../facade/UserFacade.ts");
 const RoleFacade = require("../../facade/RoleFacade.ts");
@@ -13,9 +14,17 @@ describe("Initialization Tests [init.spec]", function () {
     // context of the test
     addContext(this, "Creating admin.");
 
+    // prepare body
+    const body = {
+      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+      password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      isActive: true,
+    };
+
     //perform action
     try {
-      await UserFacade.createUser(RoleEnum.ADMIN);
+      await UserFacade.createUser(body, App.admin);
     } catch (error) {
       throw error;
     }
@@ -47,12 +56,9 @@ describe("Initialization Tests [init.spec]", function () {
     let token;
     try {
       // get token
-      token = await AuthFacade.login(body);
+      token = await AuthFacade.login(body, App.admin);
     } catch (error) {
       throw error;
     }
-
-    // set token
-    App.admin.jwt = token;
   });
 });

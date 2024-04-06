@@ -4,7 +4,7 @@ const Constant = require("../constant/Constant.ts");
 const CommonUtil = require("../util/CommonUtil.ts");
 
 class AuthFacade {
-  static async login(body) {
+  static async login(body, user) {
     // prepare request
     const url = `${Constant.baseUrl}/api/auth/login`;
 
@@ -15,12 +15,11 @@ class AuthFacade {
     if (response.status !== 200) throw new Error();
     if (response.data === undefined) throw new Error();
 
-    // get token
-    const token = CommonUtil.extractJwtToken(response);
+    // get jwt
+    const jwt = CommonUtil.extractJwtToken(response);
 
-    // return token
-    // App[role.name].jwt = token;
-    return token;
+    // set jwt
+    user.jwt = `Bearer ${jwt}`;
   }
 
   static async validate(jwt) {
@@ -28,7 +27,7 @@ class AuthFacade {
     const url = `${Constant.baseUrl}/api/auth/validate`;
     const config = {
       headers: {
-        Authorization: `Bearer ${jwt}`,
+        Authorization: jwt,
       },
     };
 

@@ -1,6 +1,4 @@
 class App {
-  static user = null;
-  static projectManager = null;
-  static admin = null;
+  static admin = {};
 }
 module.exports = App;

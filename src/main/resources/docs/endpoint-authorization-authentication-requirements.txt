@@ -1,6 +1,6 @@
 # Endpoint Authentication and Authorization Requirements
 
-HealthCheck []:
+HealthCheck [✅]:
     GET:
         /api/health-check
             no authentication
@@ -9,7 +9,7 @@ HealthCheck []:
             no authentication
 ----------------------------------------------------
 
-Auth []:
+Auth [✅]:
     POST:
         /api/auth/login
             no authentication

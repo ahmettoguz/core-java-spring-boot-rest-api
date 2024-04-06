@@ -2,16 +2,11 @@ const axios = require("axios");
 
 const Constant = require("../constant/Constant.ts");
 const CommonUtil = require("../util/CommonUtil.ts");
-const App = require("../app/App.ts");
 
 class AuthFacade {
-  static async login(role) {
+  static async login(body) {
     // prepare request
     const url = `${Constant.baseUrl}/api/auth/login`;
-    const body = {
-      email: App[role.name].email,
-      password: App[role.name].password,
-    };
 
     // make request
     const response = await axios.post(url, body);
@@ -23,8 +18,9 @@ class AuthFacade {
     // get token
     const token = CommonUtil.extractJwtToken(response);
 
-    // set initialized value
-    App[role.name].jwt = token;
+    // return token
+    // App[role.name].jwt = token;
+    return token;
   }
 
   static async validate(jwt) {

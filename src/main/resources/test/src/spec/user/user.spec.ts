@@ -292,9 +292,9 @@ describe("User Tests [user.spec]", function () {
     }
 
     // search for user
-    let foundUser;
+    let foundUsers;
     try {
-      foundUser = await UserFacade.searchByExactName(
+      foundUsers = await UserFacade.searchByExactName(
         App.admin,
         `${Constant.preKey}speci`
       );
@@ -303,12 +303,11 @@ describe("User Tests [user.spec]", function () {
     }
 
     // check data, there shouldn't be any data because exact search string is not provided
-    if (foundUser.length !== 0) throw new Error();
+    if (foundUsers.length !== 0) throw new Error();
 
     // search for user
-    foundUser;
     try {
-      foundUser = await UserFacade.searchByExactName(
+      foundUsers = await UserFacade.searchByExactName(
         App.admin,
         `${Constant.preKey}specificName`
       );
@@ -317,6 +316,48 @@ describe("User Tests [user.spec]", function () {
     }
 
     // check found users it should found and give it as paged
-    if (foundUser.length < 2) throw new Error();
+    if (foundUsers.length < 2) throw new Error();
+  });
+
+  it("[GET] /api/users/search/partial", async function () {
+    // add context information
+    addContext(this, "Searching user by partial first name.");
+
+    // create users
+    let usersCountToCreate = 3;
+    const firstNames = ["specific", "specificName", "specificName"];
+    for (let i = 0; i < usersCountToCreate; i++) {
+      // prepare body
+      const body = {
+        firstName: "",
+        email: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}@hotmail.com`,
+        password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+        isActive: true,
+      };
+      body.firstName = `${Constant.preKey}${firstNames[i]}`;
+      // perform action
+      let userToCreate: any = {};
+      try {
+        await UserFacade.createUser(body, userToCreate);
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    // search for user
+    let foundUsers;
+    try {
+      foundUsers = await UserFacade.searchByPartialName(
+        App.admin,
+        `${Constant.preKey}spe`
+      );
+    } catch (error) {
+      throw error;
+    }
+
+    // check found users it should found and give it as paged
+    if (foundUsers.length < usersCountToCreate) throw new Error();
   });
 });

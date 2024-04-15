@@ -5,6 +5,7 @@ const CommonUtil = require("../../util/CommonUtil.ts");
 const App = require("../../app/App.ts");
 
 const UserFacade = require("../../facade/UserFacade.ts");
+const AuthFacade = require("../../facade/AuthFacade.ts");
 
 before(async () => {});
 
@@ -359,5 +360,76 @@ describe("User Tests [user.spec]", function () {
 
     // check found users it should found and give it as paged
     if (foundUsers.length < usersCountToCreate) throw new Error();
+  });
+
+  it("[PUT] /api/users/{id}", async function () {
+    // add context information
+    addContext(this, "Update user.");
+
+    // create user
+    // prepare body
+    let body;
+    body = {
+      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+      password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      isActive: true,
+    };
+    // perform action
+    let userToCreate: any = {};
+    try {
+      await UserFacade.createUser(body, userToCreate);
+    } catch (error) {
+      throw error;
+    }
+
+    // read created user
+    let userRead;
+    try {
+      userRead = await UserFacade.readUserWithId(userToCreate.id, App.admin);
+    } catch (error) {
+      throw error;
+    }
+
+    // prepare data
+    const data = {
+      firstName: `${Constant.preKey}updatedFirstName`,
+      email: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_updatedEmail@hotmail.com`,
+      password: `${Constant.preKey}updatedPassword`,
+    };
+
+    // perform update
+    let updatedUser;
+    try {
+      updatedUser = await UserFacade.updateUser(data, userRead, App.admin);
+    } catch (error) {
+      throw error;
+    }
+
+    // check its updated in 2 mins
+    const currentTime = Date.now();
+    const twoMinutesInMs = 2 * 60 * 1000;
+    const elapsedTime = currentTime - new Date(updatedUser.updatedAt).getTime();
+    if (elapsedTime > twoMinutesInMs) throw new Error();
+
+    // check updated fields
+    if (
+      updatedUser.firstName != data.firstName ||
+      updatedUser.email != data.email
+    )
+      throw new Error();
+
+    // check password update (trying old password) by login operation
+    body = {
+      email: updatedUser.email,
+      password: body.password,
+    };
+    try {
+      await AuthFacade.login(body, App.admin);
+    } catch (error) {
+      throw error;
+    }
   });
 });

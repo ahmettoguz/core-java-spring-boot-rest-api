@@ -224,4 +224,43 @@ describe("User Tests [user.spec]", function () {
       lastId = currentId;
     }
   });
+
+  it("[GET] /api/users/count", async function () {
+    // add context information
+    addContext(this, "Reading users count.");
+
+    // create users
+    const usersCountToCreate = 2;
+
+    for (let i = 0; i < usersCountToCreate; i++) {
+      // prepare body
+      const body = {
+        firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+        email: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}@hotmail.com`,
+        password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+        isActive: true,
+      };
+
+      // perform action
+      let userToCreate: any = {};
+      try {
+        await UserFacade.createUser(body, userToCreate);
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    // read count
+    let usersCount;
+    try {
+      usersCount = await UserFacade.readCount(App.admin);
+    } catch (error) {
+      throw error;
+    }
+
+    // check user count
+    if (usersCount < usersCountToCreate) throw new Error();
+  });
 });

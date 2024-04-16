@@ -29,6 +29,17 @@ services:
       - spring-boot-rest-api-network
     restart: always
 
+  db-initializer:
+    build: ./db-initializer/src
+    image: db-initializer-image
+    container_name: db-initializer-container
+    networks:
+      - spring-boot-rest-api-network
+    env_file:
+      - ./db-initializer/src/.env
+    depends_on:
+      - my-sql
+
 networks:
   spring-boot-rest-api-network:
     name: spring-boot-rest-api-network

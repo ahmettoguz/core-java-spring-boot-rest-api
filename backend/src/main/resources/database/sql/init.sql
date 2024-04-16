@@ -20,6 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `spring-boot-rest-api-basic`
 --
+DROP DATABASE IF EXISTS `spring-boot-rest-api-basic`;
 CREATE DATABASE IF NOT EXISTS `spring-boot-rest-api-basic` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci;
 USE `spring-boot-rest-api-basic`;
 

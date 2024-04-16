@@ -522,7 +522,6 @@ describe("User Tests [user.spec]", function () {
     if (userRead.isActive !== false) throw new Error();
   });
 
-  
   it("[PATCH] /api/users/${id}/activate", async function () {
     // add context information
     addContext(this, "Activate user.");
@@ -561,5 +560,45 @@ describe("User Tests [user.spec]", function () {
 
     // check deactivation of the user
     if (userRead.isActive !== true) throw new Error();
+  });
+
+  it("[DELETE] /api/users/${id}", async function () {
+    // add context information
+    addContext(this, "Delete user.");
+
+    // create user
+    // prepare data
+    let data;
+    data = {
+      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+      password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      isActive: true,
+    };
+    // perform action
+    let createdUser: any = {};
+    try {
+      await UserFacade.createUser(data, createdUser);
+    } catch (error) {
+      throw error;
+    }
+
+    // delete user
+    try {
+      await UserFacade.deleteUser(createdUser.id, App.admin);
+    } catch (error) {
+      throw error;
+    }
+
+    // try to read deleted user
+    let isUserExist;
+    try {
+      await UserFacade.readUserWithId(createdUser.id, App.admin);
+      isUserExist = true;
+    } catch (error) {
+      isUserExist = false;
+    }
+
+    if (isUserExist) throw new Error();
   });
 });

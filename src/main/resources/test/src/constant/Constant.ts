@@ -1,7 +1,6 @@
 class Constant {
   static baseUrl = "http://localhost:8080";
   static preKey = "apiTest_";
-  static password = this.preKey + "Password";
 
   static admin = {
     id: 1,

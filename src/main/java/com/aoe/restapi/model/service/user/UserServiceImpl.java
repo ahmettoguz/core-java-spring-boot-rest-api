@@ -38,15 +38,12 @@ public class UserServiceImpl<T extends User> extends BaseCrudServiceImpl<T> impl
             // get new fields
             String newFirstName = newInstance.getFirstName();
             String newEmail = newInstance.getEmail();
-            String newPassword = newInstance.getPassword();
 
             // update original instance with new fields
             if (newFirstName != null)
                 originalInstance.setFirstName(newFirstName);
             if (newEmail != null)
                 originalInstance.setEmail(newEmail);
-            if (newPassword != null)
-                originalInstance.setPassword(newPassword);
 
             // return original instance to update
             return new OperationStatusSuccess<T>(originalInstance);

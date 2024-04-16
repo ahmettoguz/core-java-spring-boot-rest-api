@@ -1,7 +1,6 @@
 const axios = require("axios");
 
 const Constant = require("../constant/Constant.ts");
-const App = require("../app/App.ts");
 
 class RoleFacade {
   static async addRoleToUser(userThatGetRole, userThatAddRole, roleToAdd) {

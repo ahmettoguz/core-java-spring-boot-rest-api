@@ -7,7 +7,7 @@ const AuthFacade = require("../../facade/AuthFacade.ts");
 before(async () => {});
 
 describe("Authentication Operation Tests [auth.spec]", function () {
-  it("/api/auth/login", async function () {
+  it("[POST] /api/auth/login", async function () {
     // add context information
     addContext(this, "Checking login operation.");
 
@@ -19,13 +19,13 @@ describe("Authentication Operation Tests [auth.spec]", function () {
 
     //perform action
     try {
-      await AuthFacade.login(body);
+      await AuthFacade.login(body, App.admin);
     } catch (error) {
       throw error;
     }
   });
 
-  it("/api/auth/validate", async function () {
+  it("[POST] /api/auth/validate", async function () {
     // add context information
     addContext(this, "Validating jwt token.");
 

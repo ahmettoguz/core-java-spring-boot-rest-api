@@ -3,3 +3,5 @@ servis düzeyinde exception yönet
 configure postgresql
 
 configure deployment
+
+user create endpoint returns password

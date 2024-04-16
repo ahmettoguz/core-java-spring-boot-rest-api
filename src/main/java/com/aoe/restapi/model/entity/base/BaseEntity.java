@@ -3,15 +3,17 @@ package com.aoe.restapi.model.entity.base;
 import com.aoe.restapi.controller.base.Identifiable;
 import com.aoe.restapi.model.service.Activatable;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @MappedSuperclass
 public abstract class BaseEntity implements Activatable, Identifiable {
     // fields

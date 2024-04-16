@@ -35,6 +35,9 @@ public class AuthRestControllerImpl implements AuthRestController {
 
     @PostMapping("/login")
     public ResponseEntity<HashMap<String, Object>> login(@RequestBody LoginRequestDto loginRequestDto) {
+        // validate input
+        loginRequestDto.validateInput();
+
         // get inputs
         String email = loginRequestDto.getEmail();
         String password = loginRequestDto.getPassword();

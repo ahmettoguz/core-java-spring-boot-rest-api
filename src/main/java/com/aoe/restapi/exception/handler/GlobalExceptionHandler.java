@@ -40,6 +40,11 @@ public class GlobalExceptionHandler {
         return new OperationStatusError(HttpStatus.FORBIDDEN, ex.getMessage()).getResponseEntity();
     }
 
+    @ExceptionHandler(InvalidInputException.class)
+    public ResponseEntity<HashMap<String, Object>> handleInvalidInputException(InvalidInputException ex) {
+        return new OperationStatusError(HttpStatus.BAD_REQUEST, ex.getMessage()).getResponseEntity();
+    }
+
     @ExceptionHandler(CommonException.class)
     public ResponseEntity<HashMap<String, Object>> handleCommonException(CommonException ex) {
         // todo change and remove that

@@ -521,4 +521,45 @@ describe("User Tests [user.spec]", function () {
     // check activation of the user
     if (userRead.isActive !== false) throw new Error();
   });
+
+  
+  it("[PATCH] /api/users/${id}/activate", async function () {
+    // add context information
+    addContext(this, "Activate user.");
+
+    // create user
+    // prepare data
+    let data;
+    data = {
+      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+      password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      isActive: false,
+    };
+    // perform action
+    let createdUser: any = {};
+    try {
+      await UserFacade.createUser(data, createdUser);
+    } catch (error) {
+      throw error;
+    }
+
+    // deactivate user
+    try {
+      await UserFacade.activateUser(createdUser.id, App.admin);
+    } catch (error) {
+      throw error;
+    }
+
+    // read activated user
+    let userRead;
+    try {
+      userRead = await UserFacade.readUserWithId(createdUser.id, App.admin);
+    } catch (error) {
+      throw error;
+    }
+
+    // check deactivation of the user
+    if (userRead.isActive !== true) throw new Error();
+  });
 });

@@ -1,6 +1,6 @@
 version: "3"
-services:
 
+services:
   my-sql:
     build: ./my-sql
     image: my-sql-spring-boot-rest-api-image
@@ -11,6 +11,8 @@ services:
       - "3306:3306"
     env_file:
       - ./my-sql/.env
+    networks:
+      - spring-boot-rest-api-network
     restart: always
 
   php-myadmin:
@@ -23,5 +25,11 @@ services:
       - ./php-myadmin/.env
     ports:
       - 3310:80
+    networks:
+      - spring-boot-rest-api-network
     restart: always
-      
+
+networks:
+  spring-boot-rest-api-network:
+    name: spring-boot-rest-api-network
+    driver: bridge

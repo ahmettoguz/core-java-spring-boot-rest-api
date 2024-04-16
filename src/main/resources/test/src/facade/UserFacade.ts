@@ -232,6 +232,28 @@ class UserFacade {
     if (response.status !== 200) throw new Error();
     if (response.data === undefined) throw new Error();
   }
+
+  static async deactivateUser(userId, user) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/users/${userId}/deactivate`;
+    const method = "patch";
+
+    let config = {
+      method: method,
+      url: url,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: user.jwt,
+      },
+    };
+
+    // make request
+    const response = await axios.request(config);
+
+    // check response
+    if (response.status !== 200) throw new Error();
+    if (response.data === undefined) throw new Error();
+  }
 }
 
 module.exports = UserFacade;

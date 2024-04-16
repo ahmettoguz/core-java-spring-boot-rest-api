@@ -414,16 +414,13 @@ describe("User Tests [user.spec]", function () {
     if (elapsedTime > twoMinutesInMs) throw new Error();
 
     // check updated fields
-    if (
-      userRead.firstName != data.firstName ||
-      userRead.email != data.email
-    )
+    if (userRead.firstName != data.firstName || userRead.email != data.email)
       throw new Error();
 
     // check password update (trying old password) by login operation
     data = {
       email: userRead.email,
-      password:  `${Constant.preKey}oldPassword`,
+      password: `${Constant.preKey}oldPassword`,
     };
     try {
       await AuthFacade.login(data, userRead);
@@ -483,5 +480,45 @@ describe("User Tests [user.spec]", function () {
     } catch (error) {
       throw error;
     }
+  });
+
+  it("[PATCH] /api/users/${id}/deactivate", async function () {
+    // add context information
+    addContext(this, "Deactivate user.");
+
+    // create user
+    // prepare data
+    let data;
+    data = {
+      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+      password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      isActive: true,
+    };
+    // perform action
+    let createdUser: any = {};
+    try {
+      await UserFacade.createUser(data, createdUser);
+    } catch (error) {
+      throw error;
+    }
+
+    // deactivate user
+    try {
+      await UserFacade.deactivateUser(createdUser.id, App.admin);
+    } catch (error) {
+      throw error;
+    }
+
+    // read deactivated user
+    let userRead;
+    try {
+      userRead = await UserFacade.readUserWithId(createdUser.id, App.admin);
+    } catch (error) {
+      throw error;
+    }
+
+    // check activation of the user
+    if (userRead.isActive !== false) throw new Error();
   });
 });

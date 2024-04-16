@@ -209,6 +209,29 @@ class UserFacade {
     // return response data
     return response.data.data;
   }
+
+  static async updateUserPassword(data, userToUpdate, user) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/users/${userToUpdate.id}/password`;
+    const method = "patch";
+
+    let config = {
+      method: method,
+      url: url,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: user.jwt,
+      },
+      data: data,
+    };
+
+    // make request
+    const response = await axios.request(config);
+
+    // check response
+    if (response.status !== 200) throw new Error();
+    if (response.data === undefined) throw new Error();
+  }
 }
 
 module.exports = UserFacade;

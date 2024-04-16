@@ -14,8 +14,8 @@ describe("User Tests [user.spec]", function () {
     // add context information
     addContext(this, "Create user.");
 
-    // prepare body
-    const body = {
+    // prepare data
+    const data = {
       firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
       email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
       password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
@@ -25,7 +25,7 @@ describe("User Tests [user.spec]", function () {
     // perform action
     let userToCreate: any = {};
     try {
-      await UserFacade.createUser(body, userToCreate);
+      await UserFacade.createUser(data, userToCreate);
     } catch (error) {
       throw error;
     }
@@ -52,8 +52,8 @@ describe("User Tests [user.spec]", function () {
 
     // create more than one user first
     for (let i = 0; i < 2; i++) {
-      // prepare body
-      const body = {
+      // prepare data
+      const data = {
         firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
         email: `${
           Constant.preKey
@@ -65,7 +65,7 @@ describe("User Tests [user.spec]", function () {
       // perform action
       let userToCreate: any = {};
       try {
-        await UserFacade.createUser(body, userToCreate);
+        await UserFacade.createUser(data, userToCreate);
       } catch (error) {
         throw error;
       }
@@ -88,8 +88,8 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "Reading user with id.");
 
     // create user first
-    // prepare body
-    const body = {
+    // prepare data
+    const data = {
       firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
       email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
       password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
@@ -99,7 +99,7 @@ describe("User Tests [user.spec]", function () {
     // perform action
     let userToCreate: any = {};
     try {
-      await UserFacade.createUser(body, userToCreate);
+      await UserFacade.createUser(data, userToCreate);
     } catch (error) {
       throw error;
     }
@@ -126,8 +126,8 @@ describe("User Tests [user.spec]", function () {
 
     // create 15 user
     for (let i = 0; i < 15; i++) {
-      // prepare body
-      const body = {
+      // prepare data
+      const data = {
         firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
         email: `${
           Constant.preKey
@@ -139,7 +139,7 @@ describe("User Tests [user.spec]", function () {
       // perform action
       let userToCreate: any = {};
       try {
-        await UserFacade.createUser(body, userToCreate);
+        await UserFacade.createUser(data, userToCreate);
       } catch (error) {
         throw error;
       }
@@ -234,8 +234,8 @@ describe("User Tests [user.spec]", function () {
     const usersCountToCreate = 2;
 
     for (let i = 0; i < usersCountToCreate; i++) {
-      // prepare body
-      const body = {
+      // prepare data
+      const data = {
         firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
         email: `${
           Constant.preKey
@@ -247,7 +247,7 @@ describe("User Tests [user.spec]", function () {
       // perform action
       let userToCreate: any = {};
       try {
-        await UserFacade.createUser(body, userToCreate);
+        await UserFacade.createUser(data, userToCreate);
       } catch (error) {
         throw error;
       }
@@ -273,8 +273,8 @@ describe("User Tests [user.spec]", function () {
     let usersCountToCreate = 3;
     const firstNames = ["specific", "specificName", "specificName"];
     for (let i = 0; i < usersCountToCreate; i++) {
-      // prepare body
-      const body = {
+      // prepare data
+      const data = {
         firstName: "",
         email: `${
           Constant.preKey
@@ -282,11 +282,11 @@ describe("User Tests [user.spec]", function () {
         password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
         isActive: true,
       };
-      body.firstName = `${Constant.preKey}${firstNames[i]}`;
+      data.firstName = `${Constant.preKey}${firstNames[i]}`;
       // perform action
       let userToCreate: any = {};
       try {
-        await UserFacade.createUser(body, userToCreate);
+        await UserFacade.createUser(data, userToCreate);
       } catch (error) {
         throw error;
       }
@@ -328,8 +328,8 @@ describe("User Tests [user.spec]", function () {
     let usersCountToCreate = 3;
     const firstNames = ["specific", "specificName", "specificName"];
     for (let i = 0; i < usersCountToCreate; i++) {
-      // prepare body
-      const body = {
+      // prepare data
+      const data = {
         firstName: "",
         email: `${
           Constant.preKey
@@ -337,11 +337,11 @@ describe("User Tests [user.spec]", function () {
         password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
         isActive: true,
       };
-      body.firstName = `${Constant.preKey}${firstNames[i]}`;
+      data.firstName = `${Constant.preKey}${firstNames[i]}`;
       // perform action
       let userToCreate: any = {};
       try {
-        await UserFacade.createUser(body, userToCreate);
+        await UserFacade.createUser(data, userToCreate);
       } catch (error) {
         throw error;
       }
@@ -367,18 +367,18 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "Update user.");
 
     // create user
-    // prepare body
-    let body;
-    body = {
+    // prepare data
+    let data;
+    data = {
       firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
       email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
-      password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      password: `${Constant.preKey}oldPassword`,
       isActive: true,
     };
     // perform action
     let userToCreate: any = {};
     try {
-      await UserFacade.createUser(body, userToCreate);
+      await UserFacade.createUser(data, userToCreate);
     } catch (error) {
       throw error;
     }
@@ -392,7 +392,7 @@ describe("User Tests [user.spec]", function () {
     }
 
     // prepare data
-    const data = {
+    data = {
       firstName: `${Constant.preKey}updatedFirstName`,
       email: `${
         Constant.preKey
@@ -401,9 +401,8 @@ describe("User Tests [user.spec]", function () {
     };
 
     // perform update
-    let updatedUser;
     try {
-      updatedUser = await UserFacade.updateUser(data, userRead, App.admin);
+      userRead = await UserFacade.updateUser(data, userRead, App.admin);
     } catch (error) {
       throw error;
     }
@@ -411,23 +410,76 @@ describe("User Tests [user.spec]", function () {
     // check its updated in 2 mins
     const currentTime = Date.now();
     const twoMinutesInMs = 2 * 60 * 1000;
-    const elapsedTime = currentTime - new Date(updatedUser.updatedAt).getTime();
+    const elapsedTime = currentTime - new Date(userRead.updatedAt).getTime();
     if (elapsedTime > twoMinutesInMs) throw new Error();
 
     // check updated fields
     if (
-      updatedUser.firstName != data.firstName ||
-      updatedUser.email != data.email
+      userRead.firstName != data.firstName ||
+      userRead.email != data.email
     )
       throw new Error();
 
     // check password update (trying old password) by login operation
-    body = {
-      email: updatedUser.email,
-      password: body.password,
+    data = {
+      email: userRead.email,
+      password:  `${Constant.preKey}oldPassword`,
     };
     try {
-      await AuthFacade.login(body, App.admin);
+      await AuthFacade.login(data, userRead);
+    } catch (error) {
+      throw error;
+    }
+  });
+
+  it("[PATCH] /api/users/${id}/password", async function () {
+    // add context information
+    addContext(this, "User password update.");
+
+    // create user
+    // prepare data
+    let data;
+    data = {
+      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+      password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      isActive: true,
+    };
+    // perform action
+    let userToCreate: any = {};
+    try {
+      await UserFacade.createUser(data, userToCreate);
+    } catch (error) {
+      throw error;
+    }
+
+    // read created user
+    let userRead;
+    try {
+      userRead = await UserFacade.readUserWithId(userToCreate.id, App.admin);
+    } catch (error) {
+      throw error;
+    }
+
+    // prepare data
+    data = {
+      newPassword: `${Constant.preKey}newPassword`,
+    };
+
+    // perform update
+    try {
+      await UserFacade.updateUserPassword(data, userRead, App.admin);
+    } catch (error) {
+      throw error;
+    }
+
+    // check password update (trying new password) by login operation
+    data = {
+      email: userRead.email,
+      password: `${Constant.preKey}newPassword`,
+    };
+    try {
+      await AuthFacade.login(data, userRead);
     } catch (error) {
       throw error;
     }

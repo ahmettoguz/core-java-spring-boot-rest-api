@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "clean": "cd C:\\Users\\lenovo\\Desktop\\repository\\Repository_Backup\\repositoryBackup\\public\\Spring-Boot-Rest-Api\\database && docker-compose build db-initializer && docker-compose up -d db-initializer",
     "parallel": "mocha '**/*.spec.ts' --parallel --reporter mochawesome --require mochawesome/register --timeout 30000",
-    "test": "cls && ts-node ./node_modules/mocha/bin/_mocha '**/*.spec.ts' './src/hook/sync.hook.ts' --reporter mochawesome --timeout 30000",
+    "test": "cls && ts-node ./node_modules/mocha/bin/_mocha '**/*.spec.ts' './src/hook/sync.hook.ts' --reporter mochawesome --timeout 30000 && npm run clean",
     "js": "cls && mocha '**/*.spec.ts' './src/hook/sync.hook.ts' --reporter mochawesome --timeout 30000",
-    "spec": "mocha './src/spec/health-check/health-check.spec.ts' './src/hook/sync.hook.ts' --reporter mochawesome --timeout 30000",
     "grep": "npm run test -- --grep"
   },
   "keywords": [],

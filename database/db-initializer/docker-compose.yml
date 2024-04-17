@@ -1,0 +1,16 @@
+# remove container from database docker compose and then run this docker compose not to overlap
+version: "3"
+
+services:
+  db-initializer:
+    build: ./src
+    image: db-initializer-image
+    container_name: db-initializer-container
+    networks:
+      - spring-boot-rest-api-network
+    env_file:
+      - ./src/.env
+
+networks:
+  spring-boot-rest-api-network:
+    external: true

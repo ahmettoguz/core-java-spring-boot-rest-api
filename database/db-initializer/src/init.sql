@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: database
--- Generation Time: Apr 05, 2024 at 11:18 AM
+-- Host: my-sql
+-- Generation Time: Apr 16, 2024 at 08:34 PM
 -- Server version: 8.3.0
--- PHP Version: 8.2.15
+-- PHP Version: 8.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,10 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `spring-boot-rest-api-basic`
+-- Database: `spring-boot-rest-api`
 --
-CREATE DATABASE IF NOT EXISTS `spring-boot-rest-api-basic` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci;
-USE `spring-boot-rest-api-basic`;
+CREATE DATABASE IF NOT EXISTS `spring-boot-rest-api` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci;
+USE `spring-boot-rest-api`;
 
 -- --------------------------------------------------------
 

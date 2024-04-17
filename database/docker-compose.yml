@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  my-sql:
+    build: ./my-sql
+    image: my-sql-spring-boot-rest-api-image
+    container_name: my-sql-spring-boot-rest-api-container
+    volumes:
+      - ./my-sql/volume:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    env_file:
+      - ./my-sql/.env
+    networks:
+      - spring-boot-rest-api-network
+    restart: always
+
+  php-myadmin:
+    depends_on:
+      - my-sql
+    build: ./php-myadmin
+    image: phpmyadmin-spring-boot-rest-api-image
+    container_name: phpmyadmin-spring-boot-rest-api-container
+    env_file:
+      - ./php-myadmin/.env
+    ports:
+      - 3310:80
+    networks:
+      - spring-boot-rest-api-network
+    restart: always
+
+  db-initializer:
+    build: ./db-initializer/src
+    image: db-initializer-image
+    container_name: db-initializer-container
+    networks:
+      - spring-boot-rest-api-network
+    env_file:
+      - ./db-initializer/src/.env
+    depends_on:
+      - my-sql
+
+networks:
+  spring-boot-rest-api-network:
+    name: spring-boot-rest-api-network
+    driver: bridge

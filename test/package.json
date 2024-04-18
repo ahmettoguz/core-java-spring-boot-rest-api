@@ -8,7 +8,7 @@
     "parallel": "mocha '**/*.spec.ts' --parallel --reporter mochawesome --require mochawesome/register --timeout 30000",
     "test": "cls && ts-node ./node_modules/mocha/bin/_mocha '**/*.spec.ts' './src/hook/sync.hook.ts' --reporter mochawesome --timeout 30000 && npm run clean",
     "js": "cls && mocha '**/*.spec.ts' './src/hook/sync.hook.ts' --reporter mochawesome --timeout 30000",
-    "grep": "npm run test -- --grep"
+    "spec": "cls && ts-node ./node_modules/mocha/bin/_mocha './src/hook/sync.hook.ts' './src/*/*/*domain*.ts' --reporter mochawesome --timeout 30000"
   },
   "keywords": [],
   "author": "",

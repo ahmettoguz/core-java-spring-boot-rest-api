@@ -32,15 +32,45 @@ class DomainFacade {
   static async readDomainWithId(domainId, adminJwt) {
     // prepare request
     const url = `${Constant.baseUrl}/api/domains/${domainId}`;
+    const method = "get";
 
     const config = {
+      method,
+      url,
       headers: {
+        "Content-Type": "application/json",
         Authorization: adminJwt,
       },
     };
 
     // make request
-    const response = await axios.get(url, config);
+    const response = await axios.request(config);
+
+    // check response
+    if (response.status !== 200) throw new Error("response is not 200");
+    if (response.data === undefined)
+      throw new Error("response data is undefined");
+
+    // return response data
+    return response.data.data;
+  }
+
+  static async readAllDomains(adminJwt) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/domains`;
+    const method = "get";
+    
+    const config = {
+      method,
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: adminJwt,
+      },
+    };
+
+    // make request
+    const response = await axios.request(config);
 
     // check response
     if (response.status !== 200) throw new Error("response is not 200");

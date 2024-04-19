@@ -50,6 +50,8 @@ describe("User Tests [user.spec]", function () {
     // add context information
     addContext(this, "Reading all users.");
 
+    // TODO save user ids and compare
+
     // create more than one user first
     for (let i = 0; i < 2; i++) {
       // prepare data

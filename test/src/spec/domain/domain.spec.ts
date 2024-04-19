@@ -49,6 +49,49 @@ describe("Domain Tests [domain.spec]", function () {
       throw new Error("user id should't be setted");
   });
 
+  it("[GET] /api/domains", async function () {
+    // add context information
+    addContext(this, "Reading domain with id.");
+
+    const createdDomainIds: number[] = [];
+
+    // create more than one domain first
+    for (let i = 0; i < 2; i++) {
+      // prepare data
+      const data = {
+        name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+        isActive: true,
+        userId: 99,
+      };
+
+      // perform action
+      let domainToCreate: any;
+      try {
+        domainToCreate = await DomainFacade.createDomain(data, App.admin.jwt);
+      } catch (error) {
+        throw error;
+      }
+
+      // save ids
+      createdDomainIds.push(domainToCreate.id);
+    }
+
+    // read created domains
+    let domainsRead;
+    try {
+      domainsRead = await DomainFacade.readAllDomains(App.admin.jwt);
+    } catch (error) {
+      throw error;
+    }
+
+    // check inserted ids
+    for (let i = 0; i < createdDomainIds.length; i++) {
+      if (!domainsRead.some((domain) => domain.id === createdDomainIds[i])) {
+        throw new Error("desired number of domains couldn't read");
+      }
+    }
+  });
+
   it("[GET] /api/domains/{id}", async function () {
     // add context information
     addContext(this, "Reading domain with id.");

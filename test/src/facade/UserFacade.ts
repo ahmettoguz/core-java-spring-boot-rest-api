@@ -57,57 +57,6 @@ class UserFacade {
     return response.data.data;
   }
 
-  // static async readCount(jwt) {
-  //   // prepare request
-  //   const url = `${Constant.baseUrl}/api/${entityName}/count`;
-  //   const method = "get";
-
-  //   let config = {
-  //     method: method,
-  //     url: url,
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: jwt,
-  //     },
-  //   };
-
-  //   // make request
-  //   const response = await axios.request(config);
-
-  //   // check response
-  //   if (response.status !== 200) throw new Error();
-  //   if (response.data === undefined) throw new Error();
-
-  //   // return response data
-  //   return response.data.data;
-  // }
-
-  // static async update(jwt, data, domainId) {
-  //   // prepare request
-  //   const url = `${Constant.baseUrl}/api/${entityName}/${domainId}`;
-  //   const method = "put";
-
-  //   let config = {
-  //     method: method,
-  //     url: url,
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: jwt,
-  //     },
-  //     data: data,
-  //   };
-
-  //   // make request
-  //   const response = await axios.request(config);
-
-  //   // check response
-  //   if (response.status !== 200) throw new Error();
-  //   if (response.data === undefined) throw new Error();
-
-  //   // return response data
-  //   return response.data.data;
-  // }
-
   static async readWithId(jwt, instanceId) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;

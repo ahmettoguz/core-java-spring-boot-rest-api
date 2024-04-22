@@ -57,7 +57,7 @@ class DomainFacade {
     return response.data.data;
   }
 
-  static async readAllDomains(jwt) {
+  static async readAll(jwt) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${entityName}`;
     const method = "get";

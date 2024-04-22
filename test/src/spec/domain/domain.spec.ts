@@ -78,7 +78,7 @@ describe("Domain Tests [domain.spec]", function () {
     // read created instances
     let instancesRead;
     try {
-      instancesRead = await Facade.readAllDomains(App.admin.jwt);
+      instancesRead = await Facade.readAll(App.admin.jwt);
     } catch (error) {
       throw error;
     }
@@ -310,11 +310,7 @@ describe("Domain Tests [domain.spec]", function () {
 
     // perform update
     try {
-      readInstance = await Facade.update(
-        App.admin.jwt,
-        data,
-        readInstance.id
-      );
+      readInstance = await Facade.update(App.admin.jwt, data, readInstance.id);
     } catch (error) {
       throw error;
     }

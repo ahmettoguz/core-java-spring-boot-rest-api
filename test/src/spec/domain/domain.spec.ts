@@ -4,7 +4,7 @@ const Constant = require("../../constant/Constant.ts");
 const CommonUtil = require("../../util/CommonUtil.ts");
 const App = require("../../app/App.ts");
 
-const DomainFacade = require("../../facade/DomainFacade.ts");
+const Facade = require("../../facade/DomainFacade.ts");
 
 before(async () => {});
 
@@ -21,31 +21,30 @@ describe("Domain Tests [domain.spec]", function () {
     };
 
     // perform action
-    let domainToCreate;
+    let instanceToCreate;
     try {
-      domainToCreate = await DomainFacade.createDomain(data, App.admin.jwt);
+      instanceToCreate = await Facade.create(App.admin.jwt, data);
     } catch (error) {
       throw error;
     }
 
     // check created output
-    if (domainToCreate === null || domainToCreate === undefined)
+    if (instanceToCreate === null || instanceToCreate === undefined)
       throw new Error("domain cannot created");
 
     // read domain
-    let domainRead;
+    let readInstance;
     try {
-      domainRead = await DomainFacade.readDomainWithId(
-        domainToCreate.id,
-        App.admin.jwt
+      readInstance = await Facade.readWithId(
+        App.admin.jwt,
+        instanceToCreate.id
       );
     } catch (error) {
       throw error;
     }
 
     // check userId field (it shouldn't be added via post)
-    // todo change it to domain read
-    if (domainToCreate.userId !== null)
+    if (instanceToCreate.userId !== null)
       throw new Error("user id should't be setted");
   });
 
@@ -53,9 +52,9 @@ describe("Domain Tests [domain.spec]", function () {
     // add context information
     addContext(this, "Reading domain with id.");
 
-    const createdDomainIds: number[] = [];
+    const createdInstanceIds: number[] = [];
 
-    // create more than one domain first
+    // create more than one instance first
     for (let i = 0; i < 2; i++) {
       // prepare data
       const data = {
@@ -65,28 +64,30 @@ describe("Domain Tests [domain.spec]", function () {
       };
 
       // perform action
-      let domainToCreate: any;
+      let instanceToCreate: any;
       try {
-        domainToCreate = await DomainFacade.createDomain(data, App.admin.jwt);
+        instanceToCreate = await Facade.create(App.admin.jwt, data);
       } catch (error) {
         throw error;
       }
 
       // save ids
-      createdDomainIds.push(domainToCreate.id);
+      createdInstanceIds.push(instanceToCreate.id);
     }
 
-    // read created domains
-    let domainsRead;
+    // read created instances
+    let instancesRead;
     try {
-      domainsRead = await DomainFacade.readAllDomains(App.admin.jwt);
+      instancesRead = await Facade.readAllDomains(App.admin.jwt);
     } catch (error) {
       throw error;
     }
 
     // check inserted ids
-    for (let i = 0; i < createdDomainIds.length; i++) {
-      if (!domainsRead.some((domain) => domain.id === createdDomainIds[i])) {
+    for (let i = 0; i < createdInstanceIds.length; i++) {
+      if (
+        !instancesRead.some((domain) => domain.id === createdInstanceIds[i])
+      ) {
         throw new Error("desired number of domains couldn't read");
       }
     }
@@ -96,7 +97,7 @@ describe("Domain Tests [domain.spec]", function () {
     // add context information
     addContext(this, "Reading domain with id.");
 
-    // create domain first
+    // create instance first
     // prepare data
     let data = {
       name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
@@ -104,28 +105,28 @@ describe("Domain Tests [domain.spec]", function () {
     };
 
     // perform action
-    let domainToCreate;
+    let instanceToCreate;
     try {
-      domainToCreate = await DomainFacade.createDomain(data, App.admin.jwt);
+      instanceToCreate = await Facade.create(App.admin.jwt, data);
     } catch (error) {
       throw error;
     }
 
-    // read domain
-    let domainRead;
+    // read instance
+    let readInstance;
     try {
-      domainRead = await DomainFacade.readDomainWithId(
-        domainToCreate.id,
-        App.admin.jwt
+      readInstance = await Facade.readWithId(
+        App.admin.jwt,
+        instanceToCreate.id
       );
     } catch (error) {
       throw error;
     }
 
-    // compare domains
+    // compare instances
     if (
-      domainToCreate.id !== domainRead.id ||
-      domainToCreate.name !== domainRead.name
+      instanceToCreate.id !== readInstance.id ||
+      instanceToCreate.name !== readInstance.name
     )
       throw new Error(
         "created domain name is not same with the name which is read"
@@ -145,9 +146,9 @@ describe("Domain Tests [domain.spec]", function () {
       };
 
       // perform action
-      let domainToCreate: any;
+      let instanceToCreate: any;
       try {
-        domainToCreate = await DomainFacade.createDomain(data, App.admin.jwt);
+        instanceToCreate = await Facade.create(App.admin.jwt, data);
       } catch (error) {
         throw error;
       }
@@ -159,7 +160,7 @@ describe("Domain Tests [domain.spec]", function () {
     let pageSize = 5;
     let isDescending = false;
     try {
-      instancesOfFirstPage = await DomainFacade.readPagedSorted(
+      instancesOfFirstPage = await Facade.readPagedSorted(
         App.admin.jwt,
         pageNumber,
         pageSize,
@@ -170,15 +171,15 @@ describe("Domain Tests [domain.spec]", function () {
     }
 
     // check page size
-    if (instancesOfFirstPage.length !== 5) throw new Error();
-    
+    if (instancesOfFirstPage.length !== 5) throw new Error("page size invalid");
+
     // check sorting
     let lastId = instancesOfFirstPage[0];
     for (let i = 0; i < pageSize; i++) {
       const tempInstance = instancesOfFirstPage[i];
       const currentId = tempInstance.id;
 
-      if (currentId < lastId) throw new Error();
+      if (currentId < lastId) throw new Error("sort invalid");
 
       lastId = currentId;
     }
@@ -189,7 +190,7 @@ describe("Domain Tests [domain.spec]", function () {
     pageSize = 5;
     isDescending = false;
     try {
-      instancesOfSecondPage = await DomainFacade.readPagedSorted(
+      instancesOfSecondPage = await Facade.readPagedSorted(
         App.admin.jwt,
         pageNumber,
         pageSize,
@@ -201,7 +202,7 @@ describe("Domain Tests [domain.spec]", function () {
 
     // compare objects that ensure page is different
     if (instancesOfFirstPage[0].id === instancesOfSecondPage[0].id)
-      throw new Error();
+      throw new Error("same object in different page");
 
     // read third page to ensure page size and sorting is working
     let instancesOfThirdPage;
@@ -209,7 +210,7 @@ describe("Domain Tests [domain.spec]", function () {
     pageSize = 3;
     isDescending = true;
     try {
-      instancesOfThirdPage = await DomainFacade.readPagedSorted(
+      instancesOfThirdPage = await Facade.readPagedSorted(
         App.admin.jwt,
         pageNumber,
         pageSize,
@@ -220,7 +221,8 @@ describe("Domain Tests [domain.spec]", function () {
     }
 
     // check page size
-    if (instancesOfThirdPage.length !== pageSize) throw new Error();
+    if (instancesOfThirdPage.length !== pageSize)
+      throw new Error("page size invalid");
 
     // check sorting
     lastId = instancesOfThirdPage[0];
@@ -228,7 +230,7 @@ describe("Domain Tests [domain.spec]", function () {
       const u = instancesOfThirdPage[i];
       const currentId = u.id;
 
-      if (currentId > lastId) throw new Error();
+      if (currentId > lastId) throw new Error("sort invalid");
 
       lastId = currentId;
     }
@@ -249,9 +251,9 @@ describe("Domain Tests [domain.spec]", function () {
       };
 
       // perform action
-      let domainToCreate: any;
+      let instanceToCreate: any;
       try {
-        domainToCreate = await DomainFacade.createDomain(data, App.admin.jwt);
+        instanceToCreate = await Facade.create(App.admin.jwt, data);
       } catch (error) {
         throw error;
       }
@@ -260,12 +262,72 @@ describe("Domain Tests [domain.spec]", function () {
     // read count
     let readInstanceCount;
     try {
-      readInstanceCount = await DomainFacade.readCount(App.admin.jwt);
+      readInstanceCount = await Facade.readCount(App.admin.jwt);
     } catch (error) {
       throw error;
     }
 
-    // check user count
-    if (readInstanceCount < instanceToCreate) throw new Error();
+    // check count
+    if (readInstanceCount < instanceToCreate) throw new Error("count invalid");
+  });
+
+  it("[PUT] /api/domains/{id}", async function () {
+    // add context information
+    addContext(this, "Update domain.");
+
+    // create instance
+    // prepare data
+    let data;
+    data = {
+      name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      isActive: true,
+      userId: 99,
+    };
+
+    // perform action
+    let instanceToCreate: any;
+    try {
+      instanceToCreate = await Facade.create(App.admin.jwt, data);
+    } catch (error) {
+      throw error;
+    }
+
+    // read created instance
+    let readInstance;
+    try {
+      readInstance = await Facade.readWithId(
+        App.admin.jwt,
+        instanceToCreate.id
+      );
+    } catch (error) {
+      throw error;
+    }
+
+    // prepare data for update
+    data = {
+      name: `${Constant.preKey}updatedDomainName`,
+    };
+
+    // perform update
+    try {
+      readInstance = await Facade.update(
+        App.admin.jwt,
+        data,
+        readInstance.id
+      );
+    } catch (error) {
+      throw error;
+    }
+
+    // check its updated in 2 mins
+    const currentTime = Date.now();
+    const twoMinutesInMs = 2 * 60 * 1000;
+    const elapsedTime =
+      currentTime - new Date(readInstance.updatedAt).getTime();
+    if (elapsedTime > twoMinutesInMs) throw new Error("update time invalid");
+
+    // check updated fields
+    if (readInstance.name !== data.name)
+      throw new Error("field is not updated");
   });
 });

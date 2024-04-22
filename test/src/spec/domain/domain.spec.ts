@@ -131,4 +131,39 @@ describe("Domain Tests [domain.spec]", function () {
         "created domain name is not same with the name which is read"
       );
   });
+  
+  it("[GET] /api/domains/count", async function () {
+    // add context information
+    addContext(this, "Reading domains count.");
+
+    // create instances
+    const instanceToCreate = 2;
+
+    for (let i = 0; i < instanceToCreate; i++) {
+      // prepare data
+      const data = {
+        name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+        isActive: true,
+      };
+
+      // perform action
+      let domainToCreate: any;
+      try {
+        domainToCreate = await DomainFacade.createDomain(data, App.admin.jwt);
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    // read count
+    let readInstanceCount;
+    try {
+      readInstanceCount = await DomainFacade.readCount(App.admin.jwt);
+    } catch (error) {
+      throw error;
+    }
+
+    // check user count
+    if (readInstanceCount < instanceToCreate) throw new Error();
+  });
 });

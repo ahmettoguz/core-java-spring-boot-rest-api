@@ -140,9 +140,9 @@ class UserFacade {
     return response.data.data;
   }
 
-  static async searchByExactName(user, serachString) {
+  static async searchByExactName(jwt, serachString) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/users/search/exact`;
+    const url = `${Constant.baseUrl}/api/${entityName}/search/exact`;
     const method = "get";
 
     let data = JSON.stringify({
@@ -157,7 +157,7 @@ class UserFacade {
       url: url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: user.jwt,
+        Authorization: jwt,
       },
       data: data,
     };
@@ -173,9 +173,9 @@ class UserFacade {
     return response.data.data;
   }
 
-  static async searchByPartialName(user, serachString) {
+  static async searchByPartialName(jwt, serachString) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/users/search/partial`;
+    const url = `${Constant.baseUrl}/api/${entityName}/search/partial`;
     const method = "get";
 
     let data = JSON.stringify({
@@ -190,7 +190,7 @@ class UserFacade {
       url: url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: user.jwt,
+        Authorization: jwt,
       },
       data: data,
     };
@@ -232,9 +232,9 @@ class UserFacade {
     return response.data.data;
   }
 
-  static async updateUserPassword(data, userToUpdate, user) {
+  static async updateUserPassword(jwt, data, instanceId) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/users/${userToUpdate.id}/password`;
+    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/password`;
     const method = "patch";
 
     let config = {
@@ -242,7 +242,7 @@ class UserFacade {
       url: url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: user.jwt,
+        Authorization: jwt,
       },
       data: data,
     };
@@ -255,9 +255,9 @@ class UserFacade {
     if (response.data === undefined) throw new Error();
   }
 
-  static async deactivateUser(userId, user) {
+  static async deactivate(jwt, instanceId) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/users/${userId}/deactivate`;
+    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/deactivate`;
     const method = "patch";
 
     let config = {
@@ -265,7 +265,7 @@ class UserFacade {
       url: url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: user.jwt,
+        Authorization: jwt,
       },
     };
 
@@ -277,9 +277,9 @@ class UserFacade {
     if (response.data === undefined) throw new Error();
   }
 
-  static async activateUser(userId, user) {
+  static async activateInstance(jwt, instanceId) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/users/${userId}/activate`;
+    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/activate`;
     const method = "patch";
 
     let config = {
@@ -287,7 +287,7 @@ class UserFacade {
       url: url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: user.jwt,
+        Authorization: jwt,
       },
     };
 
@@ -299,9 +299,9 @@ class UserFacade {
     if (response.data === undefined) throw new Error();
   }
 
-  static async deleteUser(userId, user) {
+  static async delete(jwt, userId) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/users/${userId}`;
+    const url = `${Constant.baseUrl}/api/${entityName}/${userId}`;
     const method = "delete";
 
     let config = {
@@ -309,7 +309,7 @@ class UserFacade {
       url: url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: user.jwt,
+        Authorization: jwt,
       },
     };
 

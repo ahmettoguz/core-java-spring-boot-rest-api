@@ -131,7 +131,109 @@ describe("Domain Tests [domain.spec]", function () {
         "created domain name is not same with the name which is read"
       );
   });
-  
+
+  it("[GET] /api/domains/paged", async function () {
+    // add context information
+    addContext(this, "Reading domains paged and sorted.");
+
+    // create 15 instance
+    for (let i = 0; i < 15; i++) {
+      // prepare data
+      const data = {
+        name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+        isActive: true,
+      };
+
+      // perform action
+      let domainToCreate: any;
+      try {
+        domainToCreate = await DomainFacade.createDomain(data, App.admin.jwt);
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    // read first page to ensure page size and sorting
+    let instancesOfFirstPage;
+    let pageNumber = 0;
+    let pageSize = 5;
+    let isDescending = false;
+    try {
+      instancesOfFirstPage = await DomainFacade.readPagedSorted(
+        App.admin.jwt,
+        pageNumber,
+        pageSize,
+        isDescending
+      );
+    } catch (error) {
+      throw error;
+    }
+
+    // check page size
+    if (instancesOfFirstPage.length !== 5) throw new Error();
+    
+    // check sorting
+    let lastId = instancesOfFirstPage[0];
+    for (let i = 0; i < pageSize; i++) {
+      const tempInstance = instancesOfFirstPage[i];
+      const currentId = tempInstance.id;
+
+      if (currentId < lastId) throw new Error();
+
+      lastId = currentId;
+    }
+
+    // read second page to check page number is working
+    let instancesOfSecondPage;
+    pageNumber = 1;
+    pageSize = 5;
+    isDescending = false;
+    try {
+      instancesOfSecondPage = await DomainFacade.readPagedSorted(
+        App.admin.jwt,
+        pageNumber,
+        pageSize,
+        isDescending
+      );
+    } catch (error) {
+      throw error;
+    }
+
+    // compare objects that ensure page is different
+    if (instancesOfFirstPage[0].id === instancesOfSecondPage[0].id)
+      throw new Error();
+
+    // read third page to ensure page size and sorting is working
+    let instancesOfThirdPage;
+    pageNumber = 0;
+    pageSize = 3;
+    isDescending = true;
+    try {
+      instancesOfThirdPage = await DomainFacade.readPagedSorted(
+        App.admin.jwt,
+        pageNumber,
+        pageSize,
+        isDescending
+      );
+    } catch (error) {
+      throw error;
+    }
+
+    // check page size
+    if (instancesOfThirdPage.length !== pageSize) throw new Error();
+
+    // check sorting
+    lastId = instancesOfThirdPage[0];
+    for (let i = 0; i < pageSize; i++) {
+      const u = instancesOfThirdPage[i];
+      const currentId = u.id;
+
+      if (currentId > lastId) throw new Error();
+
+      lastId = currentId;
+    }
+  });
+
   it("[GET] /api/domains/count", async function () {
     // add context information
     addContext(this, "Reading domains count.");

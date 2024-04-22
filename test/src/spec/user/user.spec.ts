@@ -126,7 +126,7 @@ describe("User Tests [user.spec]", function () {
     // add context information
     addContext(this, "Reading users paged and sorted.");
 
-    // create 15 user
+    // create 15 instance
     for (let i = 0; i < 15; i++) {
       // prepare data
       const data = {
@@ -148,13 +148,13 @@ describe("User Tests [user.spec]", function () {
     }
 
     // read first page to ensure page size and sorting
-    let usersReadFirstPage;
+    let instancesOfFirstPage;
     let pageNumber = 0;
     let pageSize = 5;
     let isDescending = false;
     try {
-      usersReadFirstPage = await UserFacade.readPagedSorted(
-        App.admin,
+      instancesOfFirstPage = await UserFacade.readPagedSorted(
+        App.admin.jwt,
         pageNumber,
         pageSize,
         isDescending
@@ -164,13 +164,13 @@ describe("User Tests [user.spec]", function () {
     }
 
     // check page size
-    if (usersReadFirstPage.length !== 5) throw new Error();
+    if (instancesOfFirstPage.length !== 5) throw new Error();
 
     // check sorting
-    let lastId = -1;
+    let lastId = instancesOfFirstPage[0];
     for (let i = 0; i < pageSize; i++) {
-      const u = usersReadFirstPage[i];
-      const currentId = u.id;
+      const tempInstance = instancesOfFirstPage[i];
+      const currentId = tempInstance.id;
 
       if (currentId < lastId) throw new Error();
 
@@ -178,13 +178,13 @@ describe("User Tests [user.spec]", function () {
     }
 
     // read second page to check page number is working
-    let usersReadSecondPage;
+    let instancesOfSecondPage;
     pageNumber = 1;
     pageSize = 5;
     isDescending = false;
     try {
-      usersReadSecondPage = await UserFacade.readPagedSorted(
-        App.admin,
+      instancesOfSecondPage = await UserFacade.readPagedSorted(
+        App.admin.jwt,
         pageNumber,
         pageSize,
         isDescending
@@ -194,17 +194,17 @@ describe("User Tests [user.spec]", function () {
     }
 
     // compare objects that ensure page is different
-    if (usersReadFirstPage[0].id === usersReadFirstPage[1].id)
+    if (instancesOfFirstPage[0].id === instancesOfSecondPage[0].id)
       throw new Error();
 
     // read third page to ensure page size and sorting is working
-    let usersReadThirdPage;
+    let instancesOfThirdPage;
     pageNumber = 0;
     pageSize = 3;
     isDescending = true;
     try {
-      usersReadThirdPage = await UserFacade.readPagedSorted(
-        App.admin,
+      instancesOfThirdPage = await UserFacade.readPagedSorted(
+        App.admin.jwt,
         pageNumber,
         pageSize,
         isDescending
@@ -214,12 +214,12 @@ describe("User Tests [user.spec]", function () {
     }
 
     // check page size
-    if (usersReadThirdPage.length !== pageSize) throw new Error();
+    if (instancesOfThirdPage.length !== pageSize) throw new Error();
 
     // check sorting
-    lastId = 99999999;
+    lastId = instancesOfThirdPage[0];
     for (let i = 0; i < pageSize; i++) {
-      const u = usersReadThirdPage[i];
+      const u = instancesOfThirdPage[i];
       const currentId = u.id;
 
       if (currentId > lastId) throw new Error();

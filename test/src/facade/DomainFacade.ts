@@ -3,7 +3,7 @@ const axios = require("axios");
 const Constant = require("../constant/Constant.ts");
 
 class DomainFacade {
-  static async createDomain(data, adminJwt) {
+  static async createDomain(data, jwt) {
     // prepare request
     const url = `${Constant.baseUrl}/api/domains`;
     const method = "post";
@@ -12,7 +12,7 @@ class DomainFacade {
       url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: adminJwt,
+        Authorization: jwt,
       },
       data: data,
     };
@@ -29,7 +29,7 @@ class DomainFacade {
     return response.data.data;
   }
 
-  static async readDomainWithId(domainId, adminJwt) {
+  static async readDomainWithId(domainId, jwt) {
     // prepare request
     const url = `${Constant.baseUrl}/api/domains/${domainId}`;
     const method = "get";
@@ -39,7 +39,7 @@ class DomainFacade {
       url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: adminJwt,
+        Authorization: jwt,
       },
     };
 
@@ -55,7 +55,7 @@ class DomainFacade {
     return response.data.data;
   }
 
-  static async readAllDomains(adminJwt) {
+  static async readAllDomains(jwt) {
     // prepare request
     const url = `${Constant.baseUrl}/api/domains`;
     const method = "get";
@@ -65,7 +65,7 @@ class DomainFacade {
       url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: adminJwt,
+        Authorization: jwt,
       },
     };
 
@@ -81,7 +81,39 @@ class DomainFacade {
     return response.data.data;
   }
 
-  static async readCount(adminJwt) {
+  static async readPagedSorted(jwt, pageNumber, pageSize, isDescending) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/users/paged`;
+    const method = "get";
+
+    let data = JSON.stringify({
+      pageNumber: pageNumber,
+      pageSize: pageSize,
+      isDescending: isDescending,
+    });
+
+    let config = {
+      method: method,
+      url: url,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: jwt,
+      },
+      data: data,
+    };
+
+    // make request
+    const response = await axios.request(config);
+
+    // check response
+    if (response.status !== 200) throw new Error();
+    if (response.data === undefined) throw new Error();
+
+    // return response data
+    return response.data.data;
+  }
+
+  static async readCount(jwt) {
     // prepare request
     const url = `${Constant.baseUrl}/api/domains/count`;
     const method = "get";
@@ -91,7 +123,7 @@ class DomainFacade {
       url: url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: adminJwt,
+        Authorization: jwt,
       },
     };
 

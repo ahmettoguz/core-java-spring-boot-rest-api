@@ -61,7 +61,7 @@ class UserFacade {
     return response.data.data;
   }
 
-  static async readPagedSorted(user, pageNumber, pageSize, isDescending) {
+  static async readPagedSorted(jwt, pageNumber, pageSize, isDescending) {
     // prepare request
     const url = `${Constant.baseUrl}/api/users/paged`;
     const method = "get";
@@ -77,7 +77,7 @@ class UserFacade {
       url: url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: user.jwt,
+        Authorization: jwt,
       },
       data: data,
     };

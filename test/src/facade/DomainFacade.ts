@@ -31,9 +31,9 @@ class DomainFacade {
     return response.data.data;
   }
 
-  static async readWithId(jwt, domainId) {
+  static async readWithId(jwt, instanceId) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/${domainId}`;
+    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
     const method = "get";
 
     const config = {
@@ -140,9 +140,9 @@ class DomainFacade {
     return response.data.data;
   }
 
-  static async update(jwt, data, domainId) {
+  static async update(jwt, data, instanceId) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/${domainId}`;
+    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
     const method = "put";
 
     let config = {

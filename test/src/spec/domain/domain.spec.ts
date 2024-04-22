@@ -30,9 +30,9 @@ describe("Domain Tests [domain.spec]", function () {
 
     // check created output
     if (instanceToCreate === null || instanceToCreate === undefined)
-      throw new Error("domain cannot created");
+      throw new Error("instance cannot created");
 
-    // read domain
+    // read instance
     let readInstance;
     try {
       readInstance = await Facade.readWithId(
@@ -86,9 +86,9 @@ describe("Domain Tests [domain.spec]", function () {
     // check inserted ids
     for (let i = 0; i < createdInstanceIds.length; i++) {
       if (
-        !instancesRead.some((domain) => domain.id === createdInstanceIds[i])
+        !instancesRead.some((instance) => instance.id === createdInstanceIds[i])
       ) {
-        throw new Error("desired number of domains couldn't read");
+        throw new Error("desired number of intances couldn't read");
       }
     }
   });
@@ -129,7 +129,7 @@ describe("Domain Tests [domain.spec]", function () {
       instanceToCreate.name !== readInstance.name
     )
       throw new Error(
-        "created domain name is not same with the name which is read"
+        "created instance name is not same with the name which is read"
       );
   });
 

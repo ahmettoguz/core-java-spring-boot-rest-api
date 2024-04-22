@@ -4,7 +4,7 @@ const Constant = require("../../constant/Constant.ts");
 const CommonUtil = require("../../util/CommonUtil.ts");
 const App = require("../../app/App.ts");
 
-const UserFacade = require("../../facade/UserFacade.ts");
+const Facade = require("../../facade/UserFacade.ts");
 const AuthFacade = require("../../facade/AuthFacade.ts");
 
 before(async () => {});
@@ -23,25 +23,28 @@ describe("User Tests [user.spec]", function () {
     };
 
     // perform action
-    let userToCreate: any = {};
+    let instanceToCreate: any = {};
     try {
-      await UserFacade.createUser(data, userToCreate);
+      await Facade.create(data, instanceToCreate);
     } catch (error) {
       throw error;
     }
 
-    // read created user
-    let userRead;
+    // read created instance
+    let readInstance;
     try {
-      userRead = await UserFacade.readUserWithId(userToCreate.id, App.admin);
+      readInstance = await Facade.readWithId(
+        App.admin.jwt,
+        instanceToCreate.id
+      );
     } catch (error) {
       throw error;
     }
 
     // compare users
     if (
-      userToCreate.id != userRead.id ||
-      userToCreate.firstName != userRead.firstName
+      instanceToCreate.id != readInstance.id ||
+      instanceToCreate.firstName != readInstance.firstName
     )
       throw new Error();
   });
@@ -50,7 +53,7 @@ describe("User Tests [user.spec]", function () {
     // add context information
     addContext(this, "Reading all users.");
 
-    // TODO save user ids and compare
+    const createdInstanceIds: number[] = [];
 
     // create more than one user first
     for (let i = 0; i < 2; i++) {
@@ -65,32 +68,40 @@ describe("User Tests [user.spec]", function () {
       };
 
       // perform action
-      let userToCreate: any = {};
+      let instanceToCreate: any = {};
       try {
-        await UserFacade.createUser(data, userToCreate);
+        await Facade.create(data, instanceToCreate);
       } catch (error) {
         throw error;
       }
+
+      // save ids
+      createdInstanceIds.push(instanceToCreate.id);
     }
 
-    // read created user
-    let usersRead;
+    // read created instances
+    let instancesRead;
     try {
-      usersRead = await UserFacade.readAllUsers(App.admin);
+      instancesRead = await Facade.readAll(App.admin.jwt);
     } catch (error) {
       throw error;
     }
 
-    // check that there are at least 2 users
-    if (usersRead.length < 2) throw new Error();
+    // check inserted ids
+    for (let i = 0; i < createdInstanceIds.length; i++) {
+      if (
+        !instancesRead.some((instance) => instance.id === createdInstanceIds[i])
+      ) {
+        throw new Error("desired number of instances couldn't read");
+      }
+    }
   });
 
   it("[GET] /api/users/{id}", async function () {
     // add context information
     addContext(this, "Reading user with id.");
 
-    // create user first
-    // prepare data
+    // create instance first   // prepare data
     const data = {
       firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
       email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
@@ -99,27 +110,32 @@ describe("User Tests [user.spec]", function () {
     };
 
     // perform action
-    let userToCreate: any = {};
+    let instanceToCreate: any = {};
     try {
-      await UserFacade.createUser(data, userToCreate);
+      await Facade.create(data, instanceToCreate);
     } catch (error) {
       throw error;
     }
 
-    // read created user
-    let userRead;
+    // read instance
+    let readInstance;
     try {
-      userRead = await UserFacade.readUserWithId(userToCreate.id, App.admin);
+      readInstance = await Facade.readWithId(
+        App.admin.jwt,
+        instanceToCreate.id
+      );
     } catch (error) {
       throw error;
     }
 
-    // compare users
+    // compare instances
     if (
-      userToCreate.id != userRead.id ||
-      userToCreate.firstName != userRead.firstName
+      instanceToCreate.id !== readInstance.id ||
+      instanceToCreate.firstName !== readInstance.firstName
     )
-      throw new Error();
+      throw new Error(
+        "created instance name is not same with the name which is read"
+      );
   });
 
   it("[GET] /api/users/paged", async function () {
@@ -141,7 +157,7 @@ describe("User Tests [user.spec]", function () {
       // perform action
       let userToCreate: any = {};
       try {
-        await UserFacade.createUser(data, userToCreate);
+        await Facade.create(data, userToCreate);
       } catch (error) {
         throw error;
       }
@@ -153,7 +169,7 @@ describe("User Tests [user.spec]", function () {
     let pageSize = 5;
     let isDescending = false;
     try {
-      instancesOfFirstPage = await UserFacade.readPagedSorted(
+      instancesOfFirstPage = await Facade.readPagedSorted(
         App.admin.jwt,
         pageNumber,
         pageSize,
@@ -164,7 +180,7 @@ describe("User Tests [user.spec]", function () {
     }
 
     // check page size
-    if (instancesOfFirstPage.length !== 5) throw new Error();
+    if (instancesOfFirstPage.length !== 5) throw new Error("page size invalid");
 
     // check sorting
     let lastId = instancesOfFirstPage[0];
@@ -172,7 +188,7 @@ describe("User Tests [user.spec]", function () {
       const tempInstance = instancesOfFirstPage[i];
       const currentId = tempInstance.id;
 
-      if (currentId < lastId) throw new Error();
+      if (currentId < lastId) throw new Error("sort invalid");
 
       lastId = currentId;
     }
@@ -183,7 +199,7 @@ describe("User Tests [user.spec]", function () {
     pageSize = 5;
     isDescending = false;
     try {
-      instancesOfSecondPage = await UserFacade.readPagedSorted(
+      instancesOfSecondPage = await Facade.readPagedSorted(
         App.admin.jwt,
         pageNumber,
         pageSize,
@@ -195,7 +211,7 @@ describe("User Tests [user.spec]", function () {
 
     // compare objects that ensure page is different
     if (instancesOfFirstPage[0].id === instancesOfSecondPage[0].id)
-      throw new Error();
+      throw new Error("same object in different page");
 
     // read third page to ensure page size and sorting is working
     let instancesOfThirdPage;
@@ -203,7 +219,7 @@ describe("User Tests [user.spec]", function () {
     pageSize = 3;
     isDescending = true;
     try {
-      instancesOfThirdPage = await UserFacade.readPagedSorted(
+      instancesOfThirdPage = await Facade.readPagedSorted(
         App.admin.jwt,
         pageNumber,
         pageSize,
@@ -214,7 +230,8 @@ describe("User Tests [user.spec]", function () {
     }
 
     // check page size
-    if (instancesOfThirdPage.length !== pageSize) throw new Error();
+    if (instancesOfThirdPage.length !== pageSize)
+      throw new Error("page size invalid");
 
     // check sorting
     lastId = instancesOfThirdPage[0];
@@ -222,7 +239,7 @@ describe("User Tests [user.spec]", function () {
       const u = instancesOfThirdPage[i];
       const currentId = u.id;
 
-      if (currentId > lastId) throw new Error();
+      if (currentId > lastId) throw new Error("sort invalid");
 
       lastId = currentId;
     }
@@ -232,10 +249,10 @@ describe("User Tests [user.spec]", function () {
     // add context information
     addContext(this, "Reading users count.");
 
-    // create users
-    const usersCountToCreate = 2;
+    // create instances
+    const instanceToCreate = 2;
 
-    for (let i = 0; i < usersCountToCreate; i++) {
+    for (let i = 0; i < instanceToCreate; i++) {
       // prepare data
       const data = {
         firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
@@ -249,22 +266,22 @@ describe("User Tests [user.spec]", function () {
       // perform action
       let userToCreate: any = {};
       try {
-        await UserFacade.createUser(data, userToCreate);
+        await Facade.create(data, userToCreate);
       } catch (error) {
         throw error;
       }
     }
 
     // read count
-    let usersCount;
+    let readInstanceCount;
     try {
-      usersCount = await UserFacade.readCount(App.admin);
+      readInstanceCount = await Facade.readCount(App.admin.jwt);
     } catch (error) {
       throw error;
     }
 
-    // check user count
-    if (usersCount < usersCountToCreate) throw new Error();
+    // check count
+    if (readInstanceCount < instanceToCreate) throw new Error("count invalid");
   });
 
   it("[GET] /api/users/search/exact", async function () {
@@ -288,7 +305,7 @@ describe("User Tests [user.spec]", function () {
       // perform action
       let userToCreate: any = {};
       try {
-        await UserFacade.createUser(data, userToCreate);
+        await Facade.create(data, userToCreate);
       } catch (error) {
         throw error;
       }
@@ -297,7 +314,7 @@ describe("User Tests [user.spec]", function () {
     // search for user
     let foundUsers;
     try {
-      foundUsers = await UserFacade.searchByExactName(
+      foundUsers = await Facade.searchByExactName(
         App.admin,
         `${Constant.preKey}speci`
       );
@@ -310,7 +327,7 @@ describe("User Tests [user.spec]", function () {
 
     // search for user
     try {
-      foundUsers = await UserFacade.searchByExactName(
+      foundUsers = await Facade.searchByExactName(
         App.admin,
         `${Constant.preKey}specificName`
       );
@@ -343,7 +360,7 @@ describe("User Tests [user.spec]", function () {
       // perform action
       let userToCreate: any = {};
       try {
-        await UserFacade.createUser(data, userToCreate);
+        await Facade.create(data, userToCreate);
       } catch (error) {
         throw error;
       }
@@ -352,7 +369,7 @@ describe("User Tests [user.spec]", function () {
     // search for user
     let foundUsers;
     try {
-      foundUsers = await UserFacade.searchByPartialName(
+      foundUsers = await Facade.searchByPartialName(
         App.admin,
         `${Constant.preKey}spe`
       );
@@ -368,7 +385,7 @@ describe("User Tests [user.spec]", function () {
     // add context information
     addContext(this, "Update user.");
 
-    // create user
+    // create instance
     // prepare data
     let data;
     data = {
@@ -378,17 +395,20 @@ describe("User Tests [user.spec]", function () {
       isActive: true,
     };
     // perform action
-    let userToCreate: any = {};
+    let instanceToCreate: any = {};
     try {
-      await UserFacade.createUser(data, userToCreate);
+      await Facade.create(data, instanceToCreate);
     } catch (error) {
       throw error;
     }
 
-    // read created user
-    let userRead;
+    // read created instance
+    let readInstance;
     try {
-      userRead = await UserFacade.readUserWithId(userToCreate.id, App.admin);
+      readInstance = await Facade.readWithId(
+        App.admin.jwt,
+        instanceToCreate.id
+      );
     } catch (error) {
       throw error;
     }
@@ -404,7 +424,7 @@ describe("User Tests [user.spec]", function () {
 
     // perform update
     try {
-      userRead = await UserFacade.updateUser(data, userRead, App.admin);
+      readInstance = await Facade.update(App.admin.jwt, data, readInstance.id);
     } catch (error) {
       throw error;
     }
@@ -412,20 +432,24 @@ describe("User Tests [user.spec]", function () {
     // check its updated in 2 mins
     const currentTime = Date.now();
     const twoMinutesInMs = 2 * 60 * 1000;
-    const elapsedTime = currentTime - new Date(userRead.updatedAt).getTime();
-    if (elapsedTime > twoMinutesInMs) throw new Error();
+    const elapsedTime =
+      currentTime - new Date(readInstance.updatedAt).getTime();
+    if (elapsedTime > twoMinutesInMs) throw new Error("update time invalid");
 
     // check updated fields
-    if (userRead.firstName != data.firstName || userRead.email != data.email)
-      throw new Error();
+    if (
+      readInstance.firstName != data.firstName ||
+      readInstance.email != data.email
+    )
+      throw new Error("field is not updated");
 
     // check password update (trying old password) by login operation
     data = {
-      email: userRead.email,
+      email: readInstance.email,
       password: `${Constant.preKey}oldPassword`,
     };
     try {
-      await AuthFacade.login(data, userRead);
+      await AuthFacade.login(data, readInstance);
     } catch (error) {
       throw error;
     }
@@ -447,15 +471,15 @@ describe("User Tests [user.spec]", function () {
     // perform action
     let userToCreate: any = {};
     try {
-      await UserFacade.createUser(data, userToCreate);
+      await Facade.create(data, userToCreate);
     } catch (error) {
       throw error;
     }
 
     // read created user
-    let userRead;
+    let readInstance;
     try {
-      userRead = await UserFacade.readUserWithId(userToCreate.id, App.admin);
+      readInstance = await Facade.readWithId(App.admin.jwt, userToCreate.id);
     } catch (error) {
       throw error;
     }
@@ -467,18 +491,18 @@ describe("User Tests [user.spec]", function () {
 
     // perform update
     try {
-      await UserFacade.updateUserPassword(data, userRead, App.admin);
+      await Facade.updateUserPassword(data, readInstance, App.admin);
     } catch (error) {
       throw error;
     }
 
     // check password update (trying new password) by login operation
     data = {
-      email: userRead.email,
+      email: readInstance.email,
       password: `${Constant.preKey}newPassword`,
     };
     try {
-      await AuthFacade.login(data, userRead);
+      await AuthFacade.login(data, readInstance);
     } catch (error) {
       throw error;
     }
@@ -500,28 +524,28 @@ describe("User Tests [user.spec]", function () {
     // perform action
     let createdUser: any = {};
     try {
-      await UserFacade.createUser(data, createdUser);
+      await Facade.create(data, createdUser);
     } catch (error) {
       throw error;
     }
 
     // deactivate user
     try {
-      await UserFacade.deactivateUser(createdUser.id, App.admin);
+      await Facade.deactivateUser(createdUser.id, App.admin);
     } catch (error) {
       throw error;
     }
 
     // read deactivated user
-    let userRead;
+    let readInstance;
     try {
-      userRead = await UserFacade.readUserWithId(createdUser.id, App.admin);
+      readInstance = await Facade.readWithId(App.admin.jwt, createdUser.id);
     } catch (error) {
       throw error;
     }
 
     // check activation of the user
-    if (userRead.isActive !== false) throw new Error();
+    if (readInstance.isActive !== false) throw new Error();
   });
 
   it("[PATCH] /api/users/${id}/activate", async function () {
@@ -540,28 +564,28 @@ describe("User Tests [user.spec]", function () {
     // perform action
     let createdUser: any = {};
     try {
-      await UserFacade.createUser(data, createdUser);
+      await Facade.create(data, createdUser);
     } catch (error) {
       throw error;
     }
 
     // deactivate user
     try {
-      await UserFacade.activateUser(createdUser.id, App.admin);
+      await Facade.activateUser(createdUser.id, App.admin);
     } catch (error) {
       throw error;
     }
 
     // read activated user
-    let userRead;
+    let readInstance;
     try {
-      userRead = await UserFacade.readUserWithId(createdUser.id, App.admin);
+      readInstance = await Facade.readWithId(App.admin.jwt, createdUser.id);
     } catch (error) {
       throw error;
     }
 
     // check deactivation of the user
-    if (userRead.isActive !== true) throw new Error();
+    if (readInstance.isActive !== true) throw new Error();
   });
 
   it("[DELETE] /api/users/${id}", async function () {
@@ -580,14 +604,14 @@ describe("User Tests [user.spec]", function () {
     // perform action
     let createdUser: any = {};
     try {
-      await UserFacade.createUser(data, createdUser);
+      await Facade.create(data, createdUser);
     } catch (error) {
       throw error;
     }
 
     // delete user
     try {
-      await UserFacade.deleteUser(createdUser.id, App.admin);
+      await Facade.deleteUser(createdUser.id, App.admin);
     } catch (error) {
       throw error;
     }
@@ -595,7 +619,7 @@ describe("User Tests [user.spec]", function () {
     // try to read deleted user
     let isUserExist;
     try {
-      await UserFacade.readUserWithId(createdUser.id, App.admin);
+      await Facade.readWithId(App.admin.jwt, createdUser.id);
       isUserExist = true;
     } catch (error) {
       isUserExist = false;

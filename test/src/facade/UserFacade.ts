@@ -2,60 +2,133 @@ const axios = require("axios");
 
 const Constant = require("../constant/Constant.ts");
 
+const entityName = "users";
+
 class UserFacade {
-  static async createUser(body, user) {
+  static async create(data, user) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/users`;
+    const url = `${Constant.baseUrl}/api/${entityName}`;
+    const method = "post";
+    const config = {
+      method,
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
 
     // make request
-    const response = await axios.post(url, body);
+    const response = await axios.request(config);
 
     // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
+    if (response.status !== 200) throw new Error("response is not 200");
+    if (response.data === undefined)
+      throw new Error("response data is undefined");
 
     // set user
     Object.assign(user, response.data.data);
-    user.password = body.password;
+    user.password = data.password;
   }
 
-  static async readUserWithId(id, user) {
+  static async readAll(jwt) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/users/${id}`;
+    const url = `${Constant.baseUrl}/api/${entityName}`;
+    const method = "get";
 
     const config = {
+      method,
+      url,
       headers: {
-        Authorization: user.jwt,
+        "Content-Type": "application/json",
+        Authorization: jwt,
       },
     };
 
     // make request
-    const response = await axios.get(url, config);
+    const response = await axios.request(config);
 
     // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
+    if (response.status !== 200) throw new Error("response is not 200");
+    if (response.data === undefined)
+      throw new Error("response data is undefined");
 
     // return response data
     return response.data.data;
   }
 
-  static async readAllUsers(user) {
+  // static async readCount(jwt) {
+  //   // prepare request
+  //   const url = `${Constant.baseUrl}/api/${entityName}/count`;
+  //   const method = "get";
+
+  //   let config = {
+  //     method: method,
+  //     url: url,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: jwt,
+  //     },
+  //   };
+
+  //   // make request
+  //   const response = await axios.request(config);
+
+  //   // check response
+  //   if (response.status !== 200) throw new Error();
+  //   if (response.data === undefined) throw new Error();
+
+  //   // return response data
+  //   return response.data.data;
+  // }
+
+  // static async update(jwt, data, domainId) {
+  //   // prepare request
+  //   const url = `${Constant.baseUrl}/api/${entityName}/${domainId}`;
+  //   const method = "put";
+
+  //   let config = {
+  //     method: method,
+  //     url: url,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: jwt,
+  //     },
+  //     data: data,
+  //   };
+
+  //   // make request
+  //   const response = await axios.request(config);
+
+  //   // check response
+  //   if (response.status !== 200) throw new Error();
+  //   if (response.data === undefined) throw new Error();
+
+  //   // return response data
+  //   return response.data.data;
+  // }
+
+  static async readWithId(jwt, instanceId) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/users`;
+    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
+    const method = "get";
 
     const config = {
+      method,
+      url,
       headers: {
-        Authorization: user.jwt,
+        "Content-Type": "application/json",
+        Authorization: jwt,
       },
     };
 
     // make request
-    const response = await axios.get(url, config);
+    const response = await axios.request(config);
 
     // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
+    if (response.status !== 200) throw new Error("response is not 200");
+    if (response.data === undefined)
+      throw new Error("response data is undefined");
 
     // return response data
     return response.data.data;
@@ -63,7 +136,7 @@ class UserFacade {
 
   static async readPagedSorted(jwt, pageNumber, pageSize, isDescending) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/users/paged`;
+    const url = `${Constant.baseUrl}/api/${entityName}/paged`;
     const method = "get";
 
     let data = JSON.stringify({
@@ -93,9 +166,9 @@ class UserFacade {
     return response.data.data;
   }
 
-  static async readCount(user) {
+  static async readCount(jwt) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/users/count`;
+    const url = `${Constant.baseUrl}/api/${entityName}/count`;
     const method = "get";
 
     let config = {
@@ -103,7 +176,7 @@ class UserFacade {
       url: url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: user.jwt,
+        Authorization: jwt,
       },
     };
 
@@ -184,9 +257,9 @@ class UserFacade {
     return response.data.data;
   }
 
-  static async updateUser(data, userToUpdate, user) {
+  static async update(jwt, data, instanceId) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/users/${userToUpdate.id}`;
+    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
     const method = "put";
 
     let config = {
@@ -194,7 +267,7 @@ class UserFacade {
       url: url,
       headers: {
         "Content-Type": "application/json",
-        Authorization: user.jwt,
+        Authorization: jwt,
       },
       data: data,
     };

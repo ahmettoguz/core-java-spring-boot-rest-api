@@ -8,164 +8,33 @@ const entityName = "domains";
 
 class DomainFacade {
   static async create(jwt, data) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}`;
-    const method = "post";
-    const config = {
-      method,
-      url,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: jwt,
-      },
-      data: data,
-    };
-
-    // make request
-    const response = await axios.request(config);
-
-    // check response
-    if (response.status !== 200) throw new Error("response is not 200");
-    if (response.data === undefined)
-      throw new Error("response data is undefined");
-
-    // return data
-    return response.data.data;
+    return await CommonFacade.create(jwt, data, entityName);
   }
 
   static async readWithId(jwt, instanceId) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
-    const method = "get";
-
-    const config = {
-      method,
-      url,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: jwt,
-      },
-    };
-
-    // make request
-    const response = await axios.request(config);
-
-    // check response
-    if (response.status !== 200) throw new Error("response is not 200");
-    if (response.data === undefined)
-      throw new Error("response data is undefined");
-
-    // return response data
-    return response.data.data;
+    return await CommonFacade.readWithId(jwt, instanceId, entityName);
   }
 
   static async readAll(jwt) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}`;
-    const method = "get";
-
-    const config = {
-      method,
-      url,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: jwt,
-      },
-    };
-
-    // make request
-    const response = await axios.request(config);
-
-    // check response
-    if (response.status !== 200) throw new Error("response is not 200");
-    if (response.data === undefined)
-      throw new Error("response data is undefined");
-
-    // return response data
-    return response.data.data;
+    return await CommonFacade.readAll(jwt, entityName);
   }
 
   static async readPagedSorted(jwt, pageNumber, pageSize, isDescending) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/paged`;
-    const method = "get";
-
-    let data = JSON.stringify({
-      pageNumber: pageNumber,
-      pageSize: pageSize,
-      isDescending: isDescending,
-    });
-
-    let config = {
-      method: method,
-      url: url,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: jwt,
-      },
-      data: data,
-    };
-
-    // make request
-    const response = await axios.request(config);
-
-    // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
-
-    // return response data
-    return response.data.data;
+    return await CommonFacade.readPagedSorted(
+      jwt,
+      pageNumber,
+      pageSize,
+      isDescending,
+      entityName
+    );
   }
 
   static async readCount(jwt) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/count`;
-    const method = "get";
-
-    let config = {
-      method: method,
-      url: url,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: jwt,
-      },
-    };
-
-    // make request
-    const response = await axios.request(config);
-
-    // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
-
-    // return response data
-    return response.data.data;
+    return await CommonFacade.readCount(jwt, entityName);
   }
 
   static async update(jwt, data, instanceId) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
-    const method = "put";
-
-    let config = {
-      method: method,
-      url: url,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: jwt,
-      },
-      data: data,
-    };
-
-    // make request
-    const response = await axios.request(config);
-
-    // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
-
-    // return response data
-    return response.data.data;
+    return await CommonFacade.update(jwt, data, instanceId, entityName);
   }
 
   static async deactivate(jwt, instanceId) {

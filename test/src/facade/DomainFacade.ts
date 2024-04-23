@@ -2,6 +2,8 @@ const axios = require("axios");
 
 const Constant = require("../constant/Constant.ts");
 
+const CommonFacade = require("./CommonFacade.ts");
+
 const entityName = "domains";
 
 class DomainFacade {
@@ -164,6 +166,14 @@ class DomainFacade {
 
     // return response data
     return response.data.data;
+  }
+
+  static async deactivate(jwt, instanceId) {
+    await CommonFacade.deactivate(jwt, instanceId, entityName);
+  }
+
+  static async activate(jwt, instanceId) {
+    await CommonFacade.activate(jwt, instanceId, entityName);
   }
 }
 

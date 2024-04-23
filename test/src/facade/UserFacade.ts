@@ -277,7 +277,7 @@ class UserFacade {
     if (response.data === undefined) throw new Error();
   }
 
-  static async activateInstance(jwt, instanceId) {
+  static async activate(jwt, instanceId) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/activate`;
     const method = "patch";

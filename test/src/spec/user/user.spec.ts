@@ -584,7 +584,7 @@ describe("User Tests [user.spec]", function () {
 
     // activate instance
     try {
-      await Facade.activateInstance(App.admin.jwt, instanceToCreate.id);
+      await Facade.activate(App.admin.jwt, instanceToCreate.id);
     } catch (error) {
       throw error;
     }

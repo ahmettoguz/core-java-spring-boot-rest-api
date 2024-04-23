@@ -6,3 +6,10 @@ mvnw spring-boot:run
 cd ./test
 npm run spec
 npm run test
+
+### Clean & initialize database
+cd ./test
+npm run clean
+
+### clean terminal
+cls

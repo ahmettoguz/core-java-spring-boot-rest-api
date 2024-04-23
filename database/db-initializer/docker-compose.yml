@@ -1,4 +1,3 @@
-# remove container from database docker compose and then run this docker compose not to overlap
 version: "3"
 
 services:

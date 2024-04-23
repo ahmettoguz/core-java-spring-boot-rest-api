@@ -2,10 +2,8 @@ const axios = require("axios");
 
 const Constant = require("../constant/Constant.ts");
 
-const entityName = "users";
-
-class UserFacade {
-  static async create(data, user) {
+class CommonFacade {
+  static async create(jwt, data, entityName) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${entityName}`;
     const method = "post";
@@ -14,6 +12,7 @@ class UserFacade {
       url,
       headers: {
         "Content-Type": "application/json",
+        Authorization: jwt,
       },
       data: data,
     };
@@ -26,38 +25,11 @@ class UserFacade {
     if (response.data === undefined)
       throw new Error("response data is undefined");
 
-    // set user
-    Object.assign(user, response.data.data);
-    user.password = data.password;
-  }
-
-  static async readAll(jwt) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}`;
-    const method = "get";
-
-    const config = {
-      method,
-      url,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: jwt,
-      },
-    };
-
-    // make request
-    const response = await axios.request(config);
-
-    // check response
-    if (response.status !== 200) throw new Error("response is not 200");
-    if (response.data === undefined)
-      throw new Error("response data is undefined");
-
-    // return response data
+    // return data
     return response.data.data;
   }
 
-  static async readWithId(jwt, instanceId) {
+  static async readWithId(jwt, instanceId, entityName) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
     const method = "get";
@@ -83,7 +55,39 @@ class UserFacade {
     return response.data.data;
   }
 
-  static async readPagedSorted(jwt, pageNumber, pageSize, isDescending) {
+  static async readAll(jwt, entityName) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/${entityName}`;
+    const method = "get";
+
+    const config = {
+      method,
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: jwt,
+      },
+    };
+
+    // make request
+    const response = await axios.request(config);
+
+    // check response
+    if (response.status !== 200) throw new Error("response is not 200");
+    if (response.data === undefined)
+      throw new Error("response data is undefined");
+
+    // return response data
+    return response.data.data;
+  }
+
+  static async readPagedSorted(
+    jwt,
+    pageNumber,
+    pageSize,
+    isDescending,
+    entityName
+  ) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${entityName}/paged`;
     const method = "get";
@@ -115,7 +119,7 @@ class UserFacade {
     return response.data.data;
   }
 
-  static async readCount(jwt) {
+  static async readCount(jwt, entityName) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${entityName}/count`;
     const method = "get";
@@ -140,73 +144,7 @@ class UserFacade {
     return response.data.data;
   }
 
-  static async searchByExactName(jwt, serachString) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/search/exact`;
-    const method = "get";
-
-    let data = JSON.stringify({
-      pageNumber: 0,
-      pageSize: 5,
-      isDescending: false,
-      firstName: serachString,
-    });
-
-    let config = {
-      method: method,
-      url: url,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: jwt,
-      },
-      data: data,
-    };
-
-    // make request
-    const response = await axios.request(config);
-
-    // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
-
-    // return response data
-    return response.data.data;
-  }
-
-  static async searchByPartialName(jwt, serachString) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/search/partial`;
-    const method = "get";
-
-    let data = JSON.stringify({
-      pageNumber: 0,
-      pageSize: 5,
-      isDescending: false,
-      firstName: serachString,
-    });
-
-    let config = {
-      method: method,
-      url: url,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: jwt,
-      },
-      data: data,
-    };
-
-    // make request
-    const response = await axios.request(config);
-
-    // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
-
-    // return response data
-    return response.data.data;
-  }
-
-  static async update(jwt, data, instanceId) {
+  static async update(jwt, data, instanceId, entityName) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
     const method = "put";
@@ -232,30 +170,7 @@ class UserFacade {
     return response.data.data;
   }
 
-  static async updateUserPassword(jwt, data, instanceId) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/password`;
-    const method = "patch";
-
-    let config = {
-      method: method,
-      url: url,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: jwt,
-      },
-      data: data,
-    };
-
-    // make request
-    const response = await axios.request(config);
-
-    // check response
-    if (response.status !== 200) throw new Error();
-    if (response.data === undefined) throw new Error();
-  }
-
-  static async deactivate(jwt, instanceId) {
+  static async deactivate(jwt, instanceId, entityName) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/deactivate`;
     const method = "patch";
@@ -277,7 +192,7 @@ class UserFacade {
     if (response.data === undefined) throw new Error();
   }
 
-  static async activate(jwt, instanceId) {
+  static async activate(jwt, instanceId, entityName) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/activate`;
     const method = "patch";
@@ -299,9 +214,9 @@ class UserFacade {
     if (response.data === undefined) throw new Error();
   }
 
-  static async delete(jwt, userId) {
+  static async delete(jwt, instanceId, entityName) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/${userId}`;
+    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
     const method = "delete";
 
     let config = {
@@ -322,4 +237,4 @@ class UserFacade {
   }
 }
 
-module.exports = UserFacade;
+module.exports = CommonFacade;

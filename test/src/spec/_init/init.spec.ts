@@ -14,8 +14,8 @@ describe("Initialization Tests [init.spec]", function () {
     // context of the test
     addContext(this, "Creating admin.");
 
-    // prepare body
-    const body = {
+    // prepare data
+    const data = {
       firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
       email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
       password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
@@ -24,7 +24,7 @@ describe("Initialization Tests [init.spec]", function () {
 
     //perform action
     try {
-      await UserFacade.createUser(body, App.admin);
+      await UserFacade.create(data, App.admin);
     } catch (error) {
       throw error;
     }

@@ -213,6 +213,28 @@ class CommonFacade {
     if (response.status !== 200) throw new Error();
     if (response.data === undefined) throw new Error();
   }
+
+  static async delete(jwt, instanceId, entityName) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
+    const method = "delete";
+
+    let config = {
+      method: method,
+      url: url,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: jwt,
+      },
+    };
+
+    // make request
+    const response = await axios.request(config);
+
+    // check response
+    if (response.status !== 200) throw new Error();
+    if (response.data === undefined) throw new Error();
+  }
 }
 
 module.exports = CommonFacade;

@@ -292,4 +292,33 @@ describe("Domain Tests [domain.spec]", function () {
     if (readInstance.isActive !== true)
       throw new Error("instance cannot activated");
   });
+
+  it("[DELETE] /api/domains/${id}", async function () {
+    // add context information
+    addContext(this, "Delete domains.");
+
+    // prepare data
+    let data = {
+      name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      isActive: true,
+      userId: -1,
+    };
+
+    // create instance
+    const instanceToCreate = await Facade.create(App.admin.jwt, data);
+
+    // delete instance
+    await Facade.delete(App.admin.jwt, instanceToCreate.id);
+
+    // try to read deleted instance
+    let isInstanceExist;
+    try {
+      await Facade.readWithId(App.admin.jwt, instanceToCreate.id);
+      isInstanceExist = true;
+    } catch (error) {
+      isInstanceExist = false;
+    }
+
+    if (isInstanceExist) throw new Error("deleted instance is exist");
+  });
 });

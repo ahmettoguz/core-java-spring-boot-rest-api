@@ -44,6 +44,10 @@ class DomainFacade {
   static async activate(jwt, instanceId) {
     await CommonFacade.activate(jwt, instanceId, entityName);
   }
+
+  static async delete(jwt, instanceId) {
+    await CommonFacade.delete(jwt, instanceId, entityName);
+  }
 }
 
 module.exports = DomainFacade;

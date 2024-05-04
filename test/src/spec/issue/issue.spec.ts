@@ -38,37 +38,42 @@ describe("Issue Tests [issue.spec]", function () {
       throw new Error("id should't be setted");
   });
 
-  // it("[GET] /api/domains", async function () {
-  //   // add context information
-  //   addContext(this, "Reading domain with id.");
+  it("[GET] /api/issues", async function () {
+    // add context information
+    addContext(this, "Reading all issues.");
 
-  //   const createdInstanceIds: number[] = [];
+    const createdInstanceIds: number[] = [];
 
-  //   // create instances
-  //   for (let i = 0; i < 2; i++) {
-  //     // prepare data
-  //     const data = {
-  //       name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-  //       isActive: true,
-  //     };
-  //     const instanceToCreate = await Facade.create(App.admin.jwt, data);
+    // create instances
+    for (let i = 0; i < 2; i++) {
+      // prepare data
+      let data = {
+        title: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}_newIssueTitle`,
+        description: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}_newIssueTitle`,
+        isActive: true,
+      };
+      const instanceToCreate = await Facade.create(App.admin.jwt, data);
 
-  //     // save ids
-  //     createdInstanceIds.push(instanceToCreate.id);
-  //   }
+      // save ids
+      createdInstanceIds.push(instanceToCreate.id);
+    }
 
-  //   // read created instances
-  //   const instancesRead = await Facade.readAll(App.admin.jwt);
+    // read created instances
+    const instancesRead = await Facade.readAll(App.admin.jwt);
 
-  //   // check inserted ids
-  //   for (let i = 0; i < createdInstanceIds.length; i++) {
-  //     if (
-  //       !instancesRead.some((instance) => instance.id === createdInstanceIds[i])
-  //     ) {
-  //       throw new Error("desired number of intances couldn't read");
-  //     }
-  //   }
-  // });
+    // check inserted ids
+    for (let i = 0; i < createdInstanceIds.length; i++) {
+      if (
+        !instancesRead.some((instance) => instance.id === createdInstanceIds[i])
+      ) {
+        throw new Error("desired number of intances couldn't read");
+      }
+    }
+  });
 
   // it("[GET] /api/domains/{id}", async function () {
   //   // add context information

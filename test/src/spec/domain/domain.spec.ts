@@ -34,7 +34,7 @@ describe("Domain Tests [domain.spec]", function () {
 
   it("[GET] /api/domains", async function () {
     // add context information
-    addContext(this, "Reading domain with id.");
+    addContext(this, "Reading all domains.");
 
     const createdInstanceIds: number[] = [];
 

@@ -14,7 +14,7 @@ describe("Issue Tests [issue.spec]", function () {
     addContext(this, "Create issue.");
 
     // prepare data
-    let data = {
+    const data = {
       title: `${
         Constant.preKey
       }${CommonUtil.generateRandomWord()}_newIssueTitle`,
@@ -47,7 +47,7 @@ describe("Issue Tests [issue.spec]", function () {
     // create instances
     for (let i = 0; i < 2; i++) {
       // prepare data
-      let data = {
+      const data = {
         title: `${
           Constant.preKey
         }${CommonUtil.generateRandomWord()}_newIssueTitle`,
@@ -80,7 +80,7 @@ describe("Issue Tests [issue.spec]", function () {
     addContext(this, "Reading issue with id.");
 
     // prepare data
-    let data = {
+    const data = {
       title: `${
         Constant.preKey
       }${CommonUtil.generateRandomWord()}_newIssueTitle`,
@@ -116,7 +116,7 @@ describe("Issue Tests [issue.spec]", function () {
     // create instances
     for (let i = 0; i < 15; i++) {
       // prepare data
-      let data = {
+      const data = {
         title: `${
           Constant.preKey
         }${CommonUtil.generateRandomWord()}_newIssueTitle`,
@@ -203,7 +203,7 @@ describe("Issue Tests [issue.spec]", function () {
     const instanceToCreate = 2;
     for (let i = 0; i < instanceToCreate; i++) {
       // prepare data
-      let data = {
+      const data = {
         title: `${
           Constant.preKey
         }${CommonUtil.generateRandomWord()}_newIssueTitle`,
@@ -222,130 +222,151 @@ describe("Issue Tests [issue.spec]", function () {
     if (readInstanceCount < instanceToCreate) throw new Error("count invalid");
   });
 
-  // it("[PUT] /api/domains/{id}", async function () {
-  //   // add context information
-  //   addContext(this, "Update domain.");
+  it("[PUT] /api/issues/{id}", async function () {
+    // add context information
+    addContext(this, "Update issue.");
 
-  //   // prepare data
-  //   let data;
-  //   data = {
-  //     name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-  //     isActive: true,
-  //   };
+    // prepare data
+    const data = {
+      title: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newIssueTitle`,
+      description: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newIssueDescription`,
+      isActive: true,
+    };
 
-  //   // create instance
-  //   const instanceToCreate = await Facade.create(App.admin.jwt, data);
+    // create instance
+    const instanceToCreate = await Facade.create(App.admin.jwt, data);
 
-  //   // read instance
-  //   const readInstance = await Facade.readWithId(
-  //     App.admin.jwt,
-  //     instanceToCreate.id
-  //   );
+    // read instance
+    const readInstance = await Facade.readWithId(
+      App.admin.jwt,
+      instanceToCreate.id
+    );
 
-  //   // prepare data
-  //   data = {
-  //     name: `${Constant.preKey}updatedDomainName`,
-  //   };
+    // prepare data
+    const dataUpdate = {
+      title: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_updatedIssueTitle`,
+      description: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_updatedIssueDescription`,
+      isActive: false,
+    };
 
-  //   // update instance
-  //   const updatedInstance = await Facade.update(
-  //     App.admin.jwt,
-  //     data,
-  //     readInstance.id
-  //   );
+    // update instance
+    const updatedInstance = await Facade.update(
+      App.admin.jwt,
+      dataUpdate,
+      readInstance.id
+    );
 
-  //   // check its updated in 2 mins
-  //   const currentTime = Date.now();
-  //   const twoMinutesInMs = 2 * 60 * 1000;
-  //   const elapsedTime =
-  //     currentTime - new Date(updatedInstance.updatedAt).getTime();
-  //   if (elapsedTime > twoMinutesInMs) throw new Error("update time invalid");
+    // check its updated in 2 mins
+    const currentTime = Date.now();
+    const twoMinutesInMs = 2 * 60 * 1000;
+    const elapsedTime =
+      currentTime - new Date(updatedInstance.updatedAt).getTime();
+    if (elapsedTime > twoMinutesInMs) throw new Error("update time invalid");
 
-  //   // check updated fields
-  //   if (updatedInstance.name !== data.name)
-  //     throw new Error("field is not updated");
-  // });
+    // check updated fields
+    if (updatedInstance.title !== dataUpdate.title)
+      throw new Error("field is not updated");
 
-  // it("[PATCH] /api/domains/${id}/deactivate", async function () {
-  //   // add context information
-  //   addContext(this, "Deactivate domain.");
+    if (updatedInstance.isActive === false)
+      throw new Error("field shouldn't updated");
+  });
 
-  //   // prepare data
-  //   let data = {
-  //     name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-  //     isActive: true,
-  //   };
+  it("[PATCH] /api/issues/${id}/deactivate", async function () {
+    // add context information
+    addContext(this, "Deactivate issue.");
 
-  //   // create instance
-  //   const instanceToCreate = await Facade.create(App.admin.jwt, data);
+    // prepare data
+    const data = {
+      title: `${Constant.preKey}${CommonUtil.generateRandomWord()}_title`,
+      description: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_description`,
+      isActive: true,
+    };
 
-  //   // deactivate instance
-  //   await Facade.deactivate(App.admin.jwt, instanceToCreate.id);
+    // create instance
+    const instanceToCreate = await Facade.create(App.admin.jwt, data);
 
-  //   // read instance
-  //   const readInstance = await Facade.readWithId(
-  //     App.admin.jwt,
-  //     instanceToCreate.id
-  //   );
+    // deactivate instance
+    await Facade.deactivate(App.admin.jwt, instanceToCreate.id);
 
-  //   // check activation of the instance
-  //   if (readInstance.isActive !== false)
-  //     throw new Error("instance cannot deactivated");
-  // });
+    // read instance
+    const readInstance = await Facade.readWithId(
+      App.admin.jwt,
+      instanceToCreate.id
+    );
 
-  // it("[PATCH] /api/domains/${id}/activate", async function () {
-  //   // add context information
-  //   addContext(this, "Activate domain.");
+    // check activation of the instance
+    if (readInstance.isActive !== false)
+      throw new Error("instance cannot deactivated");
+  });
 
-  //   // prepare data
-  //   let data = {
-  //     name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-  //     isActive: false,
-  //   };
+  it("[PATCH] /api/issues/${id}/activate", async function () {
+    // add context information
+    addContext(this, "Activate issue.");
 
-  //   // create instance
-  //   const instanceToCreate = await Facade.create(App.admin.jwt, data);
+    // prepare data
+    const data = {
+      title: `${Constant.preKey}${CommonUtil.generateRandomWord()}_title`,
+      description: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_description`,
+      isActive: false,
+    };
 
-  //   // activate instance
-  //   await Facade.activate(App.admin.jwt, instanceToCreate.id);
+    // create instance
+    const instanceToCreate = await Facade.create(App.admin.jwt, data);
 
-  //   // read activated instance
-  //   const readInstance = await Facade.readWithId(
-  //     App.admin.jwt,
-  //     instanceToCreate.id
-  //   );
+    // activate instance
+    await Facade.activate(App.admin.jwt, instanceToCreate.id);
 
-  //   // check deactivation of the instance
-  //   if (readInstance.isActive !== true)
-  //     throw new Error("instance cannot activated");
-  // });
+    // read activated instance
+    const readInstance = await Facade.readWithId(
+      App.admin.jwt,
+      instanceToCreate.id
+    );
 
-  // it("[DELETE] /api/domains/${id}", async function () {
-  //   // add context information
-  //   addContext(this, "Delete domains.");
+    // check deactivation of the instance
+    if (readInstance.isActive !== true)
+      throw new Error("instance cannot activated");
+  });
 
-  //   // prepare data
-  //   let data = {
-  //     name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-  //     isActive: true,
-  //     userId: -1,
-  //   };
+  it("[DELETE] /api/issues/${id}", async function () {
+    // add context information
+    addContext(this, "Delete issue.");
 
-  //   // create instance
-  //   const instanceToCreate = await Facade.create(App.admin.jwt, data);
+    // prepare data
+    const data = {
+      title: `${Constant.preKey}${CommonUtil.generateRandomWord()}_title`,
+      description: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_description`,
+      isActive: false,
+    };
 
-  //   // delete instance
-  //   await Facade.delete(App.admin.jwt, instanceToCreate.id);
+    // create instance
+    const instanceToCreate = await Facade.create(App.admin.jwt, data);
 
-  //   // try to read deleted instance
-  //   let isInstanceExist;
-  //   try {
-  //     await Facade.readWithId(App.admin.jwt, instanceToCreate.id);
-  //     isInstanceExist = true;
-  //   } catch (error) {
-  //     isInstanceExist = false;
-  //   }
+    // delete instance
+    await Facade.delete(App.admin.jwt, instanceToCreate.id);
 
-  //   if (isInstanceExist) throw new Error("deleted instance is exist");
-  // });
+    // try to read deleted instance
+    let isInstanceExist;
+    try {
+      await Facade.readWithId(App.admin.jwt, instanceToCreate.id);
+      isInstanceExist = true;
+    } catch (error) {
+      isInstanceExist = false;
+    }
+
+    if (isInstanceExist) throw new Error("deleted instance is exist");
+  });
 });

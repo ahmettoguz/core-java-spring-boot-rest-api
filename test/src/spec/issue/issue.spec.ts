@@ -20,7 +20,7 @@ describe("Issue Tests [issue.spec]", function () {
       }${CommonUtil.generateRandomWord()}_newIssueTitle`,
       description: `${
         Constant.preKey
-      }${CommonUtil.generateRandomWord()}_newIssueTitle`,
+      }${CommonUtil.generateRandomWord()}_newIssueDescription`,
       isActive: true,
       id: -1,
       userId: -1,
@@ -53,7 +53,7 @@ describe("Issue Tests [issue.spec]", function () {
         }${CommonUtil.generateRandomWord()}_newIssueTitle`,
         description: `${
           Constant.preKey
-        }${CommonUtil.generateRandomWord()}_newIssueTitle`,
+        }${CommonUtil.generateRandomWord()}_newIssueDescription`,
         isActive: true,
       };
       const instanceToCreate = await Facade.create(App.admin.jwt, data);
@@ -75,34 +75,39 @@ describe("Issue Tests [issue.spec]", function () {
     }
   });
 
-  // it("[GET] /api/domains/{id}", async function () {
-  //   // add context information
-  //   addContext(this, "Reading domain with id.");
+  it("[GET] /api/issues/{id}", async function () {
+    // add context information
+    addContext(this, "Reading issue with id.");
 
-  //   // prepare data
-  //   let data = {
-  //     name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-  //     isActive: true,
-  //   };
+    // prepare data
+    let data = {
+      title: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newIssueTitle`,
+      description: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newIssueDescription`,
+      isActive: true,
+    };
 
-  //   // create instance
-  //   const instanceToCreate = await Facade.create(App.admin.jwt, data);
+    // create instance
+    const instanceToCreate = await Facade.create(App.admin.jwt, data);
 
-  //   // read instance
-  //   const readInstance = await Facade.readWithId(
-  //     App.admin.jwt,
-  //     instanceToCreate.id
-  //   );
+    // read instance
+    const readInstance = await Facade.readWithId(
+      App.admin.jwt,
+      instanceToCreate.id
+    );
 
-  //   // compare instances
-  //   if (
-  //     instanceToCreate.id !== readInstance.id ||
-  //     instanceToCreate.name !== readInstance.name
-  //   )
-  //     throw new Error(
-  //       "created instance name is not same with the name which is read"
-  //     );
-  // });
+    // compare instances
+    if (
+      instanceToCreate.id !== readInstance.id ||
+      instanceToCreate.name !== readInstance.name
+    )
+      throw new Error(
+        "created instance name is not same with the name which is read"
+      );
+  });
 
   // it("[GET] /api/domains/paged", async function () {
   //   // add context information

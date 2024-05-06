@@ -112,7 +112,7 @@ Domains [✅]:
             restricted for all
 ----------------------------------------------------
 
-Issues []:
+Issues [✅]:
     POST:
         /api/issues
             jwt authentication

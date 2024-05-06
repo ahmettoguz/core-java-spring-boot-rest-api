@@ -109,107 +109,118 @@ describe("Issue Tests [issue.spec]", function () {
       );
   });
 
-  // it("[GET] /api/domains/paged", async function () {
-  //   // add context information
-  //   addContext(this, "Reading domains paged and sorted.");
+  it("[GET] /api/issues/paged", async function () {
+    // add context information
+    addContext(this, "Reading issues paged and sorted.");
 
-  //   // create instances
-  //   for (let i = 0; i < 15; i++) {
-  //     // prepare data
-  //     const data = {
-  //       name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-  //       isActive: true,
-  //     };
-  //     await Facade.create(App.admin.jwt, data);
-  //   }
+    // create instances
+    for (let i = 0; i < 15; i++) {
+      // prepare data
+      let data = {
+        title: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}_newIssueTitle`,
+        description: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}_newIssueDescription`,
+        isActive: true,
+      };
+      await Facade.create(App.admin.jwt, data);
+    }
 
-  //   // read first page to ensure page size and sorting
-  //   let pageNumber = 0;
-  //   let pageSize = 5;
-  //   let isDescending = false;
-  //   const instancesOfFirstPage = await Facade.readPagedSorted(
-  //     App.admin.jwt,
-  //     pageNumber,
-  //     pageSize,
-  //     isDescending
-  //   );
+    // read first page to ensure page size and sorting
+    let pageNumber = 0;
+    let pageSize = 5;
+    let isDescending = false;
+    const instancesOfFirstPage = await Facade.readPagedSorted(
+      App.admin.jwt,
+      pageNumber,
+      pageSize,
+      isDescending
+    );
 
-  //   // check page size
-  //   if (instancesOfFirstPage.length !== 5) throw new Error("page size invalid");
+    // check page size
+    if (instancesOfFirstPage.length !== 5) throw new Error("page size invalid");
 
-  //   // check sorting
-  //   let lastId = instancesOfFirstPage[0];
-  //   for (let i = 0; i < pageSize; i++) {
-  //     const tempInstance = instancesOfFirstPage[i];
-  //     const currentId = tempInstance.id;
+    // check sorting
+    let lastId = instancesOfFirstPage[0];
+    for (let i = 0; i < pageSize; i++) {
+      const tempInstance = instancesOfFirstPage[i];
+      const currentId = tempInstance.id;
 
-  //     if (currentId < lastId) throw new Error("sort invalid");
+      if (currentId < lastId) throw new Error("sort invalid");
 
-  //     lastId = currentId;
-  //   }
+      lastId = currentId;
+    }
 
-  //   // read second page to check page number is working
-  //   pageNumber = 1;
-  //   pageSize = 5;
-  //   isDescending = false;
-  //   const instancesOfSecondPage = await Facade.readPagedSorted(
-  //     App.admin.jwt,
-  //     pageNumber,
-  //     pageSize,
-  //     isDescending
-  //   );
+    // read second page to check page number is working
+    pageNumber = 1;
+    pageSize = 5;
+    isDescending = false;
+    const instancesOfSecondPage = await Facade.readPagedSorted(
+      App.admin.jwt,
+      pageNumber,
+      pageSize,
+      isDescending
+    );
 
-  //   // compare objects that ensure page is different
-  //   if (instancesOfFirstPage[0].id === instancesOfSecondPage[0].id)
-  //     throw new Error("same object in different page");
+    // compare objects that ensure page is different
+    if (instancesOfFirstPage[0].id === instancesOfSecondPage[0].id)
+      throw new Error("same object in different page");
 
-  //   // read third page to ensure page size and sorting is working
-  //   pageNumber = 0;
-  //   pageSize = 3;
-  //   isDescending = true;
-  //   const instancesOfThirdPage = await Facade.readPagedSorted(
-  //     App.admin.jwt,
-  //     pageNumber,
-  //     pageSize,
-  //     isDescending
-  //   );
+    // read third page to ensure page size and sorting is working
+    pageNumber = 0;
+    pageSize = 3;
+    isDescending = true;
+    const instancesOfThirdPage = await Facade.readPagedSorted(
+      App.admin.jwt,
+      pageNumber,
+      pageSize,
+      isDescending
+    );
 
-  //   // check page size
-  //   if (instancesOfThirdPage.length !== pageSize)
-  //     throw new Error("page size invalid");
+    // check page size
+    if (instancesOfThirdPage.length !== pageSize)
+      throw new Error("page size invalid");
 
-  //   // check sorting
-  //   lastId = instancesOfThirdPage[0];
-  //   for (let i = 0; i < pageSize; i++) {
-  //     const u = instancesOfThirdPage[i];
-  //     const currentId = u.id;
+    // check sorting
+    lastId = instancesOfThirdPage[0];
+    for (let i = 0; i < pageSize; i++) {
+      const u = instancesOfThirdPage[i];
+      const currentId = u.id;
 
-  //     if (currentId > lastId) throw new Error("sort invalid");
+      if (currentId > lastId) throw new Error("sort invalid");
 
-  //     lastId = currentId;
-  //   }
-  // });
+      lastId = currentId;
+    }
+  });
 
-  // it("[GET] /api/domains/count", async function () {
-  //   // add context information
-  //   addContext(this, "Reading domains count.");
+  it("[GET] /api/issues/count", async function () {
+    // add context information
+    addContext(this, "Reading issues count.");
 
-  //   // create instances
-  //   const instanceToCreate = 2;
-  //   for (let i = 0; i < instanceToCreate; i++) {
-  //     const data = {
-  //       name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-  //       isActive: true,
-  //     };
-  //     await Facade.create(App.admin.jwt, data);
-  //   }
+    // create instances
+    const instanceToCreate = 2;
+    for (let i = 0; i < instanceToCreate; i++) {
+      // prepare data
+      let data = {
+        title: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}_newIssueTitle`,
+        description: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}_newIssueDescription`,
+        isActive: true,
+      };
+      await Facade.create(App.admin.jwt, data);
+    }
 
-  //   // read count
-  //   const readInstanceCount = await Facade.readCount(App.admin.jwt);
+    // read count
+    const readInstanceCount = await Facade.readCount(App.admin.jwt);
 
-  //   // check count
-  //   if (readInstanceCount < instanceToCreate) throw new Error("count invalid");
-  // });
+    // check count
+    if (readInstanceCount < instanceToCreate) throw new Error("count invalid");
+  });
 
   // it("[PUT] /api/domains/{id}", async function () {
   //   // add context information

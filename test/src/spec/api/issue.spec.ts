@@ -4,19 +4,25 @@ const Constant = require("../../constant/Constant.ts");
 const CommonUtil = require("../../util/CommonUtil.ts");
 const App = require("../../app/App.ts");
 
-const Facade = require("../../facade/DomainFacade.ts");
+const Facade = require("../../facade/IssueFacade.ts");
 
 before(async () => {});
 
-describe("Domain Tests [domain.spec]", function () {
-  it("[POST] /api/domains", async function () {
+describe("Issue Tests [issue.spec]", function () {
+  it("[POST] /api/issues", async function () {
     // add context information
-    addContext(this, "Create domain.");
+    addContext(this, "Create issue.");
 
     // prepare data
-    let data = {
-      name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+    const data = {
+      title: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newIssueTitle`,
+      description: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newIssueDescription`,
       isActive: true,
+      id: -1,
       userId: -1,
     };
 
@@ -28,13 +34,13 @@ describe("Domain Tests [domain.spec]", function () {
       throw new Error("instance cannot created");
 
     // check userId field (it shouldn't be added via post)
-    if (instanceToCreate.userId === -1)
-      throw new Error("user id should't be setted");
+    if (instanceToCreate.id === -1 || instanceToCreate.userId === -1)
+      throw new Error("id should't be setted");
   });
 
-  it("[GET] /api/domains", async function () {
+  it("[GET] /api/issues", async function () {
     // add context information
-    addContext(this, "Reading domain with id.");
+    addContext(this, "Reading all issues.");
 
     const createdInstanceIds: number[] = [];
 
@@ -42,7 +48,12 @@ describe("Domain Tests [domain.spec]", function () {
     for (let i = 0; i < 2; i++) {
       // prepare data
       const data = {
-        name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+        title: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}_newIssueTitle`,
+        description: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}_newIssueDescription`,
         isActive: true,
       };
       const instanceToCreate = await Facade.create(App.admin.jwt, data);
@@ -64,13 +75,18 @@ describe("Domain Tests [domain.spec]", function () {
     }
   });
 
-  it("[GET] /api/domains/{id}", async function () {
+  it("[GET] /api/issues/{id}", async function () {
     // add context information
-    addContext(this, "Reading domain with id.");
+    addContext(this, "Reading issue with id.");
 
     // prepare data
-    let data = {
-      name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+    const data = {
+      title: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newIssueTitle`,
+      description: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newIssueDescription`,
       isActive: true,
     };
 
@@ -93,15 +109,20 @@ describe("Domain Tests [domain.spec]", function () {
       );
   });
 
-  it("[GET] /api/domains/paged", async function () {
+  it("[GET] /api/issues/paged", async function () {
     // add context information
-    addContext(this, "Reading domains paged and sorted.");
+    addContext(this, "Reading issues paged and sorted.");
 
     // create instances
     for (let i = 0; i < 15; i++) {
       // prepare data
       const data = {
-        name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+        title: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}_newIssueTitle`,
+        description: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}_newIssueDescription`,
         isActive: true,
       };
       await Facade.create(App.admin.jwt, data);
@@ -174,15 +195,21 @@ describe("Domain Tests [domain.spec]", function () {
     }
   });
 
-  it("[GET] /api/domains/count", async function () {
+  it("[GET] /api/issues/count", async function () {
     // add context information
-    addContext(this, "Reading domains count.");
+    addContext(this, "Reading issues count.");
 
     // create instances
     const instanceToCreate = 2;
     for (let i = 0; i < instanceToCreate; i++) {
+      // prepare data
       const data = {
-        name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+        title: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}_newIssueTitle`,
+        description: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}_newIssueDescription`,
         isActive: true,
       };
       await Facade.create(App.admin.jwt, data);
@@ -195,14 +222,18 @@ describe("Domain Tests [domain.spec]", function () {
     if (readInstanceCount < instanceToCreate) throw new Error("count invalid");
   });
 
-  it("[PUT] /api/domains/{id}", async function () {
+  it("[PUT] /api/issues/{id}", async function () {
     // add context information
-    addContext(this, "Update domain.");
+    addContext(this, "Update issue.");
 
     // prepare data
-    let data;
-    data = {
-      name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+    const data = {
+      title: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newIssueTitle`,
+      description: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newIssueDescription`,
       isActive: true,
     };
 
@@ -216,14 +247,20 @@ describe("Domain Tests [domain.spec]", function () {
     );
 
     // prepare data
-    data = {
-      name: `${Constant.preKey}updatedDomainName`,
+    const dataUpdate = {
+      title: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_updatedIssueTitle`,
+      description: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_updatedIssueDescription`,
+      isActive: false,
     };
 
     // update instance
     const updatedInstance = await Facade.update(
       App.admin.jwt,
-      data,
+      dataUpdate,
       readInstance.id
     );
 
@@ -235,17 +272,23 @@ describe("Domain Tests [domain.spec]", function () {
     if (elapsedTime > twoMinutesInMs) throw new Error("update time invalid");
 
     // check updated fields
-    if (updatedInstance.name !== data.name)
+    if (updatedInstance.title !== dataUpdate.title)
       throw new Error("field is not updated");
+
+    if (updatedInstance.isActive === false)
+      throw new Error("field shouldn't updated");
   });
 
-  it("[PATCH] /api/domains/${id}/deactivate", async function () {
+  it("[PATCH] /api/issues/${id}/deactivate", async function () {
     // add context information
-    addContext(this, "Deactivate domain.");
+    addContext(this, "Deactivate issue.");
 
     // prepare data
-    let data = {
-      name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+    const data = {
+      title: `${Constant.preKey}${CommonUtil.generateRandomWord()}_title`,
+      description: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_description`,
       isActive: true,
     };
 
@@ -266,13 +309,16 @@ describe("Domain Tests [domain.spec]", function () {
       throw new Error("instance cannot deactivated");
   });
 
-  it("[PATCH] /api/domains/${id}/activate", async function () {
+  it("[PATCH] /api/issues/${id}/activate", async function () {
     // add context information
-    addContext(this, "Activate domain.");
+    addContext(this, "Activate issue.");
 
     // prepare data
-    let data = {
-      name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+    const data = {
+      title: `${Constant.preKey}${CommonUtil.generateRandomWord()}_title`,
+      description: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_description`,
       isActive: false,
     };
 
@@ -293,15 +339,17 @@ describe("Domain Tests [domain.spec]", function () {
       throw new Error("instance cannot activated");
   });
 
-  it("[DELETE] /api/domains/${id}", async function () {
+  it("[DELETE] /api/issues/${id}", async function () {
     // add context information
-    addContext(this, "Delete domains.");
+    addContext(this, "Delete issue.");
 
     // prepare data
-    let data = {
-      name: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-      isActive: true,
-      userId: -1,
+    const data = {
+      title: `${Constant.preKey}${CommonUtil.generateRandomWord()}_title`,
+      description: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_description`,
+      isActive: false,
     };
 
     // create instance

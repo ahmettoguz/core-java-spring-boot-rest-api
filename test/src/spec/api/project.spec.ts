@@ -9,34 +9,34 @@ const Facade = require("../../facade/ProjectFacade.ts");
 before(async () => {});
 
 describe("Project Tests [project.spec]", function () {
-  // it("[POST] /api/projects", async function () {
-  //   // add context information
-  //   addContext(this, "Create issue.");
+  it("[POST] /api/projects", async function () {
+    // add context information
+    addContext(this, "Create project.");
 
-  //   // prepare data
-  //   const data = {
-  //     title: `${
-  //       Constant.preKey
-  //     }${CommonUtil.generateRandomWord()}_newIssueTitle`,
-  //     description: `${
-  //       Constant.preKey
-  //     }${CommonUtil.generateRandomWord()}_newIssueDescription`,
-  //     isActive: true,
-  //     id: -1,
-  //     userId: -1,
-  //   };
+    // prepare data
+    const data = {
+      title: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newProjectTitle`,
+      progress: CommonUtil.generateRandomNumber(0, 100),
+      isActive: true,
+      id: -1,
+    };
 
-  //   // create instance
-  //   const instanceToCreate = await Facade.create(App.admin.jwt, data);
+    // create instance
+    const instanceToCreate = await Facade.create(App.admin.jwt, data);
 
-  //   // check created output
-  //   if (instanceToCreate === null || instanceToCreate === undefined)
-  //     throw new Error("instance cannot created");
+    // check created output
+    if (instanceToCreate === null || instanceToCreate === undefined)
+      throw new Error("instance cannot created");
 
-  //   // check userId field (it shouldn't be added via post)
-  //   if (instanceToCreate.id === -1 || instanceToCreate.userId === -1)
-  //     throw new Error("id should't be setted");
-  // });
+    // check userId field (it shouldn't be added via post)
+    if (instanceToCreate.id === -1) throw new Error("id should't be setted");
+
+    // check progress
+    if (data.progress !== instanceToCreate.progress)
+      throw new Error("progress is not matching");
+  });
 
   // it("[GET] /api/projects", async function () {
   //   // add context information

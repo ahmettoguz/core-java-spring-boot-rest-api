@@ -73,6 +73,15 @@ class CommonUtil {
     return randomWord;
   }
 
+  /* 
+    // usage
+    // min and max included
+    const randomNumber = CommonUtil.generateRandomNumber(0, 10);
+   */
+  static generateRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   static extractJwtToken(response) {
     const authorizationHeader = response.headers["authorization"];
 

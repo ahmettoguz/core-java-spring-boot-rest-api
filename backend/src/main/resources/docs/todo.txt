@@ -7,3 +7,24 @@ configure deployment
 user create endpoint returns password
 
 testlerde facadelarda rolefacade var user ve rolü kapsıyor sanırım bunun için farklı bir facade açmam gerekebilir
+
+
+---
+describe("Project Tests [project.spec]", function () {
+  it("[POST] /api/projects", async function () {
+    // add context information
+    addContext(this, "Create project.");
+
+    // prepare data
+    const data = {
+      title: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newProjectTitle`,
+      progress: CommonUtil.generateRandomNumber(0, 100),
+      isActive: true,
+      id: -1,
+      userIds: [1, 2, 3],
+    };
+
+    gives error  500 in backend
+---

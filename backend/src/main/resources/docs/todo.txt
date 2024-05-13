@@ -5,3 +5,5 @@ configure postgresql
 configure deployment
 
 user create endpoint returns password
+
+testlerde facadelarda rolefacade var user ve rolü kapsıyor sanırım bunun için farklı bir facade açmam gerekebilir

@@ -1,7 +1,3 @@
-const axios = require("axios");
-
-const Constant = require("../constant/Constant.ts");
-
 const CommonFacade = require("./CommonFacade.ts");
 
 const entityName = "domains";

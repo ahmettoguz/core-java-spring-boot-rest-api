@@ -47,7 +47,7 @@ describe("Project Tests [project.spec]", function () {
     // create instances
     for (let i = 0; i < 2; i++) {
       // prepare data
-      const  data = {
+      const data = {
         title: `${
           Constant.preKey
         }${CommonUtil.generateRandomWord()}_newProjectTitle`,
@@ -73,39 +73,37 @@ describe("Project Tests [project.spec]", function () {
     }
   });
 
-  // it("[GET] /api/projects/{id}", async function () {
-  //   // add context information
-  //   addContext(this, "Reading issue with id.");
+  it("[GET] /api/projects/{id}", async function () {
+    // add context information
+    addContext(this, "Reading project with id.");
 
-  //   // prepare data
-  //   const data = {
-  //     title: `${
-  //       Constant.preKey
-  //     }${CommonUtil.generateRandomWord()}_newIssueTitle`,
-  //     description: `${
-  //       Constant.preKey
-  //     }${CommonUtil.generateRandomWord()}_newIssueDescription`,
-  //     isActive: true,
-  //   };
+    // prepare data
+    const data = {
+      title: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newProjectTitle`,
+      progress: CommonUtil.generateRandomNumber(0, 100),
+      isActive: true,
+    };
 
-  //   // create instance
-  //   const instanceToCreate = await Facade.create(App.admin.jwt, data);
+    // create instance
+    const instanceToCreate = await Facade.create(App.admin.jwt, data);
 
-  //   // read instance
-  //   const readInstance = await Facade.readWithId(
-  //     App.admin.jwt,
-  //     instanceToCreate.id
-  //   );
+    // read instance
+    const readInstance = await Facade.readWithId(
+      App.admin.jwt,
+      instanceToCreate.id
+    );
 
-  //   // compare instances
-  //   if (
-  //     instanceToCreate.id !== readInstance.id ||
-  //     instanceToCreate.name !== readInstance.name
-  //   )
-  //     throw new Error(
-  //       "created instance name is not same with the name which is read"
-  //     );
-  // });
+    // compare instances
+    if (
+      instanceToCreate.id !== readInstance.id ||
+      instanceToCreate.title !== readInstance.title
+    )
+      throw new Error(
+        "created instance name is not same with the name which is read"
+      );
+  });
 
   // it("[GET] /api/projects/paged", async function () {
   //   // add context information

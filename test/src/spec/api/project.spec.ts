@@ -189,32 +189,31 @@ describe("Project Tests [project.spec]", function () {
     }
   });
 
-  // it("[GET] /api/projects/count", async function () {
-  //   // add context information
-  //   addContext(this, "Reading issues count.");
+  it("[GET] /api/projects/count", async function () {
+    // add context information
+    addContext(this, "Reading issues count.");
 
-  //   // create instances
-  //   const instanceToCreate = 2;
-  //   for (let i = 0; i < instanceToCreate; i++) {
-  //     // prepare data
-  //     const data = {
-  //       title: `${
-  //         Constant.preKey
-  //       }${CommonUtil.generateRandomWord()}_newIssueTitle`,
-  //       description: `${
-  //         Constant.preKey
-  //       }${CommonUtil.generateRandomWord()}_newIssueDescription`,
-  //       isActive: true,
-  //     };
-  //     await Facade.create(App.admin.jwt, data);
-  //   }
+    // create instances
+    const instanceToCreate = 2;
+    for (let i = 0; i < instanceToCreate; i++) {
+      // prepare data
+      const data = {
+        title: `${
+          Constant.preKey
+        }${CommonUtil.generateRandomWord()}_newProjectTitle`,
+        progress: CommonUtil.generateRandomNumber(0, 100),
+        isActive: true,
+      };
 
-  //   // read count
-  //   const readInstanceCount = await Facade.readCount(App.admin.jwt);
+      await Facade.create(App.admin.jwt, data);
+    }
 
-  //   // check count
-  //   if (readInstanceCount < instanceToCreate) throw new Error("count invalid");
-  // });
+    // read count
+    const readInstanceCount = await Facade.readCount(App.admin.jwt);
+
+    // check count
+    if (readInstanceCount < instanceToCreate) throw new Error("count invalid");
+  });
 
   // it("[PUT] /api/projects/{id}", async function () {
   //   // add context information

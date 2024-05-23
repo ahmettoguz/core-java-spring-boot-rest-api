@@ -191,7 +191,7 @@ describe("Project Tests [project.spec]", function () {
 
   it("[GET] /api/projects/count", async function () {
     // add context information
-    addContext(this, "Reading issues count.");
+    addContext(this, "Reading projects count.");
 
     // create instances
     const instanceToCreate = 2;
@@ -215,62 +215,58 @@ describe("Project Tests [project.spec]", function () {
     if (readInstanceCount < instanceToCreate) throw new Error("count invalid");
   });
 
-  // it("[PUT] /api/projects/{id}", async function () {
-  //   // add context information
-  //   addContext(this, "Update issue.");
+  it("[PUT] /api/projects/{id}", async function () {
+    // add context information
+    addContext(this, "Update project.");
 
-  //   // prepare data
-  //   const data = {
-  //     title: `${
-  //       Constant.preKey
-  //     }${CommonUtil.generateRandomWord()}_newIssueTitle`,
-  //     description: `${
-  //       Constant.preKey
-  //     }${CommonUtil.generateRandomWord()}_newIssueDescription`,
-  //     isActive: true,
-  //   };
+    // prepare data
+    const data = {
+      title: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newProjectTitle`,
+      progress: CommonUtil.generateRandomNumber(0, 100),
+      isActive: true,
+    };
 
-  //   // create instance
-  //   const instanceToCreate = await Facade.create(App.admin.jwt, data);
+    // create instance
+    const instanceToCreate = await Facade.create(App.admin.jwt, data);
 
-  //   // read instance
-  //   const readInstance = await Facade.readWithId(
-  //     App.admin.jwt,
-  //     instanceToCreate.id
-  //   );
+    // read instance
+    const readInstance = await Facade.readWithId(
+      App.admin.jwt,
+      instanceToCreate.id
+    );
 
-  //   // prepare data
-  //   const dataUpdate = {
-  //     title: `${
-  //       Constant.preKey
-  //     }${CommonUtil.generateRandomWord()}_updatedIssueTitle`,
-  //     description: `${
-  //       Constant.preKey
-  //     }${CommonUtil.generateRandomWord()}_updatedIssueDescription`,
-  //     isActive: false,
-  //   };
+    // prepare data
+    const dataUpdate = {
+      title: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_updatedProjectTitle`,
+      progress: CommonUtil.generateRandomNumber(0, 100),
+      isActive: false,
+    };
 
-  //   // update instance
-  //   const updatedInstance = await Facade.update(
-  //     App.admin.jwt,
-  //     dataUpdate,
-  //     readInstance.id
-  //   );
+    // update instance
+    const updatedInstance = await Facade.update(
+      App.admin.jwt,
+      dataUpdate,
+      readInstance.id
+    );
 
-  //   // check its updated in 2 mins
-  //   const currentTime = Date.now();
-  //   const twoMinutesInMs = 2 * 60 * 1000;
-  //   const elapsedTime =
-  //     currentTime - new Date(updatedInstance.updatedAt).getTime();
-  //   if (elapsedTime > twoMinutesInMs) throw new Error("update time invalid");
+    // check its updated in 2 mins
+    const currentTime = Date.now();
+    const twoMinutesInMs = 2 * 60 * 1000;
+    const elapsedTime =
+      currentTime - new Date(updatedInstance.updatedAt).getTime();
+    if (elapsedTime > twoMinutesInMs) throw new Error("update time invalid");
 
-  //   // check updated fields
-  //   if (updatedInstance.title !== dataUpdate.title)
-  //     throw new Error("field is not updated");
+    // check updated fields
+    if (updatedInstance.title !== dataUpdate.title)
+      throw new Error("field is not updated");
 
-  //   if (updatedInstance.isActive === false)
-  //     throw new Error("field shouldn't updated");
-  // });
+    if (updatedInstance.isActive === false)
+      throw new Error("field shouldn't updated");
+  });
 
   // it("[PATCH] /api/projects/${id}/deactivate", async function () {
   //   // add context information

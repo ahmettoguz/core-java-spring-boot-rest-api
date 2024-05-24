@@ -298,35 +298,35 @@ describe("Project Tests [project.spec]", function () {
       throw new Error("instance cannot deactivated");
   });
 
-  // it("[PATCH] /api/projects/${id}/activate", async function () {
-  //   // add context information
-  //   addContext(this, "Activate issue.");
+  it("[PATCH] /api/projects/${id}/activate", async function () {
+    // add context information
+    addContext(this, "Activate project.");
 
-  //   // prepare data
-  //   const data = {
-  //     title: `${Constant.preKey}${CommonUtil.generateRandomWord()}_title`,
-  //     description: `${
-  //       Constant.preKey
-  //     }${CommonUtil.generateRandomWord()}_description`,
-  //     isActive: false,
-  //   };
+    // prepare data
+    const data = {
+      title: `${
+        Constant.preKey
+      }${CommonUtil.generateRandomWord()}_newProjectTitle`,
+      progress: CommonUtil.generateRandomNumber(0, 100),
+      isActive: false,
+    };
 
-  //   // create instance
-  //   const instanceToCreate = await Facade.create(App.admin.jwt, data);
+    // create instance
+    const instanceToCreate = await Facade.create(App.admin.jwt, data);
 
-  //   // activate instance
-  //   await Facade.activate(App.admin.jwt, instanceToCreate.id);
+    // activate instance
+    await Facade.activate(App.admin.jwt, instanceToCreate.id);
 
-  //   // read activated instance
-  //   const readInstance = await Facade.readWithId(
-  //     App.admin.jwt,
-  //     instanceToCreate.id
-  //   );
+    // read activated instance
+    const readInstance = await Facade.readWithId(
+      App.admin.jwt,
+      instanceToCreate.id
+    );
 
-  //   // check deactivation of the instance
-  //   if (readInstance.isActive !== true)
-  //     throw new Error("instance cannot activated");
-  // });
+    // check deactivation of the instance
+    if (readInstance.isActive !== true)
+      throw new Error("instance cannot activated");
+  });
 
   // it("[DELETE] /api/projects/${id}", async function () {
   //   // add context information

@@ -1,8 +1,8 @@
 const CommonFacade = require("./CommonFacade.ts");
 
-const entityName = "issues";
+const entityName = "projects";
 
-class IssueFacade {
+class ProjectFacade {
   static async create(jwt, data) {
     return await CommonFacade.create(jwt, data, entityName);
   }
@@ -46,4 +46,4 @@ class IssueFacade {
   }
 }
 
-module.exports = IssueFacade;
+module.exports = ProjectFacade;

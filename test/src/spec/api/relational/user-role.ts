@@ -5,38 +5,61 @@ const CommonUtil = require("../../../util/CommonUtil.ts");
 const App = require("../../../app/App.ts");
 
 const Facade = require("../../../facade/relational/UserRoleFacade.ts");
+const UserFacade = require("../../../facade/UserFacade.ts");
 
 before(async () => {});
 
-describe("Project Tests [project.spec]", function () {
-  // it("[POST] /api/projects", async function () {
-  //   // add context information
-  //   addContext(this, "Create project.");
+describe("User Role Relational Tests [user-role.spec]", function () {
+  it("[POST] /api/users/{userId}/roles/{roleId}", async function () {
+    // add context information
+    addContext(this, "Bind user with role.");
 
-  //   // prepare data
-  //   const data = {
-  //     title: `${
-  //       Constant.preKey
-  //     }${CommonUtil.generateRandomWord()}_newProjectTitle`,
-  //     progress: CommonUtil.generateRandomNumber(0, 100),
-  //     isActive: true,
-  //     id: -1,
-  //   };
+    const targetRoleId = 1;
 
-  //   // create instance
-  //   const instanceToCreate = await Facade.create(App.admin.jwt, data);
+    // create user
+    // prepare data
+    const data = {
+      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+      password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+      isActive: true,
+    };
 
-  //   // check created output
-  //   if (instanceToCreate === null || instanceToCreate === undefined)
-  //     throw new Error("instance cannot created");
+    // perform action
+    let instanceToCreate: any = {};
+    try {
+      await UserFacade.create(data, instanceToCreate);
+    } catch (error) {
+      throw error;
+    }
 
-  //   // check userId field (it shouldn't be added via post)
-  //   if (instanceToCreate.id === -1) throw new Error("id should't be setted");
+    // bind created user to existing role
+    let result;
+    try {
+      result = await Facade.createRelation(
+        App.admin.jwt,
+        instanceToCreate.id,
+        targetRoleId
+      );
+    } catch (error) {
+      throw error;
+    }
 
-  //   // check progress
-  //   if (data.progress !== instanceToCreate.progress)
-  //     throw new Error("progress is not matching");
-  // });
+    // read user and check its role
+    // read instance
+    let readInstance;
+    try {
+      readInstance = await UserFacade.readWithId(
+        App.admin.jwt,
+        instanceToCreate.id
+      );
+    } catch (error) {
+      throw error;
+    }
+
+    if (!readInstance.roleIds.includes(targetRoleId))
+      throw new Error("user and role relation cannot established");
+  });
 
   // it("[DELETE] /api/projects/${id}", async function () {
   //   // add context information

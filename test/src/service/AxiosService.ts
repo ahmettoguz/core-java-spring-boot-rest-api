@@ -27,9 +27,7 @@ class AxiosService {
         };
 
         // make request
-        const response = await axios.request(config);
-        console.log(typeof (response));
-        return response;
+        return await axios.request(config);
     }
 }
 
@@ -63,11 +61,15 @@ class AxiosServiceBuilder {
 
 module.exports = {AxiosService, AxiosServiceBuilder};
 
-
-// const axiosService = new AxiosServiceBuilder()
-//     .setUrl("url")
-//     .setJwt("jwt")
-//     .setMethod("method")
+// example usage
+// let response;
+// try {
+//   const axiosService = new AxiosServiceBuilder()
+//     .setUrl(url)
+//     .setJwt(jwt)
+//     .setMethod(method)
 //     .build();
-//
-// axiosService.displayInfo();
+//   response = await axiosService.request();
+// } catch (e: any) {
+//   throw new Error(`Axios error with code: ${e.code}`);
+// }

@@ -1,7 +1,9 @@
+const axios = require("axios");
+
 class AxiosService {
-    private url: string | null | undefined;
-    private method: string | null | undefined;
-    private jwt: string | null | undefined;
+    private url?: string;
+    private method?: string;
+    private jwt?: string;
 
     constructor(builder: AxiosServiceBuilder) {
         this.url = builder.url;
@@ -9,21 +11,34 @@ class AxiosService {
         this.jwt = builder.jwt;
     }
 
-    public displayInfo(): void {
+    public displayProperties(): void {
         console.log(this);
+    }
+
+    public async request() {
+        // create configs
+        const config = {
+            method: this.method,
+            url: this.url,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: this.jwt,
+            },
+        };
+
+        // make request
+        const response = await axios.request(config);
+        console.log(typeof (response));
+        return response;
     }
 }
 
 class AxiosServiceBuilder {
-    public url: string | null | undefined;
-    public method: string | null | undefined;
-    public jwt: string | null | undefined;
+    public url?: string;
+    public method?: string;
+    public jwt?: string;
 
     constructor() {
-        // Default values
-        // this.url = "";
-        // this.method = "";
-        // this.jwt = "";
     }
 
     public setUrl(url: string): AxiosServiceBuilder {
@@ -45,7 +60,6 @@ class AxiosServiceBuilder {
         return new AxiosService(this);
     }
 }
-
 
 module.exports = {AxiosService, AxiosServiceBuilder};
 

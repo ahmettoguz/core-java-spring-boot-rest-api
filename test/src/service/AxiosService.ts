@@ -4,20 +4,17 @@ class AxiosService {
     private url?: string;
     private method?: string;
     private jwt?: string;
+    private config?: object;
 
     constructor(builder: AxiosServiceBuilder) {
         this.url = builder.url;
         this.method = builder.method;
         this.jwt = builder.jwt;
+        this.configureRequest();
     }
 
-    public displayProperties(): void {
-        console.log(this);
-    }
-
-    public async request() {
-        // create configs
-        const config = {
+    private configureRequest() {
+        this.config = {
             method: this.method,
             url: this.url,
             headers: {
@@ -25,9 +22,14 @@ class AxiosService {
                 Authorization: this.jwt,
             },
         };
+    }
 
-        // make request
-        return await axios.request(config);
+    public displayProperties(): void {
+        console.log(this);
+    }
+
+    public async request() {
+        return await axios.request(this.config);
     }
 }
 
@@ -72,4 +74,16 @@ module.exports = {AxiosService, AxiosServiceBuilder};
 //   response = await axiosService.request();
 // } catch (e: any) {
 //   throw new Error(`Axios error with code: ${e.code}`);
+// }
+
+// example usage
+// try {
+//     const axiosService = new AxiosServiceBuilder()
+//         .setUrl(url)
+//         .setJwt(jwt)
+//         .setMethod(method)
+//         .build();
+//     await axiosService.request();
+// } catch (e: any) {
+//     throw new Error(`Axios error with code: ${e.code}`);
 // }

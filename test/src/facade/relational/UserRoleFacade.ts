@@ -61,11 +61,10 @@ class UserRoleFacade {
 
         if (!readInstance.roleIds.includes(targetRoleId))
             throw new Error("user and role relation cannot established");
+
+        return {readInstance};
     }
 
-    // static async delete(jwt, instanceId) {
-    //   await CommonFacade.delete(jwt, instanceId, entityName);
-    // }
 }
 
 module.exports = UserRoleFacade;

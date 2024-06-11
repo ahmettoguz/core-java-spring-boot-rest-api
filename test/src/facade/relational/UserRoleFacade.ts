@@ -13,6 +13,7 @@ const {
 
 class UserRoleFacade {
     static async createRelation(targetRoleId) {
+        // todo seperate create user
         // create user
         // prepare data
         const data = {
@@ -62,9 +63,59 @@ class UserRoleFacade {
         if (!readInstance.roleIds.includes(targetRoleId))
             throw new Error("user and role relation cannot established");
 
-        return {readInstance};
+        return readInstance;
     }
 
+    static async deleteRelation(targetRoleId) {
+
+        // todo
+        // create user
+
+        // create relation
+        let userWithRole;
+        try {
+            userWithRole = await this.createRelation(targetRoleId);
+        } catch (e) {
+            throw new Error("create relation failed");
+        }
+
+        // get user id
+        const userId = userWithRole.id;
+
+        // prepare request
+        const url = `${Constant.baseUrl}/api/users/${userId}/roles/${targetRoleId}`;
+        const method = "delete";
+        const jwt = App.admin.jwt;
+
+        // remove relation between created user with its role
+        try {
+            const axiosService = new AxiosServiceBuilder()
+                .setUrl(url)
+                .setJwt(jwt)
+                .setMethod(method)
+                .build();
+            await axiosService.request();
+        } catch (e: any) {
+            throw new Error(`Axios error with code: ${e.code}`);
+        }
+
+        // read instance
+        let readInstance;
+        try {
+            readInstance = await UserFacade.readWithId(
+                App.admin.jwt,
+                userId
+            );
+        } catch (error) {
+            throw error;
+        }
+
+        // read user and check its role
+        if (readInstance.roleIds.includes(targetRoleId))
+            throw new Error("user and role relation cannot removed");
+
+        return readInstance;
+    }
 }
 
 module.exports = UserRoleFacade;

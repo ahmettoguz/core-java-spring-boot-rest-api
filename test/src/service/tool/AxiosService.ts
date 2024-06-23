@@ -28,7 +28,8 @@ class AxiosService {
     }
 
     public displayProperties(): void {
-        console.log(this);
+        console.log("Axios Properties:");
+        console.log(this.config);
     }
 
     public async request() {

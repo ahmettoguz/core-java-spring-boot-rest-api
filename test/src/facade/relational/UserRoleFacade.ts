@@ -1,5 +1,3 @@
-const axios = require("axios");
-
 const Constant = require("../../constant/Constant.ts");
 const CommonUtil = require("../../util/CommonUtil.ts");
 const App = require("../../app/App.ts");

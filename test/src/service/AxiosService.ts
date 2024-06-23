@@ -3,20 +3,23 @@ const axios = require("axios");
 class AxiosService {
     private url?: string;
     private method?: string;
+    private data?: object;
     private jwt?: string;
     private config?: object;
 
     constructor(builder: AxiosServiceBuilder) {
         this.url = builder.url;
         this.method = builder.method;
+        this.data = builder.data;
         this.jwt = builder.jwt;
         this.configureRequest();
     }
 
     private configureRequest() {
         this.config = {
-            method: this.method,
             url: this.url,
+            method: this.method,
+            data: this.data,
             headers: {
                 "Content-Type": "application/json",
                 Authorization: this.jwt,
@@ -36,6 +39,7 @@ class AxiosService {
 class AxiosServiceBuilder {
     public url?: string;
     public method?: string;
+    public data?: object;
     public jwt?: string;
 
     constructor() {
@@ -51,6 +55,12 @@ class AxiosServiceBuilder {
         return this;
     }
 
+
+    public setData(data: object): AxiosServiceBuilder {
+        this.data = data;
+        return this;
+    }
+
     public setJwt(jwt: string): AxiosServiceBuilder {
         this.jwt = jwt;
         return this;
@@ -62,28 +72,3 @@ class AxiosServiceBuilder {
 }
 
 module.exports = {AxiosService, AxiosServiceBuilder};
-
-// example usage
-// let response;
-// try {
-//   const axiosService = new AxiosServiceBuilder()
-//     .setUrl(url)
-//     .setJwt(jwt)
-//     .setMethod(method)
-//     .build();
-//   response = await axiosService.request();
-// } catch (e: any) {
-//   throw new Error(`Axios error with code: ${e.code}`);
-// }
-
-// example usage
-// try {
-//     const axiosService = new AxiosServiceBuilder()
-//         .setUrl(url)
-//         .setJwt(jwt)
-//         .setMethod(method)
-//         .build();
-//     await axiosService.request();
-// } catch (e: any) {
-//     throw new Error(`Axios error with code: ${e.code}`);
-// }

@@ -73,8 +73,8 @@ class UserRoleFacade {
         let userWithRole;
         try {
             userWithRole = await this.createRelation(targetRoleId);
-        } catch (e) {
-            throw new Error("create relation failed");
+        } catch (e : any) {
+            throw new Error(`create relation failed: ${e.message}`);
         }
 
         // get user id

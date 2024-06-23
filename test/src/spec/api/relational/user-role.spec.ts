@@ -18,8 +18,8 @@ describe("User Role Relational Tests [user-role.spec]", function () {
         const targetRoleId = 1;
         try {
             await Facade.createRelation(targetRoleId);
-        } catch (e) {
-            throw e;
+        } catch (e: any) {
+            throw new Error(`cannot create relation between user and role: ${e.message}`);
         }
     });
 
@@ -30,8 +30,8 @@ describe("User Role Relational Tests [user-role.spec]", function () {
         const targetRoleId = 1;
         try {
             await Facade.deleteRelation(targetRoleId);
-        } catch (e) {
-            throw e;
+        } catch (e: any) {
+            throw new Error(`cannot remove relation between user and role: ${e.message}`);
         }
     });
 });

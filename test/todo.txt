@@ -1,1 +1,21 @@
-add error descriptions
+dökümantasyona api endpointleri ve bodyleri yaz beklenen çıktıyı yaz
+
+facade'ı axios helper a çevir ve facade'ın içerisinde bütün operasyon olsun mesela user role' daki create user, get user, kısmının tamamı o facade'ın içerisinden gelmeli
+
+common facade'ı base diye adlandırabilirim
+
+aynı olan errorleri constantın içerisine göm mesela "response is not 200"
+
+const response = await axios.request(config);
+bu satırı try catch ile yap ki kendi errorümü döndürebileyim
+
+
+Users-Roles []:
+    POST:
+        /api/users/{userId}/roles/{roleId}
+            jwt authentication
+            user with project manager role and roleId is 1 can access
+şu satır düzenlenmeli roleId is 1 can access niye?  user with porject manager and admin role can access olmalı değil mi?
+
+
+created user'ın password'u gözüküyor

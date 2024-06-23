@@ -1,4 +1,4 @@
 class App {
-  static admin = {};
+  static admin: any = {};
 }
 module.exports = App;

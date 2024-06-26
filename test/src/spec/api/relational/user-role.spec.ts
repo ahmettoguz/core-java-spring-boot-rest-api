@@ -1,11 +1,11 @@
 const addContext = require("mochawesome/addContext");
+const RoleEnum = require("../../../enum/RoleEnum.ts");
 
 const Constant = require("../../../constant/Constant.ts");
 const CommonUtil = require("../../../util/CommonUtil.ts");
 const App = require("../../../app/App.ts");
 
 const Facade = require("../../../facade/relational/UserRoleFacade.ts");
-const UserFacade = require("../../../facade/UserFacade.ts");
 
 before(async () => {
 });
@@ -15,9 +15,8 @@ describe("User Role Relational Tests [user-role.spec]", function () {
         // add context information
         addContext(this, "Create relation between user and role.");
 
-        const targetRoleId = 1;
         try {
-            await Facade.createRelation(targetRoleId);
+            await Facade.createRelation(RoleEnum.ADMIN.id, App.admin.jwt);
         } catch (e: any) {
             throw new Error(`cannot create relation between user and role: ${e.message}`);
         }
@@ -27,9 +26,8 @@ describe("User Role Relational Tests [user-role.spec]", function () {
         // add context information
         addContext(this, "Remove relation between user and role.");
 
-        const targetRoleId = 1;
         try {
-            await Facade.deleteRelation(targetRoleId);
+            await Facade.deleteRelation(RoleEnum.PROJECTMANAGER.id, App.admin.jwt);
         } catch (e: any) {
             throw new Error(`cannot remove relation between user and role: ${e.message}`);
         }

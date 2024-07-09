@@ -7,312 +7,37 @@ const {AxiosServiceBuilder} = require("../service/tool/AxiosService.ts");
 
 const Service = require("../service/UserService.ts");
 
-const entityName = "users";
+const AuthFacade = require("../facade/AuthFacade.ts");
 
 class UserFacade {
     static async create() {
+        // create instance
         const instanceToCreate = await Service.create();
 
         // read created instance
-        let readInstance;
-        try {
-            readInstance = await this.readWithId(App.admin.jwt, instanceToCreate.id);
-        } catch (e: any) {
-            throw new Error(`cannot read instance by id: ${e.message}`);
-        }
+        const readInstance = await Service.readWithId(App.admin.jwt, instanceToCreate.id);
 
         // compare instances
         if (
             instanceToCreate.id != readInstance.id ||
             instanceToCreate.firstName != readInstance.firstName
         )
-            throw new Error();
+            throw new Error("created instance id is not match");
     }
 
     static async readAll(jwt) {
-        // prepare request
-        const url = `${Constant.baseUrl}/api/${entityName}`;
-        const method = "get";
+        // create instances
+        const createdInstanceIds = await Service.createMany();
 
-        const config = {
-            method,
-            url,
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: jwt,
-            },
-        };
+        // read created instances
+        const readInstances = await Service.readAll(jwt);
 
-        // make request
-        const response = await axios.request(config);
-
-        // check response
-        if (response.status !== 200) throw new Error("response is not 200");
-        if (response.data === undefined)
-            throw new Error("response data is undefined");
-
-        // return response data
-        return response.data.data;
-    }
-
-    static async readWithId(jwt, instanceId) {
-        // prepare request
-        const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
-        const method = "get";
-
-        // read instance
-        let instanceToRead;
-        try {
-            const axiosService = new AxiosServiceBuilder()
-                .setUrl(url)
-                .setMethod(method)
-                .setJwt(jwt)
-                .build();
-            const request = await axiosService.request();
-            instanceToRead = request.data.data;
-        } catch (e: any) {
-            throw new Error(`Axios error with code: ${e.code}`);
+        // check inserted ids
+        for (let i = 0; i < createdInstanceIds.length; i++) {
+            if (!readInstances.some((instance) => instance.id === createdInstanceIds[i])) {
+                throw new Error("desired number of instances couldn't read");
+            }
         }
-
-        return instanceToRead;
-    }
-
-    static async readPagedSorted(jwt, pageNumber, pageSize, isDescending) {
-        // prepare request
-        const url = `${Constant.baseUrl}/api/${entityName}/paged`;
-        const method = "get";
-
-        let data = JSON.stringify({
-            pageNumber: pageNumber,
-            pageSize: pageSize,
-            isDescending: isDescending,
-        });
-
-        let config = {
-            method: method,
-            url: url,
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: jwt,
-            },
-            data: data,
-        };
-
-        // make request
-        const response = await axios.request(config);
-
-        // check response
-        if (response.status !== 200) throw new Error();
-        if (response.data === undefined) throw new Error();
-
-        // return response data
-        return response.data.data;
-    }
-
-    static async readCount(jwt) {
-        // prepare request
-        const url = `${Constant.baseUrl}/api/${entityName}/count`;
-        const method = "get";
-
-        let config = {
-            method: method,
-            url: url,
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: jwt,
-            },
-        };
-
-        // make request
-        const response = await axios.request(config);
-
-        // check response
-        if (response.status !== 200) throw new Error();
-        if (response.data === undefined) throw new Error();
-
-        // return response data
-        return response.data.data;
-    }
-
-    static async searchByExactName(jwt, serachString) {
-        // prepare request
-        const url = `${Constant.baseUrl}/api/${entityName}/search/exact`;
-        const method = "get";
-
-        let data = JSON.stringify({
-            pageNumber: 0,
-            pageSize: 5,
-            isDescending: false,
-            firstName: serachString,
-        });
-
-        let config = {
-            method: method,
-            url: url,
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: jwt,
-            },
-            data: data,
-        };
-
-        // make request
-        const response = await axios.request(config);
-
-        // check response
-        if (response.status !== 200) throw new Error();
-        if (response.data === undefined) throw new Error();
-
-        // return response data
-        return response.data.data;
-    }
-
-    static async searchByPartialName(jwt, serachString) {
-        // prepare request
-        const url = `${Constant.baseUrl}/api/${entityName}/search/partial`;
-        const method = "get";
-
-        let data = JSON.stringify({
-            pageNumber: 0,
-            pageSize: 5,
-            isDescending: false,
-            firstName: serachString,
-        });
-
-        let config = {
-            method: method,
-            url: url,
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: jwt,
-            },
-            data: data,
-        };
-
-        // make request
-        const response = await axios.request(config);
-
-        // check response
-        if (response.status !== 200) throw new Error();
-        if (response.data === undefined) throw new Error();
-
-        // return response data
-        return response.data.data;
-    }
-
-    static async update(jwt, data, instanceId) {
-        // prepare request
-        const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
-        const method = "put";
-
-        let config = {
-            method: method,
-            url: url,
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: jwt,
-            },
-            data: data,
-        };
-
-        // make request
-        const response = await axios.request(config);
-
-        // check response
-        if (response.status !== 200) throw new Error();
-        if (response.data === undefined) throw new Error();
-
-        // return response data
-        return response.data.data;
-    }
-
-    static async updateUserPassword(jwt, data, instanceId) {
-        // prepare request
-        const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/password`;
-        const method = "patch";
-
-        let config = {
-            method: method,
-            url: url,
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: jwt,
-            },
-            data: data,
-        };
-
-        // make request
-        const response = await axios.request(config);
-
-        // check response
-        if (response.status !== 200) throw new Error();
-        if (response.data === undefined) throw new Error();
-    }
-
-    static async deactivate(jwt, instanceId) {
-        // prepare request
-        const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/deactivate`;
-        const method = "patch";
-
-        let config = {
-            method: method,
-            url: url,
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: jwt,
-            },
-        };
-
-        // make request
-        const response = await axios.request(config);
-
-        // check response
-        if (response.status !== 200) throw new Error();
-        if (response.data === undefined) throw new Error();
-    }
-
-    static async activate(jwt, instanceId) {
-        // prepare request
-        const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/activate`;
-        const method = "patch";
-
-        let config = {
-            method: method,
-            url: url,
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: jwt,
-            },
-        };
-
-        // make request
-        const response = await axios.request(config);
-
-        // check response
-        if (response.status !== 200) throw new Error();
-        if (response.data === undefined) throw new Error();
-    }
-
-    static async delete(jwt, userId) {
-        // prepare request
-        const url = `${Constant.baseUrl}/api/${entityName}/${userId}`;
-        const method = "delete";
-
-        let config = {
-            method: method,
-            url: url,
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: jwt,
-            },
-        };
-
-        // make request
-        const response = await axios.request(config);
-
-        // check response
-        if (response.status !== 200) throw new Error();
-        if (response.data === undefined) throw new Error();
     }
 }
 

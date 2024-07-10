@@ -39,6 +39,21 @@ class UserFacade {
             }
         }
     }
+    
+    static async readWithId(jwt) {
+        // create instance
+        const instanceToCreate = await Service.create();
+
+        // read created instance
+        const readInstance = await Service.readWithId(jwt, instanceToCreate.id);
+
+        // compare instances
+        if (
+            instanceToCreate.id != readInstance.id ||
+            instanceToCreate.firstName != readInstance.firstName
+        )
+            throw new Error("created instance id is not match");
+    }
 }
 
 module.exports = UserFacade;

@@ -54,6 +54,73 @@ class UserFacade {
         )
             throw new Error("created instance id is not match");
     }
+
+    static async readPagedSorted(jwt) {
+        // create instances
+        const createInstanceCount = 15;
+        await Service.createMany(createInstanceCount);
+
+        // read first page
+        const firstPageData = {
+            pageNumber: 0,
+            pageSize: 5,
+            isDescending: true,
+        };
+        const firstPage = await Service.readPagedSorted(jwt, firstPageData);
+
+        // read second page
+        const secondPageData = {
+            pageNumber: 1,
+            pageSize: 5,
+            isDescending: true
+        };
+        const secondPage = await Service.readPagedSorted(jwt, secondPageData);
+
+        // read third page
+        const thirdPageData = {
+            pageNumber: 0,
+            pageSize: 3,
+            isDescending: false,
+        };
+        const thirdPage = await Service.readPagedSorted(jwt, thirdPageData);
+
+
+        // first page validations
+        // check page size
+        if (firstPage.length !== firstPageData.pageSize) throw new Error("page size invalid");
+
+        // check sorting
+        let lastId = firstPage[0];
+        for (let i = 0; i < firstPageData.pageSize; i++) {
+            const tempInstance = firstPage[i];
+            const currentId = tempInstance.id;
+
+            if (currentId > lastId) throw new Error("descending sort invalid");
+
+            lastId = currentId;
+        }
+
+        // second page validations
+        // compare objects that ensure page is different
+        if (firstPage[0].id === secondPage[0].id)
+            throw new Error("same object in different page");
+
+        // third page validations
+        // check page size
+        if (thirdPage.length !== thirdPageData.pageSize)
+            throw new Error("page size invalid");
+
+        // check sorting
+        lastId = thirdPageData[0];
+        for (let i = 0; i < thirdPageData.pageSize; i++) {
+            const tempInstance = thirdPage[i];
+            const currentId = tempInstance.id;
+
+            if (currentId < lastId) throw new Error("ascending sort invalid");
+
+            lastId = currentId;
+        }
+    }
 }
 
 module.exports = UserFacade;

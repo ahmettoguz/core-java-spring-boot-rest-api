@@ -121,6 +121,18 @@ class UserFacade {
             lastId = currentId;
         }
     }
+    
+    static async count(jwt) {
+        // create instances
+        const createInstanceCount = 2;
+        await Service.createMany(createInstanceCount);
+
+        // read instance count
+        const readInstanceCount = await Service.count(jwt);
+
+        // check count
+        if (readInstanceCount < createInstanceCount) throw new Error("count invalid");
+    }
 }
 
 module.exports = UserFacade;

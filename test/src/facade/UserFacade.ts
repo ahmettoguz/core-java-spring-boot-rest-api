@@ -133,6 +133,45 @@ class UserFacade {
         // check count
         if (readInstanceCount < createInstanceCount) throw new Error("count invalid");
     }
+    
+    static async searchByExactName(jwt) {
+        // create instances
+        const instanceDatas = [
+            {
+                firstName: `specific`,
+                email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+                password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+                isActive: true,
+            },
+            {
+                firstName: `specificName`,
+                email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+                password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+                isActive: true,
+            }, {
+                firstName: `specificName`,
+                email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+                password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+                isActive: true,
+            },
+        ];
+        await Service.createMany(instanceDatas.length, instanceDatas);
+
+
+        // search instance with exact name
+        const foundInstancesWrong = await Service.searchByExactName(jwt, "sp");
+        const foundInstancesTrue = await Service.searchByExactName(jwt, "specificName");
+
+
+        // check data, there shouldn't be any data because exact search string is not provided
+        if (foundInstancesWrong.length !== 0)
+            throw new Error("exact string search invalid");
+
+
+        // check found instances it should found and give it as paged
+        if (foundInstancesTrue.length < 2)
+            throw new Error("count of the found instances is invalid");
+    }
 }
 
 module.exports = UserFacade;

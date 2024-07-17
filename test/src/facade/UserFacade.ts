@@ -172,6 +172,36 @@ class UserFacade {
         if (foundInstancesTrue.length < 2)
             throw new Error("count of the found instances is invalid");
     }
+    
+    static async searchByPartialName(jwt) {
+        // create instances
+        const instanceDatas = [
+            {
+                firstName: `partialName`,
+                email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+                password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+                isActive: true,
+            },
+            {
+                firstName: `partial`,
+                email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+                password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+                isActive: true,
+            }, {
+                firstName: `${Constant.preKey}_partialNameToSearch`,
+                email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+                password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+                isActive: true,
+            },
+        ];
+        await Service.createMany(instanceDatas.length, instanceDatas);
+
+        // search for instance
+        const foundInstances = await Service.searchByPartialName(jwt, "part");
+
+        // check found instances it should found and give it as paged
+        if (foundInstances.length < instanceDatas.length) throw new Error("count of the found instances is invalid");
+    }
 }
 
 module.exports = UserFacade;

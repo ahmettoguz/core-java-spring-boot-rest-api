@@ -202,6 +202,55 @@ class UserFacade {
         // check found instances it should found and give it as paged
         if (foundInstances.length < instanceDatas.length) throw new Error("count of the found instances is invalid");
     }
+    
+    static async update(jwt) {
+        // create instance
+        const createData = {
+            firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+            email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+            password: `${Constant.preKey}oldPassword`,
+            isActive: true,
+        };
+        const instanceToCreate = await Service.create(createData);
+
+
+        // perform update
+        const updateData = {
+            firstName: `${Constant.preKey}updatedFirstName`,
+            email: `${
+                Constant.preKey
+            }${CommonUtil.generateRandomWord()}_updatedEmail@hotmail.com`,
+            password: `${Constant.preKey}updatedPassword`,
+        };
+        const updatedInstance = await Service.update(App.admin.jwt, instanceToCreate.id, updateData);
+
+        // check update time assume as 2 mins
+        const currentTime = Date.now();
+        const twoMinutesInMs = 2 * 60 * 1000;
+        const elapsedTime =
+            currentTime - new Date(updatedInstance.updatedAt).getTime();
+        if (elapsedTime > twoMinutesInMs) throw new Error("update time invalid");
+
+        // check updated fields
+        if (
+            updatedInstance.firstName != updateData.firstName ||
+            updatedInstance.email != updateData.email
+        )
+            throw new Error("field is not updated");
+
+        // check password update (trying old password) by login operation
+        const loginData = {
+            email: updatedInstance.email,
+            password: createData.password,
+        };
+
+        // todo change that auth facade and service
+        try {
+            await AuthFacade.login(loginData, updatedInstance);
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = UserFacade;

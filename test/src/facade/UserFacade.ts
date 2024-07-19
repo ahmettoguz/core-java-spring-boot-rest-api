@@ -251,6 +251,32 @@ class UserFacade {
             throw error;
         }
     }
+
+    static async updateUserPassword(jwt) {
+        // create instance
+        const instanceToCreate = await Service.create();
+
+        // prepare data
+        const updateData = {
+            newPassword: `${Constant.preKey}newPassword`,
+        };
+
+        // update password
+        const operationStatus = await Service.updateUserPassword(App.admin.jwt, instanceToCreate.id, updateData);
+
+        // check password update (trying new password) by login operation
+        const loginData = {
+            email: instanceToCreate.email,
+            password: updateData.newPassword,
+        };
+
+        // todo change that auth facade and service
+        try {
+            await AuthFacade.login(loginData, instanceToCreate);
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = UserFacade;

@@ -298,6 +298,28 @@ class UserFacade {
         if (readInstance.isActive !== false)
             throw new Error("instance cannot deactivated");
     }
+
+    static async activate(jwt) {
+        // create instance
+        const createData = {
+            firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
+            email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
+            password: `${Constant.preKey}oldPassword`,
+            isActive: false,
+        };
+        const instanceToCreate = await Service.create(createData);
+
+        // activate
+        const operationStatus = await Service.activate(App.admin.jwt, instanceToCreate.id);
+
+        // read activated instance
+        const readInstance = await Service.readWithId(jwt, instanceToCreate.id);
+
+        // check activation of the instance
+        if (readInstance.isActive !== true)
+            throw new Error("instance cannot activated");
+    }
+
 }
 
 module.exports = UserFacade;

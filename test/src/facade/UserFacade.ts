@@ -320,6 +320,24 @@ class UserFacade {
             throw new Error("instance cannot activated");
     }
 
+    static async delete(jwt) {
+        // create instance
+        const instanceToCreate = await Service.create();
+
+        // delete instance
+        const operationStatus = await Service.delete(App.admin.jwt, instanceToCreate.id);
+
+        // try to read deleted instance
+        let isInstanceExist;
+        try {
+            await Service.readWithId(jwt, instanceToCreate.id);
+            isInstanceExist = true;
+        } catch (error) {
+            isInstanceExist = false;
+        }
+
+        if (isInstanceExist) throw new Error("deleted instance is exist");
+    }
 }
 
 module.exports = UserFacade;

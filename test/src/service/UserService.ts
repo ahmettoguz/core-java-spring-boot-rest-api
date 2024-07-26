@@ -65,6 +65,28 @@ class UserService {
 
         return createdInstanceIds;
     }
+
+    static async readAll(jwt) {
+        // prepare request
+        const url = `${Constant.baseUrl}/api/${entityName}`;
+        const method = "get";
+
+        // read all instances
+        let instancesToRead;
+        try {
+            const axiosService = new AxiosServiceBuilder()
+                .setUrl(url)
+                .setMethod(method)
+                .setJwt(jwt)
+                .build();
+            const response = await axiosService.request();
+            instancesToRead = response.data.data;
+        } catch (e: any) {
+            throw new Error(`${this.name}.readAll:: Axios error with code: ${e.code}`);
+        }
+
+        return instancesToRead;
+    }
 }
 
 module.exports = UserService;

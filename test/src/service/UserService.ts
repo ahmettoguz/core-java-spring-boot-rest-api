@@ -159,6 +159,35 @@ class UserService {
 
         return count;
     }
+    
+    static async searchByExactName(jwt, searchString) {
+        // prepare request
+        const url = `${Constant.baseUrl}/api/${entityName}/search/exact`;
+        const method = "get";
+        const data = {
+            pageNumber: 0,
+            pageSize: 5,
+            isDescending: true,
+            firstName: searchString,
+        };
+
+        // read paged and sorted
+        let readInstances;
+        try {
+            const axiosService = new AxiosServiceBuilder()
+                .setUrl(url)
+                .setMethod(method)
+                .setData(data)
+                .setJwt(jwt)
+                .build();
+            const response = await axiosService.request();
+            readInstances = response.data.data;
+        } catch (e: any) {
+            throw new Error(`${this.name}.searchByExactName:: Axios error with code: ${e.code}`);
+        }
+
+        return readInstances;
+    }
 }
 
 module.exports = UserService;

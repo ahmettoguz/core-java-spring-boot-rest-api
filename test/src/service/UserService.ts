@@ -188,6 +188,35 @@ class UserService {
 
         return readInstances;
     }
+
+    static async searchByPartialName(jwt, searchString) {
+        // prepare request
+        const url = `${Constant.baseUrl}/api/${entityName}/search/partial`;
+        const method = "get";
+        const data = {
+            pageNumber: 0,
+            pageSize: 5,
+            isDescending: true,
+            firstName: searchString,
+        };
+
+        // read paged and sorted
+        let readInstances;
+        try {
+            const axiosService = new AxiosServiceBuilder()
+                .setUrl(url)
+                .setMethod(method)
+                .setData(data)
+                .setJwt(jwt)
+                .build();
+            const response = await axiosService.request();
+            readInstances = response.data.data;
+        } catch (e: any) {
+            throw new Error(`${this.name}.searchByPartialName:: Axios error with code: ${e.code}`);
+        }
+
+        return readInstances;
+    }
 }
 
 module.exports = UserService;

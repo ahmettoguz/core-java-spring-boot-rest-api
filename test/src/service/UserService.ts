@@ -217,6 +217,34 @@ class UserService {
 
         return readInstances;
     }
+
+    static async update(jwt, instanceId, data) {
+        // prepare request
+        const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
+        const method = "put";
+        data = data ?? {
+            firstName: `${Constant.preKey}updatedFirstName`,
+            email: `${Constant.preKey}${CommonUtil.generateRandomWord()}_updatedEmail@hotmail.com`,
+            password: `${Constant.preKey}updatedPassword`,
+        };
+
+        // update instance
+        let updatedInstance;
+        try {
+            const axiosService = new AxiosServiceBuilder()
+                .setUrl(url)
+                .setMethod(method)
+                .setData(data)
+                .setJwt(jwt)
+                .build();
+            const response = await axiosService.request();
+            updatedInstance = response.data.data;
+        } catch (e: any) {
+            throw new Error(`${this.name}.update:: Axios error with code: ${e.code}`);
+        }
+
+        return updatedInstance;
+    }
 }
 
 module.exports = UserService;

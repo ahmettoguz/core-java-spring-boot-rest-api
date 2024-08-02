@@ -245,6 +245,29 @@ class UserService {
 
         return updatedInstance;
     }
+    
+    static async updateUserPassword(jwt, instanceId, data) {
+        // prepare request
+        const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/password`;
+        const method = "patch";
+
+        // update instance
+        let operationStatus; // todo check that operation status maybe another thing is return
+        try {
+            const axiosService = new AxiosServiceBuilder()
+                .setUrl(url)
+                .setMethod(method)
+                .setData(data)
+                .setJwt(jwt)
+                .build();
+            const response = await axiosService.request();
+            operationStatus = response.data;
+        } catch (e: any) {
+            throw new Error(`${this.name}.updateUserPassword:: Axios error with code: ${e.code}`);
+        }
+
+        return operationStatus;
+    }
 }
 
 module.exports = UserService;

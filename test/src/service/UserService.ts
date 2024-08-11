@@ -290,6 +290,50 @@ class UserService {
 
         return operationStatus;
     }
+
+    static async activate(jwt, instanceId) {
+        // prepare request
+        const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/activate`;
+        const method = "patch";
+
+        // update instance
+        let operationStatus; // todo check that operation status maybe another thing is return
+        try {
+            const axiosService = new AxiosServiceBuilder()
+                .setUrl(url)
+                .setMethod(method)
+                .setJwt(jwt)
+                .build();
+            const response = await axiosService.request();
+            operationStatus = response.data;
+        } catch (e: any) {
+            throw new Error(`${this.name}.activate:: Axios error with code: ${e.code}`);
+        }
+
+        return operationStatus;
+    }
+
+    static async delete(jwt, instanceId) {
+        // prepare request
+        const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
+        const method = "delete";
+
+        // delete instance
+        let operationStatus; // todo check that operation status maybe another thing is return
+        try {
+            const axiosService = new AxiosServiceBuilder()
+                .setUrl(url)
+                .setMethod(method)
+                .setJwt(jwt)
+                .build();
+            const response = await axiosService.request();
+            operationStatus = response.data;
+        } catch (e: any) {
+            throw new Error(`${this.name}.delete:: Axios error with code: ${e.code}`);
+        }
+
+        return operationStatus;
+    }
 }
 
 module.exports = UserService;

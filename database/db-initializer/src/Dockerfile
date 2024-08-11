@@ -1,5 +1,4 @@
-# FROM mysql
-FROM mysql:oraclelinux9
+FROM mysql
 
 WORKDIR /docker-entrypoint-initdb.d
 

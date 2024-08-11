@@ -5,60 +5,45 @@ const App = require("../../app/App.ts");
 const Constant = require("../../constant/Constant.ts");
 const CommonUtil = require("../../util/CommonUtil.ts");
 
-const UserFacade = require("../../facade/UserFacade.ts");
-const RoleFacade = require("../../facade/RoleFacade.ts");
 const AuthFacade = require("../../facade/AuthFacade.ts");
 
+const UserService = require("../../service/UserService.ts");
+const UserRoleService = require("../../service/relational/UserRoleService.ts");
+
 describe("Initialization Tests [init.spec]", function () {
-  it("user creation", async function () {
-    // context of the test
-    addContext(this, "Creating admin.");
+    it("initial user creation", async function () {
+        // add context information
+        addContext(this, "Creating user for admin authorization.");
 
-    // prepare data
-    const data = {
-      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
-      password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-      isActive: true,
-    };
+        // perform operation
+        App.admin = await UserService.create();
+    });
 
-    //perform action
-    try {
-      await UserFacade.create(data, App.admin);
-    } catch (error) {
-      throw error;
-    }
-  });
+    it("admin role grant to initial user", async function () {
+        // context of the test
+        addContext(this, "Granting admin role to created user.");
 
-  it("admin role grant to user", async function () {
-    // context of the test
-    addContext(this, "Granting admin role to created user.");
+        // perform action
+        await UserRoleService.createRelation(App.admin.id, RoleEnum.ADMIN.id, Constant.admin.jwt);
+    });
 
-    // perform action
-    try {
-      await RoleFacade.addRoleToUser(App.admin, Constant.admin, RoleEnum.ADMIN);
-    } catch (error) {
-      throw error;
-    }
-  });
+    it("initial user login as admin", async function () {
+        // context of the test
+        addContext(this, "Login as admin.");
 
-  it("admin login", async function () {
-    // context of the test
-    addContext(this, "Login as admin.");
+        // prepare body
+        const body = {
+            email: App.admin.email,
+            password: App.admin.password,
+        };
 
-    // prepare body
-    const body = {
-      email: App.admin.email,
-      password: App.admin.password,
-    };
-
-    // perform action
-    let token;
-    try {
-      // get token
-      token = await AuthFacade.login(body, App.admin);
-    } catch (error) {
-      throw error;
-    }
-  });
+        // perform action
+        let token;
+        try {
+            // get token
+            token = await AuthFacade.login(body, App.admin);
+        } catch (e: any) {
+            throw new Error(`user login failed: ${e.message}`);
+        }
+    });
 });

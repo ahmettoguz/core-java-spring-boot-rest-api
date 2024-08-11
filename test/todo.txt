@@ -1,13 +1,8 @@
 dökümantasyona api endpointleri ve bodyleri yaz beklenen çıktıyı yaz
 
-facade'ı axios helper a çevir ve facade'ın içerisinde bütün operasyon olsun mesela user role' daki create user, get user, kısmının tamamı o facade'ın içerisinden gelmeli
 
-common facade'ı base diye adlandırabilirim
 
 aynı olan errorleri constantın içerisine göm mesela "response is not 200"
-
-const response = await axios.request(config);
-bu satırı try catch ile yap ki kendi errorümü döndürebileyim
 
 
 Users-Roles []:
@@ -17,5 +12,31 @@ Users-Roles []:
             user with project manager role and roleId is 1 can access
 şu satır düzenlenmeli roleId is 1 can access niye?  user with porject manager and admin role can access olmalı değil mi?
 
-
 created user'ın password'u gözüküyor
+
+backend data kısmında gereksiz state ve status dönüyor gerek yok.
+backend bunun yerine direkt olarak datayı dönebilir.
+{
+  data: {
+    id: 127,
+    createdAt: '2024-06-23T18:25:14.431854',
+    updatedAt: '2024-06-23T18:25:14.431854',
+    isActive: true,
+    firstName: 'apiTest_nauvve_14322',
+    email: 'apiTest_vemrut_14322@hotmail.com',
+    issueIds: null,
+    projectIds: null,
+    roleIds: null
+  },
+  state: true,
+  status: 'OK'
+}
+
+bazı boolean dönen valuelarda dahi staus dönüyorum mesela updateUserPassword, deactivate, activate, delete (user için ama hepsinde de vardır)
+bunlarda bir şey dönmesine gerek yok status 200 olup olmaması yeterli.
+
+service isimlerini küçük harf ile başlat
+
+axios service is servicin içinden tool klasörüne at.
+
+common facade var. ortak olanlar için bunu  base diye adlandır ve servisini de oluştur user içerisindeki facade operasyonları buraya gidebilir. ya da inheritance yapılablir extend eder.

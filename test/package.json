@@ -1,17 +1,17 @@
 {
   "name": "api-test",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend service automation test implementation with reporting.",
+  "author" : "Ahmet Oğuz Ergin",
   "main": "index.js",
   "scripts": {
     "clean": "cd C:\\Users\\lenovo\\Desktop\\repository\\Repository_Backup\\repositoryBackup\\public\\Spring-Boot-Rest-Api\\database && docker-compose build db-initializer && docker-compose up -d db-initializer",
     "parallel": "mocha '**/*.spec.ts' --parallel --reporter mochawesome --require mochawesome/register --timeout 30000",
     "test": "cls && ts-node ./node_modules/mocha/bin/_mocha '**/*.spec.ts' '**/sync.hook.ts' --reporter mochawesome --timeout 30000",
     "testClean": "cls && ts-node ./node_modules/mocha/bin/_mocha '**/*.spec.ts' '**/sync.hook.ts' --reporter mochawesome --timeout 30000 && npm run clean",
-    "spec": "cls && ts-node ./node_modules/mocha/bin/_mocha '**/sync.hook.ts' '**/*init*.ts' '**/*user-role*.ts' --reporter mochawesome --timeout 30000"
+    "spec": "cls && ts-node ./node_modules/mocha/bin/_mocha '**/sync.hook.ts' '**/*init*.ts' '**/*user*.ts' --reporter mochawesome --timeout 30000"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/mocha": "^10.0.6",

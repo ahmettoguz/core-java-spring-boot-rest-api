@@ -18,6 +18,8 @@ public class HealthCheckRestControllerImpl implements HealthCheckRestController 
     private String appName;
     @Value("${app.var.appDescription}")
     private String appDescription;
+    @Value("${app.var.appMode}")
+    private String appMode;
 
     @Override
     @GetMapping
@@ -32,6 +34,7 @@ public class HealthCheckRestControllerImpl implements HealthCheckRestController 
         HashMap<String, String> map = new HashMap<>();
         map.put("name", appName);
         map.put("description", appDescription);
+        map.put("appMode", appMode);
 
         return new OperationStatusSuccess<HashMap<String, String>>(map).getResponseEntity();
     }

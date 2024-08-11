@@ -15,12 +15,8 @@ describe("Initialization Tests [init.spec]", function () {
         // add context information
         addContext(this, "Creating user for admin authorization.");
 
-        //perform action
-        try {
-            App.admin = await UserService.create();
-        } catch (e: any) {
-            throw new Error(`cannot create user: ${e.message}`);
-        }
+        // perform operation
+        App.admin = await UserService.create();
     });
 
     it("admin role grant to initial user", async function () {
@@ -28,11 +24,7 @@ describe("Initialization Tests [init.spec]", function () {
         addContext(this, "Granting admin role to created user.");
 
         // perform action
-        try {
-            await UserRoleService.createRelation(App.admin.id, RoleEnum.ADMIN.id, Constant.admin.jwt);
-        } catch (e: any) {
-            throw new Error(`user and role relation cannot established: ${e.message}`);
-        }
+        await UserRoleService.createRelation(App.admin.id, RoleEnum.ADMIN.id, Constant.admin.jwt);
     });
 
     it("initial user login as admin", async function () {

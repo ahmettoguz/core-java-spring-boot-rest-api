@@ -10,7 +10,7 @@ const AuthFacade = require("../facade/AuthFacade.ts");
 class UserFacade {
   static async create() {
     // create instance
-    const instanceToCreate = await Service.create();
+    const instanceToCreate = await userService.create();
 
     // read created instance
     const readInstance = await userService.readWithId(
@@ -28,7 +28,7 @@ class UserFacade {
 
   static async readAll(jwt) {
     // create instances
-    const createdInstanceIds = await Service.createMany();
+    const createdInstanceIds = await userService.createMany();
 
     // read created instances
     const readInstances = await userService.readAll(jwt);
@@ -45,7 +45,7 @@ class UserFacade {
 
   static async readWithId(jwt) {
     // create instance
-    const instanceToCreate = await Service.create();
+    const instanceToCreate = await userService.create();
 
     // read created instance
     const readInstance = await userService.readWithId(jwt, instanceToCreate.id);
@@ -61,7 +61,7 @@ class UserFacade {
   static async readPagedSorted(jwt) {
     // create instances
     const createInstanceCount = 15;
-    await Service.createMany(createInstanceCount);
+    await userService.createMany(createInstanceCount);
 
     // read first page
     const firstPageData = {
@@ -128,7 +128,7 @@ class UserFacade {
   static async count(jwt) {
     // create instances
     const createInstanceCount = 2;
-    await Service.createMany(createInstanceCount);
+    await userService.createMany(createInstanceCount);
 
     // read instance count
     const readInstanceCount = await userService.count(jwt);
@@ -166,7 +166,7 @@ class UserFacade {
         isActive: true,
       },
     ];
-    await Service.createMany(instanceDatas.length, instanceDatas);
+    await userService.createMany(instanceDatas.length, instanceDatas);
 
     // search instance with exact name
     const foundInstancesWrong = await Service.searchByExactName(jwt, "sp");
@@ -212,7 +212,7 @@ class UserFacade {
         isActive: true,
       },
     ];
-    await Service.createMany(instanceDatas.length, instanceDatas);
+    await userService.createMany(instanceDatas.length, instanceDatas);
 
     // search for instance
     const foundInstances = await Service.searchByPartialName(jwt, "part");
@@ -230,7 +230,7 @@ class UserFacade {
       password: `${Constant.preKey}oldPassword`,
       isActive: true,
     };
-    const instanceToCreate = await Service.create(createData);
+    const instanceToCreate = await userService.create(createData);
 
     // perform update
     const updateData = {
@@ -276,7 +276,7 @@ class UserFacade {
 
   static async updateUserPassword(jwt) {
     // create instance
-    const instanceToCreate = await Service.create();
+    const instanceToCreate = await userService.create();
 
     // prepare data
     const updateData = {
@@ -284,7 +284,7 @@ class UserFacade {
     };
 
     // update password
-    const operationStatus = await Service.updateUserPassword(
+    const operationStatus = await userService.updateUserPassword(
       App.admin.jwt,
       instanceToCreate.id,
       updateData
@@ -312,10 +312,10 @@ class UserFacade {
       password: `${Constant.preKey}oldPassword`,
       isActive: true,
     };
-    const instanceToCreate = await Service.create(createData);
+    const instanceToCreate = await userService.create(createData);
 
     // deactivate
-    const operationStatus = await Service.deactivate(
+    const operationStatus = await userService.deactivate(
       App.admin.jwt,
       instanceToCreate.id
     );
@@ -336,10 +336,10 @@ class UserFacade {
       password: `${Constant.preKey}oldPassword`,
       isActive: false,
     };
-    const instanceToCreate = await Service.create(createData);
+    const instanceToCreate = await userService.create(createData);
 
     // activate
-    const operationStatus = await Service.activate(
+    const operationStatus = await userService.activate(
       App.admin.jwt,
       instanceToCreate.id
     );
@@ -354,10 +354,10 @@ class UserFacade {
 
   static async delete(jwt) {
     // create instance
-    const instanceToCreate = await Service.create();
+    const instanceToCreate = await userService.create();
 
     // delete instance
-    const operationStatus = await Service.delete(
+    const operationStatus = await userService.delete(
       App.admin.jwt,
       instanceToCreate.id
     );

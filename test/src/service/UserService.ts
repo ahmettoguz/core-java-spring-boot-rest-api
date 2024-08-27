@@ -5,10 +5,8 @@ const BaseService = require("./base/BaseService.ts");
 const entityName = "users";
 
 class UserService extends BaseService {
-  static async create(data?) {
+  async create(data?) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}`;
-    const method = "post";
     data = data ?? {
       firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
       email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
@@ -16,20 +14,8 @@ class UserService extends BaseService {
       isActive: true,
     };
 
-    // create instance
-    let instanceToCreate;
-    try {
-      const axiosService = new AxiosServiceBuilder()
-        .setUrl(url)
-        .setMethod(method)
-        .setData(data)
-        .build();
-
-      const response = await axiosService.request();
-      instanceToCreate = response.data.data;
-    } catch (e: any) {
-      throw new Error(`${this.name}.create:: Axios error with code: ${e.code}`);
-    }
+    // delegate to parent
+    const instanceToCreate = await super.create(data);
 
     // set password
     instanceToCreate.password = data.password;
@@ -37,7 +23,7 @@ class UserService extends BaseService {
     return instanceToCreate;
   }
 
-  static async createMany(createInstanceCount = 2, instanceDatas = []) {
+  async createMany(createInstanceCount = 2, instanceDatas = []) {
     const createdInstanceIds: number[] = [];
 
     if (instanceDatas.length === 0) {
@@ -141,7 +127,7 @@ class UserService extends BaseService {
     return await super.update(jwt, instanceId, data);
   }
 
-  static async updateUserPassword(jwt, instanceId, data) {
+  async updateUserPassword(jwt, instanceId, data) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/password`;
     const method = "patch";
@@ -161,76 +147,6 @@ class UserService extends BaseService {
       throw new Error(
         `${this.name}.updateUserPassword:: Axios error with code: ${e.code}`
       );
-    }
-
-    return operationStatus;
-  }
-
-  static async deactivate(jwt, instanceId) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/deactivate`;
-    const method = "patch";
-
-    // update instance
-    let operationStatus; // todo check that operation status maybe another thing is return
-    try {
-      const axiosService = new AxiosServiceBuilder()
-        .setUrl(url)
-        .setMethod(method)
-        .setJwt(jwt)
-        .build();
-      const response = await axiosService.request();
-      operationStatus = response.data;
-    } catch (e: any) {
-      throw new Error(
-        `${this.name}.deactivate:: Axios error with code: ${e.code}`
-      );
-    }
-
-    return operationStatus;
-  }
-
-  static async activate(jwt, instanceId) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/activate`;
-    const method = "patch";
-
-    // update instance
-    let operationStatus; // todo check that operation status maybe another thing is return
-    try {
-      const axiosService = new AxiosServiceBuilder()
-        .setUrl(url)
-        .setMethod(method)
-        .setJwt(jwt)
-        .build();
-      const response = await axiosService.request();
-      operationStatus = response.data;
-    } catch (e: any) {
-      throw new Error(
-        `${this.name}.activate:: Axios error with code: ${e.code}`
-      );
-    }
-
-    return operationStatus;
-  }
-
-  static async delete(jwt, instanceId) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
-    const method = "delete";
-
-    // delete instance
-    let operationStatus; // todo check that operation status maybe another thing is return
-    try {
-      const axiosService = new AxiosServiceBuilder()
-        .setUrl(url)
-        .setMethod(method)
-        .setJwt(jwt)
-        .build();
-      const response = await axiosService.request();
-      operationStatus = response.data;
-    } catch (e: any) {
-      throw new Error(`${this.name}.delete:: Axios error with code: ${e.code}`);
     }
 
     return operationStatus;

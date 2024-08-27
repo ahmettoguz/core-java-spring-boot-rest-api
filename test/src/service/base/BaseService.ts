@@ -9,6 +9,31 @@ class BaseService {
     this.entityName = entityName;
   }
 
+  async create(data) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/${this.entityName}`;
+    const method = "post";
+
+    // create instance
+    let instanceToCreate;
+    try {
+      const axiosService = new AxiosServiceBuilder()
+        .setUrl(url)
+        .setMethod(method)
+        .setData(data)
+        .build();
+
+      const response = await axiosService.request();
+      instanceToCreate = response.data.data;
+    } catch (e: any) {
+      throw new Error(
+        `${this.constructor.name}.create:: Axios error with code: ${e.code}`
+      );
+    }
+
+    return instanceToCreate;
+  }
+
   async readAll(jwt) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${this.entityName}`;
@@ -138,75 +163,77 @@ class BaseService {
     return updatedInstance;
   }
 
-  //   static async deactivate(jwt, instanceId) {
-  //     // prepare request
-  //     const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/deactivate`;
-  //     const method = "patch";
+  async deactivate(jwt, instanceId) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/${this.entityName}/${instanceId}/deactivate`;
+    const method = "patch";
 
-  //     // update instance
-  //     let operationStatus; // todo check that operation status maybe another thing is return
-  //     try {
-  //       const axiosService = new AxiosServiceBuilder()
-  //         .setUrl(url)
-  //         .setMethod(method)
-  //         .setJwt(jwt)
-  //         .build();
-  //       const response = await axiosService.request();
-  //       operationStatus = response.data;
-  //     } catch (e: any) {
-  //       throw new Error(
-  //         `${this.name}.deactivate:: Axios error with code: ${e.code}`
-  //       );
-  //     }
+    // update instance
+    let operationStatus; // todo check that operation status maybe another thing is return
+    try {
+      const axiosService = new AxiosServiceBuilder()
+        .setUrl(url)
+        .setMethod(method)
+        .setJwt(jwt)
+        .build();
+      const response = await axiosService.request();
+      operationStatus = response.data;
+    } catch (e: any) {
+      throw new Error(
+        `${this.constructor.name}.deactivate:: Axios error with code: ${e.code}`
+      );
+    }
 
-  //     return operationStatus;
-  //   }
+    return operationStatus;
+  }
 
-  //   static async activate(jwt, instanceId) {
-  //     // prepare request
-  //     const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/activate`;
-  //     const method = "patch";
+  async activate(jwt, instanceId) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/${this.entityName}/${instanceId}/activate`;
+    const method = "patch";
 
-  //     // update instance
-  //     let operationStatus; // todo check that operation status maybe another thing is return
-  //     try {
-  //       const axiosService = new AxiosServiceBuilder()
-  //         .setUrl(url)
-  //         .setMethod(method)
-  //         .setJwt(jwt)
-  //         .build();
-  //       const response = await axiosService.request();
-  //       operationStatus = response.data;
-  //     } catch (e: any) {
-  //       throw new Error(
-  //         `${this.name}.activate:: Axios error with code: ${e.code}`
-  //       );
-  //     }
+    // update instance
+    let operationStatus; // todo check that operation status maybe another thing is return
+    try {
+      const axiosService = new AxiosServiceBuilder()
+        .setUrl(url)
+        .setMethod(method)
+        .setJwt(jwt)
+        .build();
+      const response = await axiosService.request();
+      operationStatus = response.data;
+    } catch (e: any) {
+      throw new Error(
+        `${this.constructor.name}.activate:: Axios error with code: ${e.code}`
+      );
+    }
 
-  //     return operationStatus;
-  //   }
+    return operationStatus;
+  }
 
-  //   static async delete(jwt, instanceId) {
-  //     // prepare request
-  //     const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
-  //     const method = "delete";
+  async delete(jwt, instanceId) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/${this.entityName}/${instanceId}`;
+    const method = "delete";
 
-  //     // delete instance
-  //     let operationStatus; // todo check that operation status maybe another thing is return
-  //     try {
-  //       const axiosService = new AxiosServiceBuilder()
-  //         .setUrl(url)
-  //         .setMethod(method)
-  //         .setJwt(jwt)
-  //         .build();
-  //       const response = await axiosService.request();
-  //       operationStatus = response.data;
-  //     } catch (e: any) {
-  //       throw new Error(`${this.name}.delete:: Axios error with code: ${e.code}`);
-  //     }
+    // delete instance
+    let operationStatus; // todo check that operation status maybe another thing is return
+    try {
+      const axiosService = new AxiosServiceBuilder()
+        .setUrl(url)
+        .setMethod(method)
+        .setJwt(jwt)
+        .build();
+      const response = await axiosService.request();
+      operationStatus = response.data;
+    } catch (e: any) {
+      throw new Error(
+        `${this.constructor.name}.delete:: Axios error with code: ${e.code}`
+      );
+    }
 
-  //     return operationStatus;
-  //   }
+    return operationStatus;
+  }
 }
 
 module.exports = BaseService;

@@ -34,6 +34,20 @@ class BaseService {
     return instanceToCreate;
   }
 
+  async createMany(instanceDatas) {
+    const createdInstanceIds: number[] = [];
+
+    // create instances
+    for (let i = 0; i < instanceDatas.length; i++) {
+      const instanceToCreate = await this.create(instanceDatas[i]);
+
+      // save ids
+      createdInstanceIds.push(instanceToCreate.id);
+    }
+
+    return createdInstanceIds;
+  }
+
   async readAll(jwt) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${this.entityName}`;

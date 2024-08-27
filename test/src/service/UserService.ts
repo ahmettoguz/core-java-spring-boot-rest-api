@@ -24,8 +24,6 @@ class UserService extends BaseService {
   }
 
   async createMany(createInstanceCount = 2, instanceDatas = []) {
-    const createdInstanceIds: number[] = [];
-
     if (instanceDatas.length === 0) {
       for (let i = 0; i < createInstanceCount; i++) {
         const data = {
@@ -40,15 +38,8 @@ class UserService extends BaseService {
       }
     }
 
-    // create instances
-    for (let i = 0; i < createInstanceCount; i++) {
-      const instanceToCreate = await this.create(instanceDatas[i]);
-
-      // save ids
-      createdInstanceIds.push(instanceToCreate.id);
-    }
-
-    return createdInstanceIds;
+    // delegate to parent
+    return await super.createMany(instanceDatas);
   }
 
   static async searchByExactName(jwt, searchString) {

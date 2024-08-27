@@ -57,37 +57,37 @@ class BaseService {
     return instanceToRead;
   }
 
-  //   static async readPagedSorted(jwt, data) {
-  //     // prepare request
-  //     const url = `${Constant.baseUrl}/api/${entityName}/paged`;
-  //     const method = "get";
-  //     data =
-  //       data ??
-  //       JSON.stringify({
-  //         pageNumber: 1,
-  //         pageSize: 5,
-  //         isDescending: true,
-  //       });
+   async readPagedSorted(jwt, data) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/${this.entityName}/paged`;
+    const method = "get";
+    data =
+      data ??
+      JSON.stringify({
+        pageNumber: 1,
+        pageSize: 5,
+        isDescending: true,
+      });
 
-  //     // read paged and sorted
-  //     let pagedInstances;
-  //     try {
-  //       const axiosService = new AxiosServiceBuilder()
-  //         .setUrl(url)
-  //         .setMethod(method)
-  //         .setData(data)
-  //         .setJwt(jwt)
-  //         .build();
-  //       const response = await axiosService.request();
-  //       pagedInstances = response.data.data;
-  //     } catch (e: any) {
-  //       throw new Error(
-  //         `${this.name}.readPagedSorted:: Axios error with code: ${e.code}`
-  //       );
-  //     }
+    // read paged and sorted
+    let pagedInstances;
+    try {
+      const axiosService = new AxiosServiceBuilder()
+        .setUrl(url)
+        .setMethod(method)
+        .setData(data)
+        .setJwt(jwt)
+        .build();
+      const response = await axiosService.request();
+      pagedInstances = response.data.data;
+    } catch (e: any) {
+      throw new Error(
+        `${this.constructor.name}.readPagedSorted:: Axios error with code: ${e.code}`
+      );
+    }
 
-  //     return pagedInstances;
-  //   }
+    return pagedInstances;
+  }
 
   //   static async count(jwt) {
   //     // prepare request

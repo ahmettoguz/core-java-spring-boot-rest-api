@@ -69,7 +69,7 @@ class UserFacade {
       pageSize: 5,
       isDescending: true,
     };
-    const firstPage = await Service.readPagedSorted(jwt, firstPageData);
+    const firstPage = await userService.readPagedSorted(jwt, firstPageData);
 
     // read second page
     const secondPageData = {
@@ -77,7 +77,7 @@ class UserFacade {
       pageSize: 5,
       isDescending: true,
     };
-    const secondPage = await Service.readPagedSorted(jwt, secondPageData);
+    const secondPage = await userService.readPagedSorted(jwt, secondPageData);
 
     // read third page
     const thirdPageData = {
@@ -85,7 +85,7 @@ class UserFacade {
       pageSize: 3,
       isDescending: false,
     };
-    const thirdPage = await Service.readPagedSorted(jwt, thirdPageData);
+    const thirdPage = await userService.readPagedSorted(jwt, thirdPageData);
 
     // first page validations
     // check page size

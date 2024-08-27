@@ -1,9 +1,6 @@
-const axios = require("axios");
-
 const Constant = require("../constant/Constant.ts");
 const CommonUtil = require("../util/CommonUtil.ts");
 const App = require("../app/App.ts");
-const {AxiosServiceBuilder} = require("../service/tool/AxiosService.ts");
 
 const Service = require("../service/UserService.ts");
 

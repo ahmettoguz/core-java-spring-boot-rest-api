@@ -7,9 +7,6 @@ const RoleEnum = require("../../enum/RoleEnum.ts");
 const UserService = require("../../service/UserService.ts");
 const Service = require("../../service/relational/UserRoleService.ts");
 
-
-const {AxiosServiceBuilder} = require("../../service/tool/AxiosService.ts");
-
 class UserRoleFacade {
     static async createRelation(targetRoleId, jwt) {
         // create user

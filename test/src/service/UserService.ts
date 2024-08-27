@@ -2,7 +2,6 @@ const {AxiosServiceBuilder} = require("../service/tool/AxiosService.ts");
 
 const Constant = require("../constant/Constant.ts");
 const CommonUtil = require("../util/CommonUtil.ts");
-const axios = require("axios");
 
 const entityName = "users";
 

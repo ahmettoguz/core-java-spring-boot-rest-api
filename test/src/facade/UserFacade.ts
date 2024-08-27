@@ -131,7 +131,7 @@ class UserFacade {
     await Service.createMany(createInstanceCount);
 
     // read instance count
-    const readInstanceCount = await Service.count(jwt);
+    const readInstanceCount = await userService.count(jwt);
 
     // check count
     if (readInstanceCount < createInstanceCount)

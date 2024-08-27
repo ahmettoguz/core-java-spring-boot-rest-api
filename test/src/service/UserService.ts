@@ -65,28 +65,6 @@ class UserService extends BaseService {
     return createdInstanceIds;
   }
 
-  static async count(jwt) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/count`;
-    const method = "get";
-
-    // read paged and sorted
-    let count;
-    try {
-      const axiosService = new AxiosServiceBuilder()
-        .setUrl(url)
-        .setMethod(method)
-        .setJwt(jwt)
-        .build();
-      const response = await axiosService.request();
-      count = response.data.data;
-    } catch (e: any) {
-      throw new Error(`${this.name}.count:: Axios error with code: ${e.code}`);
-    }
-
-    return count;
-  }
-
   static async searchByExactName(jwt, searchString) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${entityName}/search/exact`;

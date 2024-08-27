@@ -57,7 +57,7 @@ class BaseService {
     return instanceToRead;
   }
 
-   async readPagedSorted(jwt, data) {
+  async readPagedSorted(jwt, data) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${this.entityName}/paged`;
     const method = "get";
@@ -89,27 +89,29 @@ class BaseService {
     return pagedInstances;
   }
 
-  //   static async count(jwt) {
-  //     // prepare request
-  //     const url = `${Constant.baseUrl}/api/${entityName}/count`;
-  //     const method = "get";
+  async count(jwt) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/${this.entityName}/count`;
+    const method = "get";
 
-  //     // read paged and sorted
-  //     let count;
-  //     try {
-  //       const axiosService = new AxiosServiceBuilder()
-  //         .setUrl(url)
-  //         .setMethod(method)
-  //         .setJwt(jwt)
-  //         .build();
-  //       const response = await axiosService.request();
-  //       count = response.data.data;
-  //     } catch (e: any) {
-  //       throw new Error(`${this.name}.count:: Axios error with code: ${e.code}`);
-  //     }
+    // read count
+    let count;
+    try {
+      const axiosService = new AxiosServiceBuilder()
+        .setUrl(url)
+        .setMethod(method)
+        .setJwt(jwt)
+        .build();
+      const response = await axiosService.request();
+      count = response.data.data;
+    } catch (e: any) {
+      throw new Error(
+        `${this.constructor.name}.count:: Axios error with code: ${e.code}`
+      );
+    }
 
-  //     return count;
-  //   }
+    return count;
+  }
 
   //   static async searchByExactName(jwt, searchString) {
   //     // prepare request

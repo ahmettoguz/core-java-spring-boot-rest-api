@@ -240,7 +240,7 @@ class UserFacade {
       }${CommonUtil.generateRandomWord()}_updatedEmail@hotmail.com`,
       password: `${Constant.preKey}updatedPassword`,
     };
-    const updatedInstance = await Service.update(
+    const updatedInstance = await userService.update(
       App.admin.jwt,
       instanceToCreate.id,
       updateData

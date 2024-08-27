@@ -127,10 +127,8 @@ class UserService extends BaseService {
     return readInstances;
   }
 
-  static async update(jwt, instanceId, data) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
-    const method = "put";
+  async update(jwt, instanceId, data) {
+    // prepare data
     data = data ?? {
       firstName: `${Constant.preKey}updatedFirstName`,
       email: `${
@@ -139,22 +137,8 @@ class UserService extends BaseService {
       password: `${Constant.preKey}updatedPassword`,
     };
 
-    // update instance
-    let updatedInstance;
-    try {
-      const axiosService = new AxiosServiceBuilder()
-        .setUrl(url)
-        .setMethod(method)
-        .setData(data)
-        .setJwt(jwt)
-        .build();
-      const response = await axiosService.request();
-      updatedInstance = response.data.data;
-    } catch (e: any) {
-      throw new Error(`${this.name}.update:: Axios error with code: ${e.code}`);
-    }
-
-    return updatedInstance;
+    // delegate to parent
+    return await super.update(jwt, instanceId, data);
   }
 
   static async updateUserPassword(jwt, instanceId, data) {

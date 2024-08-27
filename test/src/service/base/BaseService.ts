@@ -113,122 +113,30 @@ class BaseService {
     return count;
   }
 
-  //   static async searchByExactName(jwt, searchString) {
-  //     // prepare request
-  //     const url = `${Constant.baseUrl}/api/${entityName}/search/exact`;
-  //     const method = "get";
-  //     const data = {
-  //       pageNumber: 0,
-  //       pageSize: 5,
-  //       isDescending: true,
-  //       firstName: searchString,
-  //     };
+  async update(jwt, instanceId, data) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/${this.entityName}/${instanceId}`;
+    const method = "put";
 
-  //     // read paged and sorted
-  //     let readInstances;
-  //     try {
-  //       const axiosService = new AxiosServiceBuilder()
-  //         .setUrl(url)
-  //         .setMethod(method)
-  //         .setData(data)
-  //         .setJwt(jwt)
-  //         .build();
-  //       const response = await axiosService.request();
-  //       readInstances = response.data.data;
-  //     } catch (e: any) {
-  //       throw new Error(
-  //         `${this.name}.searchByExactName:: Axios error with code: ${e.code}`
-  //       );
-  //     }
+    // update instance
+    let updatedInstance;
+    try {
+      const axiosService = new AxiosServiceBuilder()
+        .setUrl(url)
+        .setMethod(method)
+        .setData(data)
+        .setJwt(jwt)
+        .build();
+      const response = await axiosService.request();
+      updatedInstance = response.data.data;
+    } catch (e: any) {
+      throw new Error(
+        `${this.constructor.name}.update:: Axios error with code: ${e.code}`
+      );
+    }
 
-  //     return readInstances;
-  //   }
-
-  //   static async searchByPartialName(jwt, searchString) {
-  //     // prepare request
-  //     const url = `${Constant.baseUrl}/api/${entityName}/search/partial`;
-  //     const method = "get";
-  //     const data = {
-  //       pageNumber: 0,
-  //       pageSize: 5,
-  //       isDescending: true,
-  //       firstName: searchString,
-  //     };
-
-  //     // read paged and sorted
-  //     let readInstances;
-  //     try {
-  //       const axiosService = new AxiosServiceBuilder()
-  //         .setUrl(url)
-  //         .setMethod(method)
-  //         .setData(data)
-  //         .setJwt(jwt)
-  //         .build();
-  //       const response = await axiosService.request();
-  //       readInstances = response.data.data;
-  //     } catch (e: any) {
-  //       throw new Error(
-  //         `${this.name}.searchByPartialName:: Axios error with code: ${e.code}`
-  //       );
-  //     }
-
-  //     return readInstances;
-  //   }
-
-  //   static async update(jwt, instanceId, data) {
-  //     // prepare request
-  //     const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
-  //     const method = "put";
-  //     data = data ?? {
-  //       firstName: `${Constant.preKey}updatedFirstName`,
-  //       email: `${
-  //         Constant.preKey
-  //       }${CommonUtil.generateRandomWord()}_updatedEmail@hotmail.com`,
-  //       password: `${Constant.preKey}updatedPassword`,
-  //     };
-
-  //     // update instance
-  //     let updatedInstance;
-  //     try {
-  //       const axiosService = new AxiosServiceBuilder()
-  //         .setUrl(url)
-  //         .setMethod(method)
-  //         .setData(data)
-  //         .setJwt(jwt)
-  //         .build();
-  //       const response = await axiosService.request();
-  //       updatedInstance = response.data.data;
-  //     } catch (e: any) {
-  //       throw new Error(`${this.name}.update:: Axios error with code: ${e.code}`);
-  //     }
-
-  //     return updatedInstance;
-  //   }
-
-  //   static async updateUserPassword(jwt, instanceId, data) {
-  //     // prepare request
-  //     const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/password`;
-  //     const method = "patch";
-
-  //     // update instance
-  //     let operationStatus; // todo check that operation status maybe another thing is return
-  //     try {
-  //       const axiosService = new AxiosServiceBuilder()
-  //         .setUrl(url)
-  //         .setMethod(method)
-  //         .setData(data)
-  //         .setJwt(jwt)
-  //         .build();
-  //       const response = await axiosService.request();
-  //       operationStatus = response.data;
-  //     } catch (e: any) {
-  //       throw new Error(
-  //         `${this.name}.updateUserPassword:: Axios error with code: ${e.code}`
-  //       );
-  //     }
-
-  //     return operationStatus;
-  //   }
+    return updatedInstance;
+  }
 
   //   static async deactivate(jwt, instanceId) {
   //     // prepare request

@@ -1,9 +1,10 @@
 const { AxiosServiceBuilder } = require("../util/AxiosService.ts");
 const Constant = require("../constant/Constant.ts");
 const CommonUtil = require("../util/CommonUtil.ts");
+const BaseService = require("./base/BaseService.ts");
 const entityName = "users";
 
-class UserService {
+class UserService extends BaseService {
   static async create(data?) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${entityName}`;
@@ -62,30 +63,6 @@ class UserService {
     }
 
     return createdInstanceIds;
-  }
-
-  static async readAll(jwt) {
-    // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}`;
-    const method = "get";
-
-    // read all instances
-    let instancesToRead;
-    try {
-      const axiosService = new AxiosServiceBuilder()
-        .setUrl(url)
-        .setMethod(method)
-        .setJwt(jwt)
-        .build();
-      const response = await axiosService.request();
-      instancesToRead = response.data.data;
-    } catch (e: any) {
-      throw new Error(
-        `${this.name}.readAll:: Axios error with code: ${e.code}`
-      );
-    }
-
-    return instancesToRead;
   }
 
   static async readWithId(jwt, instanceId) {

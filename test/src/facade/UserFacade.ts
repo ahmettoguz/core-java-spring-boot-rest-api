@@ -13,7 +13,7 @@ class UserFacade {
     const instanceToCreate = await Service.create();
 
     // read created instance
-    const readInstance = await Service.readWithId(
+    const readInstance = await userService.readWithId(
       App.admin.jwt,
       instanceToCreate.id
     );
@@ -48,7 +48,7 @@ class UserFacade {
     const instanceToCreate = await Service.create();
 
     // read created instance
-    const readInstance = await Service.readWithId(jwt, instanceToCreate.id);
+    const readInstance = await userService.readWithId(jwt, instanceToCreate.id);
 
     // compare instances
     if (
@@ -321,7 +321,7 @@ class UserFacade {
     );
 
     // read deactivated instance
-    const readInstance = await Service.readWithId(jwt, instanceToCreate.id);
+    const readInstance = await userService.readWithId(jwt, instanceToCreate.id);
 
     // check activation of the instance
     if (readInstance.isActive !== false)
@@ -345,7 +345,7 @@ class UserFacade {
     );
 
     // read activated instance
-    const readInstance = await Service.readWithId(jwt, instanceToCreate.id);
+    const readInstance = await userService.readWithId(jwt, instanceToCreate.id);
 
     // check activation of the instance
     if (readInstance.isActive !== true)
@@ -365,7 +365,7 @@ class UserFacade {
     // try to read deleted instance
     let isInstanceExist;
     try {
-      await Service.readWithId(jwt, instanceToCreate.id);
+      await userService.readWithId(jwt, instanceToCreate.id);
       isInstanceExist = true;
     } catch (error) {
       isInstanceExist = false;

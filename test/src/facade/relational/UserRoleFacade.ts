@@ -5,6 +5,8 @@ const App = require("../../app/App.ts");
 const RoleEnum = require("../../enum/RoleEnum.ts");
 
 const UserService = require("../../service/UserService.ts");
+const userService = new UserService("users");
+
 const Service = require("../../service/relational/UserRoleService.ts");
 
 class UserRoleFacade {
@@ -16,7 +18,7 @@ class UserRoleFacade {
         await Service.createRelation(user.id, RoleEnum.ADMIN.id, jwt);
 
         // read user
-        const readInstance = await UserService.readWithId(jwt, user.id);
+        const readInstance = await userService.readWithId(jwt, user.id);
 
         // check role relation
         if (!readInstance.roleIds.includes(targetRoleId))
@@ -32,7 +34,7 @@ class UserRoleFacade {
         await Service.createRelation(user.id, targetRoleId, jwt);
 
         // read user
-        let readInstance = await UserService.readWithId(jwt, user.id);
+        let readInstance = await userService.readWithId(jwt, user.id);
 
         // check role relation
         if (!readInstance.roleIds.includes(targetRoleId))
@@ -42,7 +44,7 @@ class UserRoleFacade {
         await Service.deleteRelation(user.id, targetRoleId, jwt);
 
         // read user
-        readInstance = await UserService.readWithId(jwt, user.id);
+        readInstance = await userService.readWithId(jwt, user.id);
 
         // check role relation
         if (readInstance.roleIds.includes(targetRoleId))

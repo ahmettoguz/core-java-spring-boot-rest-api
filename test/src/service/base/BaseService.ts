@@ -33,29 +33,29 @@ class BaseService {
     return instancesToRead;
   }
 
-  //   static async readWithId(jwt, instanceId) {
-  //     // prepare request
-  //     const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}`;
-  //     const method = "get";
+  async readWithId(jwt, instanceId) {
+    // prepare request
+    const url = `${Constant.baseUrl}/api/${this.entityName}/${instanceId}`;
+    const method = "get";
 
-  //     // read instance
-  //     let instanceToRead;
-  //     try {
-  //       const axiosService = new AxiosServiceBuilder()
-  //         .setUrl(url)
-  //         .setMethod(method)
-  //         .setJwt(jwt)
-  //         .build();
-  //       const response = await axiosService.request();
-  //       instanceToRead = response.data.data;
-  //     } catch (e: any) {
-  //       throw new Error(
-  //         `${this.name}.readWithId:: Axios error with code: ${e.code}`
-  //       );
-  //     }
+    // read instance
+    let instanceToRead;
+    try {
+      const axiosService = new AxiosServiceBuilder()
+        .setUrl(url)
+        .setMethod(method)
+        .setJwt(jwt)
+        .build();
+      const response = await axiosService.request();
+      instanceToRead = response.data.data;
+    } catch (e: any) {
+      throw new Error(
+        `${this.constructor.name}.readWithId:: Axios error with code: ${e.code}`
+      );
+    }
 
-  //     return instanceToRead;
-  //   }
+    return instanceToRead;
+  }
 
   //   static async readPagedSorted(jwt, data) {
   //     // prepare request

@@ -1,6 +1,5 @@
 const { AxiosServiceBuilder } = require("../../util/AxiosService.ts");
 const Constant = require("../../constant/Constant.ts");
-const CommonUtil = require("../../util/CommonUtil.ts");
 
 class BaseService {
   private entityName: string;

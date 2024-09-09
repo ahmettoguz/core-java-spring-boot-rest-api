@@ -2,9 +2,12 @@ const { AxiosServiceBuilder } = require("../util/AxiosService.ts");
 const Constant = require("../constant/Constant.ts");
 const CommonUtil = require("../util/CommonUtil.ts");
 const BaseService = require("./base/BaseService.ts");
-const entityName = "users";
 
 class UserService extends BaseService {
+  constructor() {
+    super("users");
+  }
+
   async create(data?) {
     // prepare request
     data = data ?? {
@@ -42,9 +45,9 @@ class UserService extends BaseService {
     return await super.createMany(instanceDatas);
   }
 
-  static async searchByExactName(jwt, searchString) {
+  async searchByExactName(jwt, searchString) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/search/exact`;
+    const url = `${Constant.baseUrl}/api/${this.entityName}/search/exact`;
     const method = "get";
     const data = {
       pageNumber: 0,
@@ -73,9 +76,9 @@ class UserService extends BaseService {
     return readInstances;
   }
 
-  static async searchByPartialName(jwt, searchString) {
+  async searchByPartialName(jwt, searchString) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/search/partial`;
+    const url = `${Constant.baseUrl}/api/${this.entityName}/search/partial`;
     const method = "get";
     const data = {
       pageNumber: 0,
@@ -120,11 +123,11 @@ class UserService extends BaseService {
 
   async updateUserPassword(jwt, instanceId, data) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${entityName}/${instanceId}/password`;
+    const url = `${Constant.baseUrl}/api/${this.entityName}/${instanceId}/password`;
     const method = "patch";
 
     // update instance
-    let operationStatus; // todo check that operation status maybe another thing is return
+    let operationStatus;
     try {
       const axiosService = new AxiosServiceBuilder()
         .setUrl(url)

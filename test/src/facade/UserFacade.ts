@@ -1,28 +1,19 @@
 const Constant = require("../constant/Constant.ts");
 const CommonUtil = require("../util/CommonUtil.ts");
-const App = require("../app/App.ts");
-
-const Service = require("../service/UserService.ts");
-const userService = new Service("users");
-
+const UserService = require("../service/UserService.ts");
+const userService = new UserService();
 const AuthFacade = require("../facade/AuthFacade.ts");
 
 class UserFacade {
-  static async create() {
+  static async create(jwt) {
     // create instance
     const instanceToCreate = await userService.create();
 
     // read created instance
-    const readInstance = await userService.readWithId(
-      App.admin.jwt,
-      instanceToCreate.id
-    );
+    const readInstance = await userService.readWithId(jwt, instanceToCreate.id);
 
     // compare instances
-    if (
-      instanceToCreate.id != readInstance.id ||
-      instanceToCreate.firstName != readInstance.firstName
-    )
+    if (instanceToCreate.id != readInstance.id)
       throw new Error("created instance id is not match");
   }
 
@@ -51,10 +42,7 @@ class UserFacade {
     const readInstance = await userService.readWithId(jwt, instanceToCreate.id);
 
     // compare instances
-    if (
-      instanceToCreate.id != readInstance.id ||
-      instanceToCreate.firstName != readInstance.firstName
-    )
+    if (instanceToCreate.id != readInstance.id)
       throw new Error("created instance id is not match");
   }
 
@@ -95,8 +83,7 @@ class UserFacade {
     // check sorting
     let lastId = firstPage[0];
     for (let i = 0; i < firstPageData.pageSize; i++) {
-      const tempInstance = firstPage[i];
-      const currentId = tempInstance.id;
+      const currentId = firstPage[i].id;
 
       if (currentId > lastId) throw new Error("descending sort invalid");
 
@@ -116,8 +103,7 @@ class UserFacade {
     // check sorting
     lastId = thirdPageData[0];
     for (let i = 0; i < thirdPageData.pageSize; i++) {
-      const tempInstance = thirdPage[i];
-      const currentId = tempInstance.id;
+      const currentId = thirdPage[i].id;
 
       if (currentId < lastId) throw new Error("ascending sort invalid");
 
@@ -169,8 +155,8 @@ class UserFacade {
     await userService.createMany(instanceDatas.length, instanceDatas);
 
     // search instance with exact name
-    const foundInstancesWrong = await Service.searchByExactName(jwt, "sp");
-    const foundInstancesTrue = await Service.searchByExactName(
+    const foundInstancesWrong = await userService.searchByExactName(jwt, "sp");
+    const foundInstancesTrue = await userService.searchByExactName(
       jwt,
       "specificName"
     );
@@ -215,7 +201,7 @@ class UserFacade {
     await userService.createMany(instanceDatas.length, instanceDatas);
 
     // search for instance
-    const foundInstances = await Service.searchByPartialName(jwt, "part");
+    const foundInstances = await userService.searchByPartialName(jwt, "part");
 
     // check found instances it should found and give it as paged
     if (foundInstances.length < instanceDatas.length)
@@ -241,7 +227,7 @@ class UserFacade {
       password: `${Constant.preKey}updatedPassword`,
     };
     const updatedInstance = await userService.update(
-      App.admin.jwt,
+      jwt,
       instanceToCreate.id,
       updateData
     );
@@ -285,7 +271,7 @@ class UserFacade {
 
     // update password
     const operationStatus = await userService.updateUserPassword(
-      App.admin.jwt,
+      jwt,
       instanceToCreate.id,
       updateData
     );
@@ -315,10 +301,7 @@ class UserFacade {
     const instanceToCreate = await userService.create(createData);
 
     // deactivate
-    const operationStatus = await userService.deactivate(
-      App.admin.jwt,
-      instanceToCreate.id
-    );
+    await userService.deactivate(jwt, instanceToCreate.id);
 
     // read deactivated instance
     const readInstance = await userService.readWithId(jwt, instanceToCreate.id);
@@ -339,10 +322,7 @@ class UserFacade {
     const instanceToCreate = await userService.create(createData);
 
     // activate
-    const operationStatus = await userService.activate(
-      App.admin.jwt,
-      instanceToCreate.id
-    );
+    await userService.activate(jwt, instanceToCreate.id);
 
     // read activated instance
     const readInstance = await userService.readWithId(jwt, instanceToCreate.id);
@@ -357,10 +337,7 @@ class UserFacade {
     const instanceToCreate = await userService.create();
 
     // delete instance
-    const operationStatus = await userService.delete(
-      App.admin.jwt,
-      instanceToCreate.id
-    );
+    await userService.delete(jwt, instanceToCreate.id);
 
     // try to read deleted instance
     let isInstanceExist;

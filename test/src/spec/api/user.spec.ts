@@ -10,7 +10,7 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "Create user.");
 
     // perform operation
-    await Facade.create();
+    await Facade.create(App.admin.jwt);
   });
 
   it("[GET] /api/users", async function () {

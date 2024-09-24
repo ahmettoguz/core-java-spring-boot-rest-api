@@ -2,7 +2,7 @@ const DomainService = require("../service/DomainService.ts");
 const domainService = new DomainService();
 
 class DomainFacade {
-  static async create(jwt) {
+  async create(jwt) {
     // create instance
     const instanceToCreate = await domainService.create(jwt);
 
@@ -17,7 +17,7 @@ class DomainFacade {
       throw new Error("created instance id is not match");
   }
 
-  static async readAll(jwt) {
+  async readAll(jwt) {
     // create instances
     const createdInstanceIds = await domainService.createMany(jwt);
 
@@ -34,7 +34,7 @@ class DomainFacade {
     }
   }
 
-  static async readWithId(jwt) {
+  async readWithId(jwt) {
     // create instance
     const instanceToCreate = await domainService.create(jwt);
 
@@ -49,7 +49,7 @@ class DomainFacade {
       throw new Error("created instance id is not match");
   }
 
-  static async readPagedSorted(jwt) {
+  async readPagedSorted(jwt) {
     // create instances
     const createInstanceCount = 15;
     await domainService.createMany(jwt, createInstanceCount);
@@ -114,7 +114,7 @@ class DomainFacade {
     }
   }
 
-  static async count(jwt) {
+  async count(jwt) {
     // create instances
     const createInstanceCount = 2;
     await domainService.createMany(jwt, createInstanceCount);
@@ -127,7 +127,7 @@ class DomainFacade {
       throw new Error("count invalid");
   }
 
-  static async update(jwt) {
+  async update(jwt) {
     // create instance
     const createData = await domainService.getDefaultCreateData();
     const instanceToCreate = await domainService.create(jwt, createData);
@@ -152,7 +152,7 @@ class DomainFacade {
       throw new Error("field is not updated");
   }
 
-  static async deactivate(jwt) {
+  async deactivate(jwt) {
     // create instance
     const createData = await domainService.getDefaultCreateData();
     createData.isActive = true;
@@ -172,7 +172,7 @@ class DomainFacade {
       throw new Error("instance cannot deactivated");
   }
 
-  static async activate(jwt) {
+  async activate(jwt) {
     // create instance
     const createData = await domainService.getDefaultCreateData();
     createData.isActive = false;
@@ -192,7 +192,7 @@ class DomainFacade {
       throw new Error("instance cannot activated");
   }
 
-  static async delete(jwt) {
+  async delete(jwt) {
     // create instance
     const instanceToCreate = await domainService.create(jwt);
 

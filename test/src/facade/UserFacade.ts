@@ -5,7 +5,7 @@ const userService = new UserService();
 const AuthFacade = require("../facade/AuthFacade.ts");
 
 class UserFacade {
-  static async create(jwt) {
+  async create(jwt) {
     // create instance
     const instanceToCreate = await userService.create();
 
@@ -17,7 +17,7 @@ class UserFacade {
       throw new Error("created instance id is not match");
   }
 
-  static async readAll(jwt) {
+  async readAll(jwt) {
     // create instances
     const createdInstanceIds = await userService.createMany();
 
@@ -34,7 +34,7 @@ class UserFacade {
     }
   }
 
-  static async readWithId(jwt) {
+  async readWithId(jwt) {
     // create instance
     const instanceToCreate = await userService.create();
 
@@ -46,7 +46,7 @@ class UserFacade {
       throw new Error("created instance id is not match");
   }
 
-  static async readPagedSorted(jwt) {
+  async readPagedSorted(jwt) {
     // create instances
     const createInstanceCount = 15;
     await userService.createMany(null, createInstanceCount);
@@ -111,7 +111,7 @@ class UserFacade {
     }
   }
 
-  static async count(jwt) {
+  async count(jwt) {
     // create instances
     const createInstanceCount = 2;
     await userService.createMany(null, createInstanceCount);
@@ -124,7 +124,7 @@ class UserFacade {
       throw new Error("count invalid");
   }
 
-  static async searchByExactName(jwt) {
+  async searchByExactName(jwt) {
     // create instances
     const instanceDatas = [
       {
@@ -170,7 +170,7 @@ class UserFacade {
       throw new Error("count of the found instances is invalid");
   }
 
-  static async searchByPartialName(jwt) {
+  async searchByPartialName(jwt) {
     // create instances
     const instanceDatas = [
       {
@@ -208,7 +208,7 @@ class UserFacade {
       throw new Error("count of the found instances is invalid");
   }
 
-  static async update(jwt) {
+  async update(jwt) {
     // create instance
     const createData = await userService.getDefaultCreateData();
     const instanceToCreate = await userService.create(null, createData);
@@ -249,7 +249,7 @@ class UserFacade {
     }
   }
 
-  static async updateUserPassword(jwt) {
+  async updateUserPassword(jwt) {
     // create instance
     const instanceToCreate = await userService.create();
 
@@ -279,7 +279,7 @@ class UserFacade {
     }
   }
 
-  static async deactivate(jwt) {
+  async deactivate(jwt) {
     // create instance
     const createData = await userService.getDefaultCreateData();
     createData.isActive = true;
@@ -296,7 +296,7 @@ class UserFacade {
       throw new Error("instance cannot deactivated");
   }
 
-  static async activate(jwt) {
+  async activate(jwt) {
     // create instance
     const createData = await userService.getDefaultCreateData();
     createData.isActive = false;
@@ -313,7 +313,7 @@ class UserFacade {
       throw new Error("instance cannot activated");
   }
 
-  static async delete(jwt) {
+  async delete(jwt) {
     // create instance
     const instanceToCreate = await userService.create();
 

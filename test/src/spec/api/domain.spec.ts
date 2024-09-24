@@ -1,6 +1,7 @@
 const addContext = require("mochawesome/addContext");
 const App = require("../../app/App.ts");
-const Facade = require("../../facade/DomainFacade.ts");
+const DomainFacade = require("../../facade/DomainFacade.ts");
+const domainFacade = new DomainFacade();
 
 before(async () => {});
 
@@ -10,7 +11,7 @@ describe("Domain Tests [domain.spec]", function () {
     addContext(this, "Create domain.");
 
     // perform operation
-    await Facade.create(App.admin.jwt);
+    await domainFacade.create(App.admin.jwt);
   });
 
   it("[GET] /api/domains", async function () {
@@ -18,7 +19,7 @@ describe("Domain Tests [domain.spec]", function () {
     addContext(this, "Reading all domains.");
 
     // perform operation
-    await Facade.readAll(App.admin.jwt);
+    await domainFacade.readAll(App.admin.jwt);
   });
 
   it("[GET] /api/domains/{id}", async function () {
@@ -26,7 +27,7 @@ describe("Domain Tests [domain.spec]", function () {
     addContext(this, "Reading domain with id.");
 
     // perform operation
-    await Facade.readWithId(App.admin.jwt);
+    await domainFacade.readWithId(App.admin.jwt);
   });
 
   it("[GET] /api/domains/paged", async function () {
@@ -34,7 +35,7 @@ describe("Domain Tests [domain.spec]", function () {
     addContext(this, "Reading domains paged and sorted.");
 
     // perform operation
-    await Facade.readPagedSorted(App.admin.jwt);
+    await domainFacade.readPagedSorted(App.admin.jwt);
   });
 
   it("[GET] /api/domains/count", async function () {
@@ -42,7 +43,7 @@ describe("Domain Tests [domain.spec]", function () {
     addContext(this, "Reading domains count.");
 
     // perform operation
-    await Facade.count(App.admin.jwt);
+    await domainFacade.count(App.admin.jwt);
   });
 
   it("[PUT] /api/domains/{id}", async function () {
@@ -50,7 +51,7 @@ describe("Domain Tests [domain.spec]", function () {
     addContext(this, "Update domain.");
 
     // perform operation
-    await Facade.update(App.admin.jwt);
+    await domainFacade.update(App.admin.jwt);
   });
 
   it("[PATCH] /api/domains/${id}/deactivate", async function () {
@@ -58,7 +59,7 @@ describe("Domain Tests [domain.spec]", function () {
     addContext(this, "Deactivate domain.");
 
     // perform operation
-    await Facade.deactivate(App.admin.jwt);
+    await domainFacade.deactivate(App.admin.jwt);
   });
 
   it("[PATCH] /api/domains/${id}/activate", async function () {
@@ -66,7 +67,7 @@ describe("Domain Tests [domain.spec]", function () {
     addContext(this, "Activate domain.");
 
     // perform operation
-    await Facade.activate(App.admin.jwt);
+    await domainFacade.activate(App.admin.jwt);
   });
 
   it("[DELETE] /api/domains/${id}", async function () {
@@ -74,6 +75,6 @@ describe("Domain Tests [domain.spec]", function () {
     addContext(this, "Delete domains.");
 
     // perform operation
-    await Facade.delete(App.admin.jwt);
+    await domainFacade.delete(App.admin.jwt);
   });
 });

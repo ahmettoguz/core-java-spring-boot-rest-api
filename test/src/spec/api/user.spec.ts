@@ -1,6 +1,7 @@
 const addContext = require("mochawesome/addContext");
 const App = require("../../app/App.ts");
-const Facade = require("../../facade/UserFacade.ts");
+const UserFacade = require("../../facade/UserFacade.ts");
+const facade = new UserFacade();
 
 before(async () => {});
 
@@ -10,7 +11,7 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "Create user.");
 
     // perform operation
-    await Facade.create(App.admin.jwt);
+    await facade.create(App.admin.jwt);
   });
 
   it("[GET] /api/users", async function () {
@@ -18,7 +19,7 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "Reading all users.");
 
     // perform operation
-    await Facade.readAll(App.admin.jwt);
+    await facade.readAll(App.admin.jwt);
   });
 
   it("[GET] /api/users/{id}", async function () {
@@ -26,7 +27,7 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "Reading user with id.");
 
     // perform operation
-    await Facade.readWithId(App.admin.jwt);
+    await facade.readWithId(App.admin.jwt);
   });
 
   it("[GET] /api/users/paged", async function () {
@@ -34,7 +35,7 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "Reading users paged and sorted.");
 
     // perform operation
-    await Facade.readPagedSorted(App.admin.jwt);
+    await facade.readPagedSorted(App.admin.jwt);
   });
 
   it("[GET] /api/users/count", async function () {
@@ -42,7 +43,7 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "Reading users count.");
 
     // perform operation
-    await Facade.count(App.admin.jwt);
+    await facade.count(App.admin.jwt);
   });
 
   it("[GET] /api/users/search/exact", async function () {
@@ -50,7 +51,7 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "Searching user by exact first name.");
 
     // perform operation
-    await Facade.searchByExactName(App.admin.jwt);
+    await facade.searchByExactName(App.admin.jwt);
   });
 
   it("[GET] /api/users/search/partial", async function () {
@@ -58,7 +59,7 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "Searching user by partial first name.");
 
     // perform operation
-    await Facade.searchByPartialName(App.admin.jwt);
+    await facade.searchByPartialName(App.admin.jwt);
   });
 
   it("[PUT] /api/users/{id}", async function () {
@@ -66,7 +67,7 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "Update user.");
 
     // perform operation
-    await Facade.update(App.admin.jwt);
+    await facade.update(App.admin.jwt);
   });
 
   it("[PATCH] /api/users/${id}/password", async function () {
@@ -74,7 +75,7 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "User password update.");
 
     // perform operation
-    await Facade.updateUserPassword(App.admin.jwt);
+    await facade.updateUserPassword(App.admin.jwt);
   });
 
   it("[PATCH] /api/users/${id}/deactivate", async function () {
@@ -82,7 +83,7 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "Deactivate user.");
 
     // perform operation
-    await Facade.deactivate(App.admin.jwt);
+    await facade.deactivate(App.admin.jwt);
   });
 
   it("[PATCH] /api/users/${id}/activate", async function () {
@@ -90,7 +91,7 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "Activate user.");
 
     // perform operation
-    await Facade.activate(App.admin.jwt);
+    await facade.activate(App.admin.jwt);
   });
 
   it("[DELETE] /api/users/${id}", async function () {
@@ -98,6 +99,6 @@ describe("User Tests [user.spec]", function () {
     addContext(this, "Delete user.");
 
     // perform operation
-    await Facade.delete(App.admin.jwt);
+    await facade.delete(App.admin.jwt);
   });
 });

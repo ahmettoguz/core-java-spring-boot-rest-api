@@ -8,42 +8,48 @@ const CommonUtil = require("../../util/CommonUtil.ts");
 const AuthFacade = require("../../facade/AuthFacade.ts");
 
 const UserService = require("../../service/UserService.ts");
+const userService = new UserService("users");
+
 const UserRoleService = require("../../service/relational/UserRoleService.ts");
 
 describe("Initialization Tests [init.spec]", function () {
-    it("initial user creation", async function () {
-        // add context information
-        addContext(this, "Creating user for admin authorization.");
+  it("initial user creation", async function () {
+    // add context information
+    addContext(this, "Creating user for admin authorization.");
 
-        // perform operation
-        App.admin = await UserService.create();
-    });
+    // perform operation
+    App.admin = await userService.create();
+  });
 
-    it("admin role grant to initial user", async function () {
-        // context of the test
-        addContext(this, "Granting admin role to created user.");
+  it("admin role grant to initial user", async function () {
+    // context of the test
+    addContext(this, "Granting admin role to created user.");
 
-        // perform action
-        await UserRoleService.createRelation(App.admin.id, RoleEnum.ADMIN.id, Constant.admin.jwt);
-    });
+    // perform action
+    await UserRoleService.createRelation(
+      App.admin.id,
+      RoleEnum.ADMIN.id,
+      Constant.admin.jwt
+    );
+  });
 
-    it("initial user login as admin", async function () {
-        // context of the test
-        addContext(this, "Login as admin.");
+  it("initial user login as admin", async function () {
+    // context of the test
+    addContext(this, "Login as admin.");
 
-        // prepare body
-        const body = {
-            email: App.admin.email,
-            password: App.admin.password,
-        };
+    // prepare body
+    const body = {
+      email: App.admin.email,
+      password: App.admin.password,
+    };
 
-        // perform action
-        let token;
-        try {
-            // get token
-            token = await AuthFacade.login(body, App.admin);
-        } catch (e: any) {
-            throw new Error(`user login failed: ${e.message}`);
-        }
-    });
+    // perform action
+    let token;
+    try {
+      // get token
+      token = await AuthFacade.login(body, App.admin);
+    } catch (e: any) {
+      throw new Error(`user login failed: ${e.message}`);
+    }
+  });
 });

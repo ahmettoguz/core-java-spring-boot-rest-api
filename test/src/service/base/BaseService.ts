@@ -8,7 +8,7 @@ class BaseService {
     this.entityName = entityName;
   }
 
-  async create(data, jwt?) {
+  async create(jwt = null, data) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${this.entityName}`;
     const method = "post";
@@ -35,12 +35,12 @@ class BaseService {
     return instanceToCreate;
   }
 
-  async createMany(instanceDatas, jwt?) {
+  async createMany(jwt = null, instanceDatas) {
     const createdInstanceIds: number[] = [];
 
     // create instances
     for (let i = 0; i < instanceDatas.length; i++) {
-      const instanceToCreate = await this.create(instanceDatas[i], jwt);
+      const instanceToCreate = await this.create(jwt, instanceDatas[i]);
 
       // save ids
       createdInstanceIds.push(instanceToCreate.id);

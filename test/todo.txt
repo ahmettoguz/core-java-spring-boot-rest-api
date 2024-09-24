@@ -38,5 +38,4 @@ bunlarda bir şey dönmesine gerek yok status 200 olup olmaması yeterli.
 service isimlerini küçük harf ile başlat
 
 axios service is servicin içinden tool klasörüne at.
-
-common facade var. ortak olanlar için bunu  base diye adlandır ve servisini de oluştur user içerisindeki facade operasyonları buraya gidebilir. ya da inheritance yapılablir extend eder.
+-

@@ -214,13 +214,7 @@ class UserFacade {
     const instanceToCreate = await userService.create(null, createData);
 
     // perform update
-    const updateData = {
-      firstName: `${Constant.preKey}updatedFirstName`,
-      email: `${
-        Constant.preKey
-      }${CommonUtil.generateRandomWord()}_updatedEmail@hotmail.com`,
-      password: `${Constant.preKey}updatedPassword`,
-    };
+    const updateData = await userService.getDefaultCreateData();
     const updatedInstance = await userService.update(
       jwt,
       instanceToCreate.id,

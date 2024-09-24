@@ -107,20 +107,6 @@ class UserService extends BaseService {
     return readInstances;
   }
 
-  async update(jwt, instanceId, data) {
-    // prepare data
-    data = data ?? {
-      firstName: `${Constant.preKey}updatedFirstName`,
-      email: `${
-        Constant.preKey
-      }${CommonUtil.generateRandomWord()}_updatedEmail@hotmail.com`,
-      password: `${Constant.preKey}updatedPassword`,
-    };
-
-    // delegate to parent
-    return await super.update(jwt, instanceId, data);
-  }
-
   async updateUserPassword(jwt, instanceId, data) {
     // prepare request
     const url = `${Constant.baseUrl}/api/${this.entityName}/${instanceId}/password`;

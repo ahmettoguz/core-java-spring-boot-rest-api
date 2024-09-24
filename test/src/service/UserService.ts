@@ -8,41 +8,26 @@ class UserService extends BaseService {
     super("users");
   }
 
-  async create(data?) {
-    // prepare request
-    data = data ?? {
+  async getDefaultCreateData() {
+    return {
       firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
       email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
       password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
       isActive: true,
     };
+  }
+
+  async create(jwt = null, data = null) {
+    // prepare request
+    data = data ?? (await this.getDefaultCreateData());
 
     // delegate to parent
-    const instanceToCreate = await super.create(data);
+    const instanceToCreate = await super.create(jwt, data);
 
     // set password
     instanceToCreate.password = data.password;
 
     return instanceToCreate;
-  }
-
-  async createMany(createInstanceCount = 2, instanceDatas = []) {
-    if (instanceDatas.length === 0) {
-      for (let i = 0; i < createInstanceCount; i++) {
-        const data = {
-          firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-          email: `${
-            Constant.preKey
-          }${CommonUtil.generateRandomWord()}@hotmail.com`,
-          password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-          isActive: true,
-        };
-        instanceDatas.push(data);
-      }
-    }
-
-    // delegate to parent
-    return await super.createMany(instanceDatas);
   }
 
   async searchByExactName(jwt, searchString) {
@@ -105,20 +90,6 @@ class UserService extends BaseService {
     }
 
     return readInstances;
-  }
-
-  async update(jwt, instanceId, data) {
-    // prepare data
-    data = data ?? {
-      firstName: `${Constant.preKey}updatedFirstName`,
-      email: `${
-        Constant.preKey
-      }${CommonUtil.generateRandomWord()}_updatedEmail@hotmail.com`,
-      password: `${Constant.preKey}updatedPassword`,
-    };
-
-    // delegate to parent
-    return await super.update(jwt, instanceId, data);
   }
 
   async updateUserPassword(jwt, instanceId, data) {

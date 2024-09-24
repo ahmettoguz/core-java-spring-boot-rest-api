@@ -1,26 +1,30 @@
 const { AxiosServiceBuilder } = require("../../util/AxiosService.ts");
 const Constant = require("../../constant/Constant.ts");
 
-class BaseService {
+abstract class BaseService {
   private entityName: string;
+  protected abstract getDefaultCreateData(): any;
 
   constructor(entityName: string) {
     this.entityName = entityName;
   }
 
-  async create(data) {
+  async create(jwt = null, data = null) {
     // prepare request
+    data = data ?? (await this.getDefaultCreateData());
     const url = `${Constant.baseUrl}/api/${this.entityName}`;
     const method = "post";
 
     // create instance
     let instanceToCreate;
     try {
-      const axiosService = new AxiosServiceBuilder()
+      const axiosServiceBuilder = new AxiosServiceBuilder()
         .setUrl(url)
         .setMethod(method)
-        .setData(data)
-        .build();
+        .setData(data);
+      // add jwt if required
+      if (jwt) axiosServiceBuilder.setJwt(jwt);
+      const axiosService = axiosServiceBuilder.build();
 
       const response = await axiosService.request();
       instanceToCreate = response.data.data;
@@ -33,12 +37,16 @@ class BaseService {
     return instanceToCreate;
   }
 
-  async createMany(instanceDatas) {
+  async createMany(jwt = null, createInstanceCount = 2, instanceDatas = []) {
     const createdInstanceIds: number[] = [];
+
+    if (instanceDatas.length === 0)
+      for (let i = 0; i < createInstanceCount; i++)
+        instanceDatas.push(await this.getDefaultCreateData());
 
     // create instances
     for (let i = 0; i < instanceDatas.length; i++) {
-      const instanceToCreate = await this.create(instanceDatas[i]);
+      const instanceToCreate = await this.create(jwt, instanceDatas[i]);
 
       // save ids
       createdInstanceIds.push(instanceToCreate.id);

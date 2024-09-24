@@ -5,7 +5,7 @@ const userService = new UserService();
 const AuthFacade = require("../facade/AuthFacade.ts");
 
 class UserFacade {
-  static async create(jwt) {
+  async create(jwt) {
     // create instance
     const instanceToCreate = await userService.create();
 
@@ -17,7 +17,7 @@ class UserFacade {
       throw new Error("created instance id is not match");
   }
 
-  static async readAll(jwt) {
+  async readAll(jwt) {
     // create instances
     const createdInstanceIds = await userService.createMany();
 
@@ -34,7 +34,7 @@ class UserFacade {
     }
   }
 
-  static async readWithId(jwt) {
+  async readWithId(jwt) {
     // create instance
     const instanceToCreate = await userService.create();
 
@@ -46,10 +46,10 @@ class UserFacade {
       throw new Error("created instance id is not match");
   }
 
-  static async readPagedSorted(jwt) {
+  async readPagedSorted(jwt) {
     // create instances
     const createInstanceCount = 15;
-    await userService.createMany(createInstanceCount);
+    await userService.createMany(null, createInstanceCount);
 
     // read first page
     const firstPageData = {
@@ -111,10 +111,10 @@ class UserFacade {
     }
   }
 
-  static async count(jwt) {
+  async count(jwt) {
     // create instances
     const createInstanceCount = 2;
-    await userService.createMany(createInstanceCount);
+    await userService.createMany(null, createInstanceCount);
 
     // read instance count
     const readInstanceCount = await userService.count(jwt);
@@ -124,7 +124,7 @@ class UserFacade {
       throw new Error("count invalid");
   }
 
-  static async searchByExactName(jwt) {
+  async searchByExactName(jwt) {
     // create instances
     const instanceDatas = [
       {
@@ -152,7 +152,7 @@ class UserFacade {
         isActive: true,
       },
     ];
-    await userService.createMany(instanceDatas.length, instanceDatas);
+    await userService.createMany(null, instanceDatas.length, instanceDatas);
 
     // search instance with exact name
     const foundInstancesWrong = await userService.searchByExactName(jwt, "sp");
@@ -170,7 +170,7 @@ class UserFacade {
       throw new Error("count of the found instances is invalid");
   }
 
-  static async searchByPartialName(jwt) {
+  async searchByPartialName(jwt) {
     // create instances
     const instanceDatas = [
       {
@@ -198,7 +198,7 @@ class UserFacade {
         isActive: true,
       },
     ];
-    await userService.createMany(instanceDatas.length, instanceDatas);
+    await userService.createMany(null, instanceDatas.length, instanceDatas);
 
     // search for instance
     const foundInstances = await userService.searchByPartialName(jwt, "part");
@@ -208,24 +208,13 @@ class UserFacade {
       throw new Error("count of the found instances is invalid");
   }
 
-  static async update(jwt) {
+  async update(jwt) {
     // create instance
-    const createData = {
-      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
-      password: `${Constant.preKey}oldPassword`,
-      isActive: true,
-    };
-    const instanceToCreate = await userService.create(createData);
+    const createData = await userService.getDefaultCreateData();
+    const instanceToCreate = await userService.create(null, createData);
 
     // perform update
-    const updateData = {
-      firstName: `${Constant.preKey}updatedFirstName`,
-      email: `${
-        Constant.preKey
-      }${CommonUtil.generateRandomWord()}_updatedEmail@hotmail.com`,
-      password: `${Constant.preKey}updatedPassword`,
-    };
+    const updateData = await userService.getDefaultCreateData();
     const updatedInstance = await userService.update(
       jwt,
       instanceToCreate.id,
@@ -260,7 +249,7 @@ class UserFacade {
     }
   }
 
-  static async updateUserPassword(jwt) {
+  async updateUserPassword(jwt) {
     // create instance
     const instanceToCreate = await userService.create();
 
@@ -290,15 +279,11 @@ class UserFacade {
     }
   }
 
-  static async deactivate(jwt) {
+  async deactivate(jwt) {
     // create instance
-    const createData = {
-      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
-      password: `${Constant.preKey}oldPassword`,
-      isActive: true,
-    };
-    const instanceToCreate = await userService.create(createData);
+    const createData = await userService.getDefaultCreateData();
+    createData.isActive = true;
+    const instanceToCreate = await userService.create(null, createData);
 
     // deactivate
     await userService.deactivate(jwt, instanceToCreate.id);
@@ -311,15 +296,11 @@ class UserFacade {
       throw new Error("instance cannot deactivated");
   }
 
-  static async activate(jwt) {
+  async activate(jwt) {
     // create instance
-    const createData = {
-      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
-      password: `${Constant.preKey}oldPassword`,
-      isActive: false,
-    };
-    const instanceToCreate = await userService.create(createData);
+    const createData = await userService.getDefaultCreateData();
+    createData.isActive = false;
+    const instanceToCreate = await userService.create(null, createData);
 
     // activate
     await userService.activate(jwt, instanceToCreate.id);
@@ -332,7 +313,7 @@ class UserFacade {
       throw new Error("instance cannot activated");
   }
 
-  static async delete(jwt) {
+  async delete(jwt) {
     // create instance
     const instanceToCreate = await userService.create();
 

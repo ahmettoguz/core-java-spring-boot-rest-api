@@ -210,12 +210,7 @@ class UserFacade {
 
   static async update(jwt) {
     // create instance
-    const createData = {
-      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
-      password: `${Constant.preKey}oldPassword`,
-      isActive: true,
-    };
+    const createData = await userService.getDefaultCreateData();
     const instanceToCreate = await userService.create(null, createData);
 
     // perform update

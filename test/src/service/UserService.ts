@@ -8,14 +8,18 @@ class UserService extends BaseService {
     super("users");
   }
 
-  async create(data?) {
-    // prepare request
-    data = data ?? {
+  async getDefaultCreateData() {
+    return {
       firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
       email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
       password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
       isActive: true,
     };
+  }
+
+  async create(data?) {
+    // prepare request
+    data = data ?? await this.getDefaultCreateData();
 
     // delegate to parent
     const instanceToCreate = await super.create(data);
@@ -29,14 +33,7 @@ class UserService extends BaseService {
   async createMany(createInstanceCount = 2, instanceDatas = []) {
     if (instanceDatas.length === 0) {
       for (let i = 0; i < createInstanceCount; i++) {
-        const data = {
-          firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-          email: `${
-            Constant.preKey
-          }${CommonUtil.generateRandomWord()}@hotmail.com`,
-          password: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-          isActive: true,
-        };
+        const data = await this.getDefaultCreateData();
         instanceDatas.push(data);
       }
     }

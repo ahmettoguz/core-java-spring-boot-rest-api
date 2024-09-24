@@ -49,7 +49,7 @@ class UserFacade {
   static async readPagedSorted(jwt) {
     // create instances
     const createInstanceCount = 15;
-    await userService.createMany(createInstanceCount);
+    await userService.createMany(null, createInstanceCount);
 
     // read first page
     const firstPageData = {
@@ -114,7 +114,7 @@ class UserFacade {
   static async count(jwt) {
     // create instances
     const createInstanceCount = 2;
-    await userService.createMany(createInstanceCount);
+    await userService.createMany(null, createInstanceCount);
 
     // read instance count
     const readInstanceCount = await userService.count(jwt);
@@ -152,7 +152,7 @@ class UserFacade {
         isActive: true,
       },
     ];
-    await userService.createMany(instanceDatas.length, instanceDatas);
+    await userService.createMany(null, instanceDatas.length, instanceDatas);
 
     // search instance with exact name
     const foundInstancesWrong = await userService.searchByExactName(jwt, "sp");
@@ -198,7 +198,7 @@ class UserFacade {
         isActive: true,
       },
     ];
-    await userService.createMany(instanceDatas.length, instanceDatas);
+    await userService.createMany(null, instanceDatas.length, instanceDatas);
 
     // search for instance
     const foundInstances = await userService.searchByPartialName(jwt, "part");
@@ -216,7 +216,7 @@ class UserFacade {
       password: `${Constant.preKey}oldPassword`,
       isActive: true,
     };
-    const instanceToCreate = await userService.create(createData);
+    const instanceToCreate = await userService.create(null, createData);
 
     // perform update
     const updateData = {
@@ -294,7 +294,7 @@ class UserFacade {
     // create instance
     const createData = await userService.getDefaultCreateData();
     createData.isActive = true;
-    const instanceToCreate = await userService.create(createData);
+    const instanceToCreate = await userService.create(null, createData);
 
     // deactivate
     await userService.deactivate(jwt, instanceToCreate.id);
@@ -311,7 +311,7 @@ class UserFacade {
     // create instance
     const createData = await userService.getDefaultCreateData();
     createData.isActive = false;
-    const instanceToCreate = await userService.create(createData);
+    const instanceToCreate = await userService.create(null, createData);
 
     // activate
     await userService.activate(jwt, instanceToCreate.id);

@@ -292,13 +292,7 @@ class UserFacade {
 
   static async deactivate(jwt) {
     // create instance
-    const createData = {
-      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
-      password: `${Constant.preKey}oldPassword`,
-      isActive: true,
-    };
-    const instanceToCreate = await userService.create(createData);
+    const instanceToCreate = await userService.create();
 
     // deactivate
     await userService.deactivate(jwt, instanceToCreate.id);
@@ -313,13 +307,7 @@ class UserFacade {
 
   static async activate(jwt) {
     // create instance
-    const createData = {
-      firstName: `${Constant.preKey}${CommonUtil.generateRandomWord()}`,
-      email: `${Constant.preKey}${CommonUtil.generateRandomWord()}@hotmail.com`,
-      password: `${Constant.preKey}oldPassword`,
-      isActive: false,
-    };
-    const instanceToCreate = await userService.create(createData);
+    const instanceToCreate = await userService.create();
 
     // activate
     await userService.activate(jwt, instanceToCreate.id);

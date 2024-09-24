@@ -292,7 +292,9 @@ class UserFacade {
 
   static async deactivate(jwt) {
     // create instance
-    const instanceToCreate = await userService.create();
+    const createData = await userService.getDefaultCreateData();
+    createData.isActive = true;
+    const instanceToCreate = await userService.create(createData);
 
     // deactivate
     await userService.deactivate(jwt, instanceToCreate.id);
@@ -307,7 +309,9 @@ class UserFacade {
 
   static async activate(jwt) {
     // create instance
-    const instanceToCreate = await userService.create();
+    const createData = await userService.getDefaultCreateData();
+    createData.isActive = false;
+    const instanceToCreate = await userService.create(createData);
 
     // activate
     await userService.activate(jwt, instanceToCreate.id);

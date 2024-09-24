@@ -17,7 +17,7 @@ class UserService extends BaseService {
     };
   }
 
-  async create(jwt = null, data?) {
+  async create(jwt = null, data = null) {
     // prepare request
     data = data ?? (await this.getDefaultCreateData());
 
@@ -28,18 +28,6 @@ class UserService extends BaseService {
     instanceToCreate.password = data.password;
 
     return instanceToCreate;
-  }
-
-  async createMany(jwt = null, createInstanceCount = 2, instanceDatas = []) {
-    if (instanceDatas.length === 0) {
-      for (let i = 0; i < createInstanceCount; i++) {
-        const data = await this.getDefaultCreateData();
-        instanceDatas.push(data);
-      }
-    }
-
-    // delegate to parent
-    return await super.createMany(jwt, instanceDatas);
   }
 
   async searchByExactName(jwt, searchString) {

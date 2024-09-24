@@ -1,5 +1,3 @@
-const Constant = require("../constant/Constant.ts");
-const CommonUtil = require("../util/CommonUtil.ts");
 const DomainService = require("../service/DomainService.ts");
 const domainService = new DomainService();
 

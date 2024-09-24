@@ -1,15 +1,17 @@
 const { AxiosServiceBuilder } = require("../../util/AxiosService.ts");
 const Constant = require("../../constant/Constant.ts");
 
-class BaseService {
+abstract class BaseService {
   private entityName: string;
+  protected abstract getDefaultCreateData(): any;
 
   constructor(entityName: string) {
     this.entityName = entityName;
   }
 
-  async create(jwt = null, data) {
+  async create(jwt = null, data = null) {
     // prepare request
+    data = data ?? (await this.getDefaultCreateData());
     const url = `${Constant.baseUrl}/api/${this.entityName}`;
     const method = "post";
 
@@ -35,8 +37,12 @@ class BaseService {
     return instanceToCreate;
   }
 
-  async createMany(jwt = null, instanceDatas) {
+  async createMany(jwt = null, createInstanceCount = 2, instanceDatas = []) {
     const createdInstanceIds: number[] = [];
+
+    if (instanceDatas.length === 0)
+      for (let i = 0; i < createInstanceCount; i++)
+        instanceDatas.push(await this.getDefaultCreateData());
 
     // create instances
     for (let i = 0; i < instanceDatas.length; i++) {

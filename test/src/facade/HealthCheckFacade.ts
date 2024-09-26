@@ -4,7 +4,7 @@ const healthCheckService = new HealthCheckService();
 class HealthCheckFacade {
   async checkServerStatus() {
     // perform operation
-    const response = await healthCheckService.checkServerStatus();
+    await healthCheckService.checkServerStatus();
   }
 
   async checkAppInformation() {

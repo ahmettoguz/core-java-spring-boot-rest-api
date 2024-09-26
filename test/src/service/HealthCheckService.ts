@@ -17,8 +17,7 @@ class HealthCheckService {
         .setUrl(url)
         .setMethod(method)
         .build();
-      const response = await axiosService.request();
-      return response;
+      await axiosService.request();
     } catch (e: any) {
       throw new Error(
         `${this.constructor.name}.checkServerStatus:: Axios error with code: ${e.code}`

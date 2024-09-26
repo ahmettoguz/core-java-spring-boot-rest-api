@@ -5,7 +5,7 @@ const App = require("../../app/App.ts");
 const Constant = require("../../constant/Constant.ts");
 const CommonUtil = require("../../util/CommonUtil.ts");
 
-const AuthFacade = require("../../facade/AuthFacade.ts");
+const AuthFacade = require("../../facade/authentication/AuthFacade.ts");
 const authFacade = new AuthFacade();
 
 const UserService = require("../../service/UserService.ts");

@@ -1,7 +1,7 @@
-const AuthService = require("../service/AuthService.ts");
+const App = require("../../app/App.ts");
+const CommonUtil = require("../../util/CommonUtil.ts");
+const AuthService = require("../../service/authentication/AuthService.ts");
 const authService = new AuthService();
-const App = require("../app/App.ts");
-const CommonUtil = require("../util/CommonUtil.ts");
 
 class AuthFacade {
   async login(data = null, user = null) {

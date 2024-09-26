@@ -1,7 +1,3 @@
-dökümantasyona api endpointleri ve bodyleri yaz beklenen çıktıyı yaz
-
-
-
 aynı olan errorleri constantın içerisine göm mesela "response is not 200"
 
 
@@ -32,10 +28,3 @@ backend bunun yerine direkt olarak datayı dönebilir.
   status: 'OK'
 }
 
-bazı boolean dönen valuelarda dahi staus dönüyorum mesela updateUserPassword, deactivate, activate, delete (user için ama hepsinde de vardır)
-bunlarda bir şey dönmesine gerek yok status 200 olup olmaması yeterli.
-
-service isimlerini küçük harf ile başlat
-
-axios service is servicin içinden tool klasörüne at.
--

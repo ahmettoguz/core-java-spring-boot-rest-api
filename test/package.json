@@ -9,7 +9,7 @@
     "parallel": "mocha '**/*.spec.ts' --parallel --reporter mochawesome --require mochawesome/register --timeout 30000",
     "test": "cls && ts-node ./node_modules/mocha/bin/_mocha '**/*.spec.ts' '**/sync.hook.ts' --reporter mochawesome --timeout 30000",
     "testClean": "cls && ts-node ./node_modules/mocha/bin/_mocha '**/*.spec.ts' '**/sync.hook.ts' --reporter mochawesome --timeout 30000 && npm run clean",
-    "spec": "cls && ts-node ./node_modules/mocha/bin/_mocha '**/sync.hook.ts' '**/*init*.ts' '**/*project.spec.ts' --reporter mochawesome --timeout 30000"
+    "spec": "cls && ts-node ./node_modules/mocha/bin/_mocha '**/sync.hook.ts' '**/*init*.ts' '**/*health**.spec.ts' --reporter mochawesome --timeout 30000"
   },
   "keywords": [],
   "license": "ISC",

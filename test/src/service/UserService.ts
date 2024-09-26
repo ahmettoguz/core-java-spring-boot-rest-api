@@ -32,7 +32,7 @@ class UserService extends BaseService {
 
   async searchByExactName(jwt, searchString) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${this.entityName}/search/exact`;
+    const url = `${Constant.baseUrl}/api/${this.prefix}/search/exact`;
     const method = "get";
     const data = {
       pageNumber: 0,
@@ -63,7 +63,7 @@ class UserService extends BaseService {
 
   async searchByPartialName(jwt, searchString) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${this.entityName}/search/partial`;
+    const url = `${Constant.baseUrl}/api/${this.prefix}/search/partial`;
     const method = "get";
     const data = {
       pageNumber: 0,
@@ -94,7 +94,7 @@ class UserService extends BaseService {
 
   async updateUserPassword(jwt, instanceId, data) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${this.entityName}/${instanceId}/password`;
+    const url = `${Constant.baseUrl}/api/${this.prefix}/${instanceId}/password`;
     const method = "patch";
 
     // update instance

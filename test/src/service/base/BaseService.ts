@@ -2,17 +2,17 @@ const { AxiosServiceBuilder } = require("../../util/AxiosService.ts");
 const Constant = require("../../constant/Constant.ts");
 
 abstract class BaseService {
-  private entityName: string;
+  private prefix: string;
   protected abstract getDefaultCreateData(): any;
 
-  constructor(entityName: string) {
-    this.entityName = entityName;
+  constructor(prefix: string) {
+    this.prefix = prefix;
   }
 
   async create(jwt = null, data = null) {
     // prepare request
     data = data ?? (await this.getDefaultCreateData());
-    const url = `${Constant.baseUrl}/api/${this.entityName}`;
+    const url = `${Constant.baseUrl}/api/${this.prefix}`;
     const method = "post";
 
     // create instance
@@ -57,7 +57,7 @@ abstract class BaseService {
 
   async readAll(jwt) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${this.entityName}`;
+    const url = `${Constant.baseUrl}/api/${this.prefix}`;
     const method = "get";
 
     // read all instances
@@ -81,7 +81,7 @@ abstract class BaseService {
 
   async readWithId(jwt, instanceId) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${this.entityName}/${instanceId}`;
+    const url = `${Constant.baseUrl}/api/${this.prefix}/${instanceId}`;
     const method = "get";
 
     // read instance
@@ -105,7 +105,7 @@ abstract class BaseService {
 
   async readPagedSorted(jwt, data) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${this.entityName}/paged`;
+    const url = `${Constant.baseUrl}/api/${this.prefix}/paged`;
     const method = "get";
     data =
       data ??
@@ -137,7 +137,7 @@ abstract class BaseService {
 
   async count(jwt) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${this.entityName}/count`;
+    const url = `${Constant.baseUrl}/api/${this.prefix}/count`;
     const method = "get";
 
     // read count
@@ -161,7 +161,7 @@ abstract class BaseService {
 
   async update(jwt, instanceId, data) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${this.entityName}/${instanceId}`;
+    const url = `${Constant.baseUrl}/api/${this.prefix}/${instanceId}`;
     const method = "put";
 
     // update instance
@@ -186,7 +186,7 @@ abstract class BaseService {
 
   async deactivate(jwt, instanceId) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${this.entityName}/${instanceId}/deactivate`;
+    const url = `${Constant.baseUrl}/api/${this.prefix}/${instanceId}/deactivate`;
     const method = "patch";
 
     // update instance
@@ -210,7 +210,7 @@ abstract class BaseService {
 
   async activate(jwt, instanceId) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${this.entityName}/${instanceId}/activate`;
+    const url = `${Constant.baseUrl}/api/${this.prefix}/${instanceId}/activate`;
     const method = "patch";
 
     // update instance
@@ -234,7 +234,7 @@ abstract class BaseService {
 
   async delete(jwt, instanceId) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/${this.entityName}/${instanceId}`;
+    const url = `${Constant.baseUrl}/api/${this.prefix}/${instanceId}`;
     const method = "delete";
 
     // delete instance

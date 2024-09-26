@@ -1,4 +1,4 @@
-const HealthCheckService = require("../service/HealthCheckService.ts");
+const HealthCheckService = require("../../service/health-check/HealthCheckService.ts");
 const healthCheckService = new HealthCheckService();
 
 class HealthCheckFacade {

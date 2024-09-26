@@ -1,5 +1,5 @@
 const addContext = require("mochawesome/addContext");
-const AuthFacade = require("../../facade/AuthFacade.ts");
+const AuthFacade = require("../../facade/authentication/AuthFacade.ts");
 const authFacade = new AuthFacade();
 
 before(async () => {});

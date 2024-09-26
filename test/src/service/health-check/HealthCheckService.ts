@@ -1,5 +1,5 @@
-const Constant = require("../constant/Constant.ts");
-const { AxiosServiceBuilder } = require("../util/AxiosService.ts");
+const Constant = require("../../constant/Constant.ts");
+const { AxiosServiceBuilder } = require("../../util/AxiosService.ts");
 
 class HealthCheckService {
   private prefix: string;

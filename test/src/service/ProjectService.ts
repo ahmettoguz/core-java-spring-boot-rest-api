@@ -1,6 +1,6 @@
 const Constant = require("../constant/Constant.ts");
 const CommonUtil = require("../util/CommonUtil.ts");
-const CoreEntityService = require("./base/CoreEntityService.ts");
+const CoreEntityService = require("./core/CoreEntityService.ts");
 
 class ProjectService extends CoreEntityService {
   constructor() {

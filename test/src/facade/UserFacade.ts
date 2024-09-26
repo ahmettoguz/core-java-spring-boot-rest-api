@@ -2,7 +2,8 @@ const Constant = require("../constant/Constant.ts");
 const CommonUtil = require("../util/CommonUtil.ts");
 const UserService = require("../service/UserService.ts");
 const userService = new UserService();
-const AuthFacade = require("../facade/AuthFacade.ts");
+const AuthFacade = require("../facade/authentication/AuthFacade");
+const authFacade = new AuthFacade();
 
 class UserFacade {
   async create(jwt) {
@@ -240,13 +241,7 @@ class UserFacade {
       email: updatedInstance.email,
       password: createData.password,
     };
-
-    // todo change that auth facade and service
-    try {
-      await AuthFacade.login(loginData, updatedInstance);
-    } catch (error) {
-      throw error;
-    }
+    await authFacade.login(loginData, updatedInstance);
   }
 
   async updateUserPassword(jwt) {
@@ -270,13 +265,7 @@ class UserFacade {
       email: instanceToCreate.email,
       password: updateData.newPassword,
     };
-
-    // todo change that auth facade and service
-    try {
-      await AuthFacade.login(loginData, instanceToCreate);
-    } catch (error) {
-      throw error;
-    }
+    await authFacade.login(loginData, instanceToCreate);
   }
 
   async deactivate(jwt) {

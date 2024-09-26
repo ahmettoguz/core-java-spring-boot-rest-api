@@ -3,11 +3,10 @@ const RoleEnum = require("../../enum/RoleEnum.ts");
 const Constant = require("../../constant/Constant.ts");
 const UserService = require("../../service/UserService.ts");
 const userService = new UserService();
+const UserRoleFacade = require("../../facade/relational/UserRoleFacade.ts");
+const userRoleFacade = new UserRoleFacade();
 const AuthFacade = require("../../facade/authentication/AuthFacade.ts");
 const authFacade = new AuthFacade();
-
-// todo changge  user role after refactor that relational
-const UserRoleService = require("../../service/relational/UserRoleService.ts");
 
 class InitFacade {
   async initialCreation() {
@@ -17,10 +16,10 @@ class InitFacade {
 
   async initialAdminRoleGrant() {
     // perform action
-    await UserRoleService.createRelation(
+    await userRoleFacade.associateUserAndRole(
+      Constant.admin.jwt,
       App.admin.id,
-      RoleEnum.ADMIN.id,
-      Constant.admin.jwt
+      RoleEnum.ADMIN.id
     );
   }
 

@@ -230,8 +230,8 @@ class UserFacade {
 
     // check updated fields
     if (
-      updatedInstance.firstName != updateData.firstName ||
-      updatedInstance.email != updateData.email
+      !updatedInstance.firstName &&
+      updatedInstance.firstName != updateData.firstName
     )
       throw new Error("field is not updated");
 

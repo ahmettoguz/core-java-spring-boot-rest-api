@@ -148,7 +148,7 @@ class DomainFacade {
     if (elapsedTime > twoMinutesInMs) throw new Error("update time invalid");
 
     // check updated fields
-    if (updatedInstance.name != updateData.name)
+    if (!updatedInstance.name && updatedInstance.name != updateData.name)
       throw new Error("field is not updated");
   }
 

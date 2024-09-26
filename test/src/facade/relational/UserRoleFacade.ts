@@ -1,53 +1,57 @@
-const Constant = require("../../constant/Constant.ts");
-const CommonUtil = require("../../util/CommonUtil.ts");
-const App = require("../../app/App.ts");
-
 const RoleEnum = require("../../enum/RoleEnum.ts");
 
 const UserService = require("../../service/UserService.ts");
-const userService = new UserService("users");
+const userService = new UserService();
 
-const Service = require("../../service/relational/UserRoleService.ts");
+const UserRoleService = require("../../service/relational/UserRoleService.ts");
+const userRoleService = new UserRoleService();
 
 class UserRoleFacade {
-  static async createRelation(targetRoleId, jwt) {
-    // create user
-    const user = await userService.create();
+  async associateUserAndRole(jwt, userId = null, roleId = null) {
+    // check data and prepare if not exist
+    if (userId == null && roleId == null) {
+      // create user
+      const user = await userService.create();
+      userId = user.id;
+
+      // assumed role is admin
+      roleId = RoleEnum.ADMIN.id;
+    }
 
     // create relation between user and role
-    await Service.createRelation(user.id, RoleEnum.ADMIN.id, jwt);
+    await userRoleService.associate(jwt, userId, roleId);
 
     // read user
-    const readInstance = await userService.readWithId(jwt, user.id);
+    const readInstance = await userService.readWithId(jwt, userId);
 
     // check role relation
-    if (!readInstance.roleIds.includes(targetRoleId))
+    if (!readInstance.roleIds.includes(roleId))
       throw new Error("user and role relation cannot established");
   }
 
-  static async deleteRelation(targetRoleId, jwt) {
-    // create user
-    const user = await userService.create();
+  async unassociateUserAndRole(jwt, userId = null, roleId = null) {
+    // check data and prepare if not exist
+    if (userId == null && roleId == null) {
+      // create user
+      const user = await userService.create();
+      userId = user.id;
+
+      // assumed role is admin
+      roleId = RoleEnum.ADMIN.id;
+    }
 
     // create relation between user and role
-    await Service.createRelation(user.id, targetRoleId, jwt);
+    await this.associateUserAndRole(jwt, userId, roleId);
+
+    // remove relation between user and role
+    await userRoleService.unassociate(jwt, userId, roleId);
 
     // read user
-    let readInstance = await userService.readWithId(jwt, user.id);
+    const readInstance = await userService.readWithId(jwt, userId);
 
     // check role relation
-    if (!readInstance.roleIds.includes(targetRoleId))
+    if (readInstance.roleIds.includes(roleId))
       throw new Error("user and role relation cannot established");
-
-    // remove relation
-    await Service.deleteRelation(user.id, targetRoleId, jwt);
-
-    // read user
-    readInstance = await userService.readWithId(jwt, user.id);
-
-    // check role relation
-    if (readInstance.roleIds.includes(targetRoleId))
-      throw new Error("user and role relation cannot removed");
   }
 }
 

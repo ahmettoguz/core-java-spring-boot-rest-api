@@ -1,8 +1,8 @@
 const Constant = require("../constant/Constant.ts");
 const CommonUtil = require("../util/CommonUtil.ts");
-const BaseService = require("./base/BaseService.ts");
+const CoreEntityService = require("./base/CoreEntityService.ts");
 
-class DomainService extends BaseService {
+class DomainService extends CoreEntityService {
   constructor() {
     super("domains");
   }

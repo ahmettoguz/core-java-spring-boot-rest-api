@@ -4,20 +4,12 @@ const healthCheckService = new HealthCheckService();
 class HealthCheckFacade {
   async checkServerStatus() {
     // perform operation
-    const response = await healthCheckService.checkServerStatus();
-
-    // check status
-    if (response.status !== 200)
-      throw new Error(`response code is: ${response.status}`);
+    await healthCheckService.checkServerStatus();
   }
 
   async checkAppInformation() {
     // perform operation
     const response = await healthCheckService.checkAppInformation();
-
-    // check status
-    if (response.status !== 200)
-      throw new Error(`response code is: ${response.status}`);
 
     // todo check backend tarafında data.data yerine direkt olarak datayı dönmem lazım
     // check data field

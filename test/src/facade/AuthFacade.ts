@@ -1,57 +1,30 @@
-const axios = require("axios");
-
-const Constant = require("../constant/Constant.ts");
+const AuthService = require("../service/AuthService.ts");
+const authService = new AuthService();
+const App = require("../app/App.ts");
 const CommonUtil = require("../util/CommonUtil.ts");
 
 class AuthFacade {
-    static async login(body, user) {
-        // prepare request
-        const url = `${Constant.baseUrl}/api/auth/login`;
+  async login(data = null, user = null) {
+    // prepare request
+    data = data ?? {
+      email: App.admin.email,
+      password: App.admin.password,
+    };
 
-        // make request
-        let response;
-        try {
-            response = await axios.post(url, body);
-        } catch (e: any) {
-            throw new Error(`${this.name}.login:: Axios error with code: ${e.code}`);
-        }
+    //perform action
+    const response = await authService.login(data);
 
-        // check response
-        if (response.status !== 200) throw new Error();
-        if (response.data === undefined) throw new Error();
+    // get jwt
+    const jwt = CommonUtil.extractJwtToken(response);
 
-        // get jwt
-        const jwt = CommonUtil.extractJwtToken(response);
+    // set jwt
+    if (user) user.jwt = `Bearer ${jwt}`;
+  }
 
-        // set jwt
-        user.jwt = `Bearer ${jwt}`;
-    }
-
-    static async validate(jwt) {
-        // prepare request
-        const url = `${Constant.baseUrl}/api/auth/validate`;
-        const config = {
-            headers: {
-                Authorization: jwt,
-            },
-        };
-
-        // make request
-        const response = await axios.post(url, null, config);
-
-        // check status
-        if (response.status !== 200) throw new Error();
-
-        // check expiration time
-        if (response.data.exp <= new Date()) {
-            throw new Error();
-        }
-
-        // check body
-        if (response.data.body === undefined && response.data.body === null) {
-            throw new Error();
-        }
-    }
+  async validateJwt() {
+    //perform action
+    await authService.validateJwt(App.admin.jwt);
+  }
 }
 
 module.exports = AuthFacade;

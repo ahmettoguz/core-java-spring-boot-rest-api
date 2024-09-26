@@ -6,6 +6,7 @@ const Constant = require("../../constant/Constant.ts");
 const CommonUtil = require("../../util/CommonUtil.ts");
 
 const AuthFacade = require("../../facade/AuthFacade.ts");
+const authFacade = new AuthFacade();
 
 const UserService = require("../../service/UserService.ts");
 const userService = new UserService("users");
@@ -47,7 +48,7 @@ describe("Initialization Tests [init.spec]", function () {
     let token;
     try {
       // get token
-      token = await AuthFacade.login(body, App.admin);
+      token = await authFacade.login(body, App.admin);
     } catch (e: any) {
       throw new Error(`user login failed: ${e.message}`);
     }

@@ -86,4 +86,10 @@ public class User extends BaseEntity {
                     .collect(Collectors.toList());
         }
     }
+
+    public Integer getDomainId() {
+        if (domain != null)
+            return domain.getId();
+        return null;
+    }
 }

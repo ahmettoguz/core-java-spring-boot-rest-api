@@ -51,7 +51,7 @@ class UserRoleFacade {
 
     // check role relation
     if (readInstance.roleIds.includes(roleId))
-      throw new Error("user and role relation cannot established");
+      throw new Error("user and role relation cannot removed");
   }
 }
 

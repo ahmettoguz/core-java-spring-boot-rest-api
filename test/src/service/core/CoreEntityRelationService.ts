@@ -30,7 +30,7 @@ abstract class CoreEntityRelationService {
 
   async unassociate(jwt, firstEntityId, secondEntityId) {
     // prepare request
-    const url = `${Constant.baseUrl}/api/users/${firstEntityId}/roles/${secondEntityId}`;
+    const url = `${Constant.baseUrl}/api/users/${firstEntityId}/${this.prefixEntity2}/${secondEntityId}`;
     const method = "delete";
 
     // send request

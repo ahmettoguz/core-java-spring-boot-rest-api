@@ -3,6 +3,9 @@ const RoleEnum = require("../../enum/RoleEnum.ts");
 const UserService = require("../../service/UserService.ts");
 const userService = new UserService();
 
+const DomainService = require("../../service/DomainService.ts");
+const domainService = new DomainService();
+
 const UserDomainService = require("../../service/relational/UserDomainService.ts");
 const userDomainService = new UserDomainService();
 
@@ -14,8 +17,9 @@ class UserDomainFacade {
       const user = await userService.create();
       userId = user.id;
 
-      // assumed domain id is 1
-      domainId = 1;
+      // create domain
+      const domain = await domainService.create(jwt);
+      domainId = domain.id;
     }
 
     // create relation between user and domain
@@ -36,8 +40,9 @@ class UserDomainFacade {
       const user = await userService.create();
       userId = user.id;
 
-      // assumed domain id is 1
-      domainId = 1;
+      // create domain
+      const domain = await domainService.create(jwt);
+      domainId = domain.id;
     }
 
     // create relation between user and domain

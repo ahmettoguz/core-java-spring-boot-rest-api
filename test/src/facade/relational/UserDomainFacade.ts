@@ -1,5 +1,3 @@
-const RoleEnum = require("../../enum/RoleEnum.ts");
-
 const UserService = require("../../service/UserService.ts");
 const userService = new UserService();
 

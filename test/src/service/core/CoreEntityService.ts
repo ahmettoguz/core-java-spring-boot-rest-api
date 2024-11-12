@@ -2,7 +2,7 @@ import Constant from "src/constant/Constant";
 import { AxiosServiceBuilder } from "src/util/AxiosService";
 
 abstract class CoreEntityService {
-  private prefix: string;
+  public prefix: string;
   protected abstract getDefaultCreateData(): any;
 
   constructor(prefix: string) {

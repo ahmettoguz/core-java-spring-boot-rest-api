@@ -54,7 +54,7 @@ class UserService extends CoreEntityService {
       readInstances = response.data.data;
     } catch (e: any) {
       throw new Error(
-        `${this.name}.searchByExactName:: Axios error with code: ${e.code}`
+        `${this.constructor.name}.searchByExactName:: Axios error with code: ${e.code}`
       );
     }
 
@@ -85,7 +85,7 @@ class UserService extends CoreEntityService {
       readInstances = response.data.data;
     } catch (e: any) {
       throw new Error(
-        `${this.name}.searchByPartialName:: Axios error with code: ${e.code}`
+        `${this.constructor.name}.searchByPartialName:: Axios error with code: ${e.code}`
       );
     }
 
@@ -110,7 +110,7 @@ class UserService extends CoreEntityService {
       operationStatus = response.data;
     } catch (e: any) {
       throw new Error(
-        `${this.name}.updateUserPassword:: Axios error with code: ${e.code}`
+        `${this.constructor.name}.updateUserPassword:: Axios error with code: ${e.code}`
       );
     }
 

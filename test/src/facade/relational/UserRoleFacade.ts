@@ -1,5 +1,6 @@
 import UserService from "src/service/UserService";
 import UserRoleService from "src/service/relational/UserRoleService";
+import RoleEnum from "src/enum/RoleEnum";
 
 const userService = new UserService();
 const userRoleService = new UserRoleService();

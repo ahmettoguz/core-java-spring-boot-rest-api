@@ -1,9 +1,8 @@
-const RoleEnum = require("../../enum/RoleEnum.ts");
+import UserService from "src/service/UserService";
+import UserRoleService from "src/service/relational/UserRoleService";
+import RoleEnum from "src/enum/RoleEnum";
 
-const UserService = require("../../service/UserService.ts");
 const userService = new UserService();
-
-const UserRoleService = require("../../service/relational/UserRoleService.ts");
 const userRoleService = new UserRoleService();
 
 class UserRoleFacade {
@@ -65,4 +64,4 @@ class UserRoleFacade {
   }
 }
 
-module.exports = UserRoleFacade;
+export default UserRoleFacade;

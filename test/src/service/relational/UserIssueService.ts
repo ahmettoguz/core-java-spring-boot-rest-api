@@ -1,4 +1,4 @@
-const CoreEntityRelationService = require("../core/CoreEntityRelationService.ts");
+import CoreEntityRelationService from "../core/CoreEntityRelationService";
 
 class UserIssueService extends CoreEntityRelationService {
   constructor() {
@@ -6,4 +6,4 @@ class UserIssueService extends CoreEntityRelationService {
   }
 }
 
-module.exports = UserIssueService;
+export default UserIssueService;

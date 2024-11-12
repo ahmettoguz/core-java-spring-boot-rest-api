@@ -1,8 +1,9 @@
-const Constant = require("../constant/Constant.ts");
-const CommonUtil = require("../util/CommonUtil.ts");
-const UserService = require("../service/UserService.ts");
+import Constant from "src/constant/Constant";
+import UserService from "src/service/UserService";
+import CommonUtil from "src/util/CommonUtil";
+import AuthFacade from "./authentication/AuthFacade";
+
 const userService = new UserService();
-const AuthFacade = require("../facade/authentication/AuthFacade");
 const authFacade = new AuthFacade();
 
 class UserFacade {
@@ -322,4 +323,4 @@ class UserFacade {
   }
 }
 
-module.exports = UserFacade;
+export default UserFacade;

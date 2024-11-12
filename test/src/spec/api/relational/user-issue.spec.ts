@@ -1,6 +1,7 @@
-const addContext = require("mochawesome/addContext");
-const App = require("../../../app/App.ts");
-const UserIssueFacade = require("../../../facade/relational/UserIssueFacade.ts");
+import addContext from "mochawesome/addContext";
+import App from "src/app/App";
+import UserIssueFacade from "src/facade/relational/UserIssueFacade";
+
 const userIssueFacade = new UserIssueFacade();
 
 before(async () => {});

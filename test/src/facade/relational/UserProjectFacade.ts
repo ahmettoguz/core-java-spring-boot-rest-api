@@ -1,10 +1,9 @@
-const UserService = require("../../service/UserService.ts");
+import ProjectService from "src/service/ProjectService";
+import UserService from "src/service/UserService";
+import UserProjectService from "src/service/relational/UserProjectService";
+
 const userService = new UserService();
-
-const ProjectService = require("../../service/ProjectService.ts");
 const projectService = new ProjectService();
-
-const UserProjectService = require("../../service/relational/UserProjectService.ts");
 const userProjectService = new UserProjectService();
 
 class UserProjectFacade {
@@ -74,4 +73,4 @@ class UserProjectFacade {
   }
 }
 
-module.exports = UserProjectFacade;
+export default UserProjectFacade;

@@ -1,7 +1,7 @@
-const { AxiosServiceBuilder } = require("../util/AxiosService.ts");
-const Constant = require("../constant/Constant.ts");
-const CommonUtil = require("../util/CommonUtil.ts");
-const CoreEntityService = require("./core/CoreEntityService.ts");
+import Constant from "src/constant/Constant";
+import { AxiosServiceBuilder } from "src/util/AxiosService";
+import CommonUtil from "src/util/CommonUtil";
+import CoreEntityService from "./core/CoreEntityService";
 
 class UserService extends CoreEntityService {
   constructor() {
@@ -54,7 +54,7 @@ class UserService extends CoreEntityService {
       readInstances = response.data.data;
     } catch (e: any) {
       throw new Error(
-        `${this.name}.searchByExactName:: Axios error with code: ${e.code}`
+        `${this.constructor.name}.searchByExactName:: Axios error with code: ${e.code}`
       );
     }
 
@@ -85,7 +85,7 @@ class UserService extends CoreEntityService {
       readInstances = response.data.data;
     } catch (e: any) {
       throw new Error(
-        `${this.name}.searchByPartialName:: Axios error with code: ${e.code}`
+        `${this.constructor.name}.searchByPartialName:: Axios error with code: ${e.code}`
       );
     }
 
@@ -110,7 +110,7 @@ class UserService extends CoreEntityService {
       operationStatus = response.data;
     } catch (e: any) {
       throw new Error(
-        `${this.name}.updateUserPassword:: Axios error with code: ${e.code}`
+        `${this.constructor.name}.updateUserPassword:: Axios error with code: ${e.code}`
       );
     }
 
@@ -118,4 +118,4 @@ class UserService extends CoreEntityService {
   }
 }
 
-module.exports = UserService;
+export default UserService;

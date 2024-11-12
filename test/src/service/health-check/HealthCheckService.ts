@@ -1,5 +1,5 @@
-const Constant = require("../../constant/Constant.ts");
-const { AxiosServiceBuilder } = require("../../util/AxiosService.ts");
+import Constant from "src/constant/Constant";
+import { AxiosServiceBuilder } from "src/util/AxiosService";
 
 class HealthCheckService {
   private prefix: string;
@@ -44,4 +44,4 @@ class HealthCheckService {
   }
 }
 
-module.exports = HealthCheckService;
+export default HealthCheckService;

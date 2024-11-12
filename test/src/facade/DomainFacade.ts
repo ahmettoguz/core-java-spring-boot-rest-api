@@ -1,4 +1,5 @@
-const DomainService = require("../service/DomainService.ts");
+import DomainService from "src/service/DomainService";
+
 const domainService = new DomainService();
 
 class DomainFacade {
@@ -212,4 +213,4 @@ class DomainFacade {
   }
 }
 
-module.exports = DomainFacade;
+export default DomainFacade;

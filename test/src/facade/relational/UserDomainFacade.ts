@@ -1,10 +1,9 @@
-const UserService = require("../../service/UserService.ts");
+import DomainService from "src/service/DomainService";
+import UserDomainService from "src/service/relational/UserDomainService";
+import UserService from "src/service/UserService";
+
 const userService = new UserService();
-
-const DomainService = require("../../service/DomainService.ts");
 const domainService = new DomainService();
-
-const UserDomainService = require("../../service/relational/UserDomainService.ts");
 const userDomainService = new UserDomainService();
 
 class UserDomainFacade {
@@ -60,4 +59,4 @@ class UserDomainFacade {
   }
 }
 
-module.exports = UserDomainFacade;
+export default UserDomainFacade;

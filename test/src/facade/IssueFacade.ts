@@ -1,4 +1,5 @@
-const IssueService = require("../service/IssueService.ts");
+import IssueService from "src/service/IssueService";
+
 const issueService = new IssueService();
 
 class IssueFacade {
@@ -212,4 +213,4 @@ class IssueFacade {
   }
 }
 
-module.exports = IssueFacade;
+export default IssueFacade;

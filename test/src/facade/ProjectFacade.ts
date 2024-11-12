@@ -1,4 +1,5 @@
-const ProjectService = require("../service/ProjectService.ts");
+import ProjectService from "src/service/ProjectService";
+
 const projectService = new ProjectService();
 
 class ProjectFacade {
@@ -215,4 +216,4 @@ class ProjectFacade {
   }
 }
 
-module.exports = ProjectFacade;
+export default ProjectFacade;

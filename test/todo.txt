@@ -29,3 +29,5 @@ backend bunun yerine direkt olarak datayı dönebilir.
 }
 
 test servis kısmında error atarken sadece code'u gösteriyorum bir hata yaptığım zaman göremiyorum nerede yaptığımı yani mesaj da gösterilmeli.
+
+**/postman-request/**, **/node_modules/**,mochawesome-report

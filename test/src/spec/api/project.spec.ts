@@ -1,6 +1,7 @@
-const addContext = require("mochawesome/addContext");
-const App = require("../../app/App.ts");
-const ProjectFacade = require("../../facade/ProjectFacade.ts");
+import addContext from "mochawesome/addContext";
+import App from "src/app/App";
+import ProjectFacade from "src/facade/ProjectFacade";
+
 const projectFacade = new ProjectFacade();
 
 before(async () => {});

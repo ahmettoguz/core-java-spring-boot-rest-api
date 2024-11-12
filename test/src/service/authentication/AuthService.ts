@@ -1,5 +1,5 @@
-const Constant = require("../../constant/Constant.ts");
-const { AxiosServiceBuilder } = require("../../util/AxiosService.ts");
+import Constant from "src/constant/Constant";
+import { AxiosServiceBuilder } from "src/util/AxiosService";
 
 class AuthService {
   private prefix: string;
@@ -49,4 +49,4 @@ class AuthService {
   }
 }
 
-module.exports = AuthService;
+export default AuthService;

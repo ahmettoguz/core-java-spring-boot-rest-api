@@ -93,4 +93,4 @@ class CommonUtil {
   }
 }
 
-module.exports = CommonUtil;
+export default CommonUtil;

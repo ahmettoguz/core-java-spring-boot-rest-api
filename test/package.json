@@ -2,7 +2,7 @@
   "name": "api-test",
   "version": "1.0.0",
   "description": "Backend service automation test implementation with reporting.",
-  "author" : "Ahmet Oğuz Ergin",
+  "author": "Ahmet Oğuz Ergin",
   "main": "index.js",
   "scripts": {
     "clean": "cd C:\\Users\\lenovo\\Desktop\\repository\\repository\\Spring-Boot-Rest-Api\\database && docker-compose build db-initializer && docker-compose up -d db-initializer",
@@ -19,7 +19,6 @@
     "axios": "^1.6.8",
     "mocha": "^10.4.0",
     "mochawesome": "^7.1.3",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.4"
+    "ts-node": "^10.9.2"
   }
 }

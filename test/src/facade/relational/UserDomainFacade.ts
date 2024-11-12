@@ -8,6 +8,8 @@ const UserDomainService = require("../../service/relational/UserDomainService.ts
 const userDomainService = new UserDomainService();
 
 class UserDomainFacade {
+  // one to one relation
+
   async associateUserAndDomain(jwt, userId = null, domainId = null) {
     // check data and prepare if not exist
     if (userId == null && domainId == null) {
@@ -28,7 +30,7 @@ class UserDomainFacade {
 
     // check domain relation
     if (!readInstance.domainId == domainId)
-      throw new Error("user and role relation cannot established");
+      throw new Error("user and domain relation cannot established");
   }
 
   async unassociateUserAndDomain(jwt, userId = null, domainId = null) {
@@ -54,7 +56,7 @@ class UserDomainFacade {
 
     // check domain relation
     if (readInstance.domainId == domainId)
-      throw new Error("user and role relation cannot removed");
+      throw new Error("user and domain relation cannot removed");
   }
 }
 

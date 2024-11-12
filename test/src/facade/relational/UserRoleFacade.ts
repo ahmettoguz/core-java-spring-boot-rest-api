@@ -7,6 +7,8 @@ const UserRoleService = require("../../service/relational/UserRoleService.ts");
 const userRoleService = new UserRoleService();
 
 class UserRoleFacade {
+  // many to many relation
+
   async associateUserAndRole(jwt, userId = null, roleId = null) {
     // check data and prepare if not exist
     if (userId == null && roleId == null) {

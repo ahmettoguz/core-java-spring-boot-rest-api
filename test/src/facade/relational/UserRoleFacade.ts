@@ -7,51 +7,61 @@ const UserRoleService = require("../../service/relational/UserRoleService.ts");
 const userRoleService = new UserRoleService();
 
 class UserRoleFacade {
-  async associateUserAndRole(jwt, userId = null, roleId = null) {
+  // many to many relation
+
+  async associateUserAndRole(jwt, userId = null, roleIds = null) {
     // check data and prepare if not exist
-    if (userId == null && roleId == null) {
+    if (userId == null && roleIds == null) {
       // create user
       const user = await userService.create();
       userId = user.id;
 
-      // assumed role is admin
-      roleId = RoleEnum.ADMIN.id;
+      // assumed roles
+      roleIds = [RoleEnum.ADMIN.id, RoleEnum.PROJECTMANAGER.id];
     }
 
-    // create relation between user and role
-    await userRoleService.associate(jwt, userId, roleId);
+    // create relation between user and roles
+    for (const id of roleIds) {
+      await userRoleService.associate(jwt, userId, id);
+    }
 
     // read user
     const readInstance = await userService.readWithId(jwt, userId);
 
-    // check role relation
-    if (!readInstance.roleIds.includes(roleId))
+    // check relation
+    if (roleIds.some((id) => !readInstance.roleIds.includes(id))) {
       throw new Error("user and role relation cannot established");
+    }
   }
 
-  async unassociateUserAndRole(jwt, userId = null, roleId = null) {
+  async unassociateUserAndRole(jwt, userId = null, roleIds = null) {
     // check data and prepare if not exist
-    if (userId == null && roleId == null) {
+    if (userId == null && roleIds == null) {
       // create user
       const user = await userService.create();
       userId = user.id;
 
-      // assumed role is admin
-      roleId = RoleEnum.ADMIN.id;
+      // assumed roles
+      roleIds = [RoleEnum.ADMIN.id, RoleEnum.PROJECTMANAGER.id];
     }
 
-    // create relation between user and role
-    await this.associateUserAndRole(jwt, userId, roleId);
+    // create relation between user and roles
+    for (const id of roleIds) {
+      await userRoleService.associate(jwt, userId, id);
+    }
 
-    // remove relation between user and role
-    await userRoleService.unassociate(jwt, userId, roleId);
+    // remove relation between user and roles
+    for (const id of roleIds) {
+      await userRoleService.unassociate(jwt, userId, id);
+    }
 
     // read user
     const readInstance = await userService.readWithId(jwt, userId);
 
-    // check role relation
-    if (readInstance.roleIds.includes(roleId))
+    // check role relations
+    if (roleIds.some((id) => readInstance.roleIds.includes(id))) {
       throw new Error("user and role relation cannot removed");
+    }
   }
 }
 

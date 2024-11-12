@@ -28,3 +28,4 @@ backend bunun yerine direkt olarak datayı dönebilir.
   status: 'OK'
 }
 
+test servis kısmında error atarken sadece code'u gösteriyorum bir hata yaptığım zaman göremiyorum nerede yaptığımı yani mesaj da gösterilmeli.

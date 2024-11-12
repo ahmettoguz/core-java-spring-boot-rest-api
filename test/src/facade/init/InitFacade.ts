@@ -19,7 +19,7 @@ class InitFacade {
     await userRoleFacade.associateUserAndRole(
       Constant.admin.jwt,
       App.admin.id,
-      RoleEnum.ADMIN.id
+      [RoleEnum.ADMIN.id]
     );
   }
 

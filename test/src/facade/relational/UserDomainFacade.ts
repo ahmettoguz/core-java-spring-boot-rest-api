@@ -45,7 +45,7 @@ class UserDomainFacade {
       domainId = domain.id;
     }
 
-    // create relation between user and domain
+    // remove relation between user and domain
     await this.associateUserAndDomain(jwt, userId, domainId);
 
     // remove relation between user and domain

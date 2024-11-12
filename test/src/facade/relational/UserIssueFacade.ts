@@ -54,7 +54,7 @@ class UserIssueFacade {
       }
     }
 
-    // create relation between user and issues
+    // remove relation between user and issues
     for (const id of issueIds) {
       await userIssueService.associate(jwt, userId, id);
     }

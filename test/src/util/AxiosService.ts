@@ -1,4 +1,4 @@
-const axios = require("axios");
+import axios from "axios";
 
 class AxiosService {
   private url?: string;
@@ -70,4 +70,4 @@ class AxiosServiceBuilder {
   }
 }
 
-module.exports = { AxiosService, AxiosServiceBuilder };
+export { AxiosService, AxiosServiceBuilder };

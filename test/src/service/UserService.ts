@@ -1,7 +1,7 @@
-const { AxiosServiceBuilder } = require("../util/AxiosService.ts");
-const Constant = require("../constant/Constant.ts");
-const CommonUtil = require("../util/CommonUtil.ts");
-const CoreEntityService = require("./core/CoreEntityService.ts");
+import Constant from "src/constant/Constant";
+import { AxiosServiceBuilder } from "src/util/AxiosService";
+import CommonUtil from "src/util/CommonUtil";
+import CoreEntityService from "./core/CoreEntityService";
 
 class UserService extends CoreEntityService {
   constructor() {
@@ -118,4 +118,4 @@ class UserService extends CoreEntityService {
   }
 }
 
-module.exports = UserService;
+export default UserService;

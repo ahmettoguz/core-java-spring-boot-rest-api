@@ -1,4 +1,5 @@
-const HealthCheckService = require("../../service/health-check/HealthCheckService.ts");
+import HealthCheckService from "src/service/health-check/HealthCheckService";
+
 const healthCheckService = new HealthCheckService();
 
 class HealthCheckFacade {
@@ -21,4 +22,4 @@ class HealthCheckFacade {
   }
 }
 
-module.exports = HealthCheckFacade;
+export default HealthCheckFacade;

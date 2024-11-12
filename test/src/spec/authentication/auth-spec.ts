@@ -1,5 +1,6 @@
-const addContext = require("mochawesome/addContext");
-const AuthFacade = require("../../facade/authentication/AuthFacade.ts");
+import addContext from "mochawesome/addContext";
+import AuthFacade from "src/facade/authentication/AuthFacade";
+
 const authFacade = new AuthFacade();
 
 before(async () => {});

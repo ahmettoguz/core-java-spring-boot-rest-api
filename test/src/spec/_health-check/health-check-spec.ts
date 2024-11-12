@@ -1,5 +1,6 @@
-const addContext = require("mochawesome/addContext");
-const HealthCheckFacade = require("../../facade/heatlh-check/HealthCheckFacade.ts");
+import { addContext } from "mochawesome/addContext";
+import HealthCheckFacade from "src/facade/heatlh-check/HealthCheckFacade";
+
 const healthCheckFacade = new HealthCheckFacade();
 
 describe("Health Check Tests [health-check.spec]", function () {

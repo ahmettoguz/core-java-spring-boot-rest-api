@@ -1,6 +1,6 @@
-const Constant = require("../constant/Constant.ts");
-const CommonUtil = require("../util/CommonUtil.ts");
-const CoreEntityService = require("./core/CoreEntityService.ts");
+import Constant from "src/constant/Constant";
+import CommonUtil from "src/util/CommonUtil";
+import CoreEntityService from "./core/CoreEntityService";
 
 class DomainService extends CoreEntityService {
   constructor() {
@@ -15,4 +15,4 @@ class DomainService extends CoreEntityService {
   }
 }
 
-module.exports = DomainService;
+export default DomainService;

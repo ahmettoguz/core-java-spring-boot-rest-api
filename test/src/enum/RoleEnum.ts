@@ -4,4 +4,4 @@ const RoleEnum = {
   USER: { name: "user", id: 3 },
 };
 
-module.exports = RoleEnum;
+export default RoleEnum;

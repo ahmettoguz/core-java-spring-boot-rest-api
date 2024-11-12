@@ -1,6 +1,7 @@
-const App = require("../../app/App.ts");
-const CommonUtil = require("../../util/CommonUtil.ts");
-const AuthService = require("../../service/authentication/AuthService.ts");
+import App from "src/app/App";
+import AuthService from "src/service/authentication/AuthService";
+import CommonUtil from "src/util/CommonUtil";
+
 const authService = new AuthService();
 
 class AuthFacade {
@@ -27,4 +28,4 @@ class AuthFacade {
   }
 }
 
-module.exports = AuthFacade;
+export default AuthFacade;

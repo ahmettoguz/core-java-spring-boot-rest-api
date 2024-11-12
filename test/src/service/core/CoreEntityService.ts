@@ -1,5 +1,5 @@
-const { AxiosServiceBuilder } = require("../../util/AxiosService.ts");
-const Constant = require("../../constant/Constant.ts");
+import Constant from "src/constant/Constant";
+import { AxiosServiceBuilder } from "src/util/AxiosService";
 
 abstract class CoreEntityService {
   private prefix: string;
@@ -257,4 +257,4 @@ abstract class CoreEntityService {
   }
 }
 
-module.exports = CoreEntityService;
+export default CoreEntityService;

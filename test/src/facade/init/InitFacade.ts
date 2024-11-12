@@ -1,11 +1,12 @@
-const App = require("../../app/App.ts");
-const RoleEnum = require("../../enum/RoleEnum.ts");
-const Constant = require("../../constant/Constant.ts");
-const UserService = require("../../service/UserService.ts");
-const userService = new UserService();
-const UserRoleFacade = require("../../facade/relational/UserRoleFacade.ts");
+import App from "src/app/App";
+import Constant from "src/constant/Constant";
+import RoleEnum from "src/enum/RoleEnum";
+import UserService from "src/service/UserService";
+import AuthFacade from "../authentication/AuthFacade";
+import UserRoleFacade from "../relational/UserRoleFacade";
+
 const userRoleFacade = new UserRoleFacade();
-const AuthFacade = require("../../facade/authentication/AuthFacade.ts");
+const userService = new UserService();
 const authFacade = new AuthFacade();
 
 class InitFacade {
@@ -35,4 +36,4 @@ class InitFacade {
   }
 }
 
-module.exports = InitFacade;
+export default InitFacade;

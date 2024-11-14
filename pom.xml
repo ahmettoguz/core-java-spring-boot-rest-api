@@ -33,7 +33,6 @@
             <scope>provided</scope>
         </dependency>
 
-
         <!-- auto build -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -96,7 +95,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-            <version>1.18.30</version>
+            <version>1.18.34</version>
         </dependency>
 
         <dependency>

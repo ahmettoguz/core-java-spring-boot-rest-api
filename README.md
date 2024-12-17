@@ -84,9 +84,9 @@ This Java Spring Boot application is designed to manage API operations. It is fu
 
 + **Relational Database Management:** Efficient handling of relational data with ORM, supporting one-to-one, one-to-many, and many-to-many relationships.
 + **Hot Reload:** Changes in the codebase can be instantly reflected without needing to restart the application.
-+ **Lombok for Code Efficiency:** Lombok is used to eliminate boilerplate code for better readability and maintainability.
 + **Environment Configuration:** Configurations have been adjusted for enhanced flexibility.
 + **AOP:** Aspect-Oriented Programming handles authentication and authorization separately from business logic, ensuring security across the application.
++ **Lombok:** Lombok is used to eliminate boilerplate code for better readability and maintainability.
 + **JWT Authentication:** User authentication and authorization are managed with JSON Web Tokens for secure, stateless sessions.
 + **Exceptions:** The application manages both custom and global exceptions for error handling.
 + **Swagger Documentation:** Comprehensive API documentation integrated for documentation and testing purposes.

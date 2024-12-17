@@ -1,18 +1,69 @@
-<h1 id="top" align="center">🚢 v1.0.0 🚢</h1> 
+<h1 id="top" align="center">Core Java Spring Boot <br/> Rest API </h1> 
 
-<br/>
+<br>
+
+<div align="center">
+    <img width=600 src="assets/banner/banner.png">
+</div>
 
 ## 🔍 Table of Contents
 
+- [About Project](#intro)
+- [Technologies](#technologies)
 - [Software Versions](#software-versions)
 - [Features](#features)
-- [Next Release Features](#next-release-features)
+- [Releases](#releases)
 - [System Startup](#system-startup)
   - [Developer Mode](#developer-mode)
   - [Production Mode](#production-mode)
 - [Endpoint Documentation](#endpoint-documentation)
 - [Test](#test)
+- [Contributors](#contributors)
  
+<br/>
+
+<h2 id="intro">📌 About Project</h2> 
+
+This Java Spring Boot REST API application efficiently manages relational data with ORM, supporting one-to-one, one-to-many, and many-to-many relationships. It enables hot reload for instant reflection of code changes and offers flexible environment configurations. Security is robustly managed through AOP, which separates authentication and authorization from business logic, and JWT tokens ensure secure, stateless sessions.The application uses Lombok to reduce boilerplate code and supports both custom and global exception handling for seamless error management. It is fully dockerized for consistent deployment and scalability, with Swagger documentation providing interactive API exploration. Quality assurance is ensured through comprehensive automated and manual testing.
+
+<br/>
+
+<h2 id="technologies">☄️ Technologies</h2>
+
+### DevOps
+
+&nbsp; [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+
+### Build Tools
+
+&nbsp; [![Apache Maven](https://img.shields.io/badge/apache_maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)](https://maven.apache.org/)
+
+### Security
+
+&nbsp; [![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)](https://jwt.io/)
+
+### Web
+
+&nbsp; [![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.java.com/)
+
+&nbsp; [![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)](https://spring.io/)
+
+&nbsp; [![Spring Boot](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)](https://spring.io/projects/spring-boot)
+
+&nbsp; [![Apache Tomcat](https://img.shields.io/badge/apache%20tomcat-%23F8DC75.svg?style=for-the-badge&logo=apache-tomcat&logoColor=black)](https://tomcat.apache.org/)
+
+&nbsp; [![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white)](https://swagger.io/)
+
+### ORM
+
+&nbsp; [![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white)](https://hibernate.org/)
+
+### Database
+
+&nbsp; [![Mysql](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+
+&nbsp; [![Postgresql](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+
 <br/>
 
 <h2 id="software-versions">🏷️ Software Versions</h2>
@@ -42,13 +93,9 @@
 
 <br/>
 
-<h2 id="next-release-features">🚧 Next Release Features</h2>
+<h2 id="releases">🚢 Releases</h2> 
 
-- PostgreSQL integration.
-- Plain response.
-- Remove precedence key.
-- Add Dto.
-- Implement isDeleted.
+&nbsp; [![.](https://img.shields.io/badge/1.0.0-233838?style=flat&label=version&labelColor=470137&color=077521)](https://github.com/ahmettoguz/core-java-spring-boot-rest-api/tree/v1.0.0)
 
 <br/>
 
@@ -83,5 +130,11 @@ To view the documentation visit: [`sw/swagger-ui/index.html`](https://localhost/
 <h2 id="test">🔬 Test </h2>
 
 Check out the [`core-mocha-api-automation-test`](https://github.com/ahmettoguz/core-mocha-api-automation-test) repository for both automation and manual tests.
+
+<br/>
+
+<h2 id="contributors">👥 Contributors</h2> 
+
+<a href="https://github.com/ahmettoguz" target="_blank"><img width=60 height=60 src="https://avatars.githubusercontent.com/u/101711642?v=4"></a> 
 
 ### [🔝](#top)

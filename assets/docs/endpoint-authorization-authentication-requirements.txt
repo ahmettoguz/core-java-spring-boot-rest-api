@@ -1,0 +1,253 @@
+# Endpoint Authentication and Authorization Requirements
+
+HealthCheck [✅]:
+    GET:
+        /api/health-check
+            no authentication
+
+        /api/health-check/info
+            no authentication
+----------------------------------------------------
+
+Auth [✅]:
+    POST:
+        /api/auth/login
+            no authentication
+
+        /api/auth/validate
+            jwt authentication
+----------------------------------------------------
+
+Users [✅]:
+    POST:
+        /api/users
+            no authentication
+
+    GET:
+        /api/users
+            jwt authentication
+            project manager can access
+
+        /api/users/{id}
+            jwt authentication
+            project manager can access
+            user with that id can access
+
+        /api/users/paged
+            jwt authentication
+            project manager can access
+
+        /api/users/count
+            jwt authentication
+            project manager can access
+
+        /api/users/search/exact
+            jwt authentication
+            project manager can access
+
+        /api/users/search/partial
+            jwt authentication
+            project manager can access
+
+    PUT:
+        /api/users/{id}
+            jwt authentication
+            user with that id can access
+
+    PATCH:
+        /api/users/${id}/password
+            jwt authentication
+            user with that id can access
+
+        /api/users/${id}/deactivate
+            jwt authentication
+            project manager can access
+            user with that id can access
+
+        /api/users/${id}/activate
+            jwt authentication
+            project manager can access
+
+    DELETE:
+        /api/users/${id}
+            jwt authentication
+            restricted for all
+----------------------------------------------------
+
+Domains [✅]:
+    POST:
+        /api/domains
+            jwt authentication
+
+    GET:
+        /api/domains
+            jwt authentication
+
+        /api/domains/{id}
+            jwt authentication
+
+        /api/domains/paged
+            jwt authentication
+
+        /api/domains/count
+            jwt authentication
+
+    PUT:
+        /api/domains/{id}
+            jwt authentication
+            user with that id can access
+
+    PATCH:
+        /api/domains/${id}/deactivate
+            jwt authentication
+            user with that id can access
+
+        /api/domains/${id}/activate
+            jwt authentication
+            restricted for all
+
+    DELETE:
+        /api/domains/${id}
+            jwt authentication
+            restricted for all
+----------------------------------------------------
+
+Issues [✅]:
+    POST:
+        /api/issues
+            jwt authentication
+
+    GET:
+        /api/issues
+            jwt authentication
+            project manager can access
+
+        /api/issues/{id}
+            jwt authentication
+            project manager can access
+            user that have issue id can access
+
+        /api/issues/paged
+            jwt authentication
+            project manager can access
+
+        /api/issues/count
+            jwt authentication
+            project manager can access
+
+    PUT:
+        /api/issues/{id}
+            jwt authentication
+            project manager can access
+            user that have issue id can access
+
+    PATCH:
+        /api/issues/${id}/deactivate
+            jwt authentication
+            project manager can access
+            user that have issue id can access
+
+        /api/issues/${id}/activate
+            jwt authentication
+            project manager can access
+
+    DELETE:
+        /api/issues/${id}
+            jwt authentication
+                restricted for all
+    ----------------------------------------------------
+----------------------------------------------------
+
+Projects [✅]:
+    POST:
+        /api/projects
+            jwt authentication
+            project manager can access
+
+    GET:
+        /api/projects
+            jwt authentication
+            project manager can access
+
+        /api/projects/{id}
+            jwt authentication
+            project manager can access
+            user that have project id can access
+
+        /api/projects/paged
+            jwt authentication
+            project manager can access
+
+        /api/projects/count
+            jwt authentication
+            project manager can access
+
+    PUT:
+        /api/projects/{id}
+            jwt authentication
+            project manager can access
+            user that have project id can access
+
+    PATCH:
+        /api/projects/${id}/deactivate
+            jwt authentication
+            project manager can access
+
+        /api/projects/${id}/activate
+            jwt authentication
+            restricted for all
+
+    DELETE:
+        /api/projects/${id}
+            jwt authentication
+            restricted for all
+----------------------------------------------------
+
+Users-Roles [✅]:
+    POST:
+        /api/users/{userId}/roles/{roleId}
+            jwt authentication
+            user with project manager role and roleId is 1 can access
+
+
+    DELETE:
+        /api/users/{userId}/roles/{roleId}
+            jwt authentication
+            user with project manager role and roleId is 1 can access
+----------------------------------------------------
+
+Users-Domains []:
+    POST:
+        /api/users/${userId}/domains/${domainId}
+            jwt authentication
+            user with that user id can access
+
+    DELETE:
+        /api/users/${userId}/domains/${domainId}
+            jwt authentication
+            user with that user id can access
+----------------------------------------------------
+
+Users-Issues []:
+    POST:
+        /api/users/${userId}/issues/${issueId}
+            jwt authentication
+            project manager can access
+
+    DELETE:
+        /api/users/${userId}/issues/${issueId}
+            jwt authentication
+            project manager can access
+----------------------------------------------------
+
+Users-Projects []:
+    POST:
+        /api/users/${userId}/projects/${issueId}
+            jwt authentication
+            project manager can access
+
+    DELETE:
+        /api/users/${userId}/issues/${issueId}
+            jwt authentication
+            project manager can access
+----------------------------------------------------

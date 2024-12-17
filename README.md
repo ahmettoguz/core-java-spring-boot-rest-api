@@ -24,7 +24,7 @@
 
 <h2 id="intro">📌 About Project</h2> 
 
-This Java Spring Boot application is designed to manage API operations. It is fully dockerized for seamless deployment and scalability across environments. The project provides Swagger documentation for interactive API exploration and includes Postman collections for manual testing, allowing users to validate API behavior easily.
+This Java Spring Boot REST API application efficiently manages relational data with ORM, supporting one-to-one, one-to-many, and many-to-many relationships. It enables hot reload for instant reflection of code changes and offers flexible environment configurations. Security is robustly managed through AOP, which separates authentication and authorization from business logic, and JWT tokens ensure secure, stateless sessions.The application uses Lombok to reduce boilerplate code and supports both custom and global exception handling for seamless error management. It is fully dockerized for consistent deployment and scalability, with Swagger documentation providing interactive API exploration. Quality assurance is ensured through comprehensive automated and manual testing.
 
 <br/>
 

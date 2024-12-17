@@ -111,10 +111,15 @@ mvnw spring-boot:run
 
 <h3 id="production-mode">⚡Production Mode</h3> 
 
+* Create a new directory named `core`.
+* Clone the [`core-docker-config`](https://github.com/ahmettoguz/core-docker-config) and [`core-java-spring-boot-rest-api`](https://github.com/ahmettoguz/core-java-spring-boot-rest-api) repositories into the `core` directory.
+```
+git clone https://github.com/ahmettoguz/core-docker-config
+git clone https://github.com/ahmettoguz/core-java-spring-boot-rest-api
+```
+
 * Copy `application-dev.properties` to create `application-prod.properties`. Refer to `production-example.txt` for guidance.
-* Change `app.var.appMode` to `prod`.
-* Change `server.port` to `80`.
-* Follow the instructions in the [`Micro-Docker-Config repository`](https://github.com/ahmettoguz/Micro-Docker-Config) to configure Docker for production.
+* Refer to the documentation provided in the [`core-docker-config`](https://github.com/ahmettoguz/core-docker-config) project for the system startup commands.
 
 <br/>
 
